@@ -350,6 +350,142 @@ def cmd_faith_agreement(args) -> None:
     _dump(report, out)
 
 
+SMOKE_SELECTION = PROJECT_ROOT / "data" / "stage3" / "judge_smoke_selection.json"
+JUDGE_RUNS = RUNS_DIR / "stage3" / "judge"
+
+
+def cmd_faith_judge_select(args) -> None:
+    """Usa etiquetas humanas SOLO para elegir casos; escribe la selección congelada."""
+    from rag_lab.faithfulness.prepare import STAGE3
+    from rag_lab.faithfulness.schema import read_jsonl
+    from rag_lab.faithfulness.smoke_selection import select_smoke_cases
+    from rag_lab.hashing import sha256_file
+
+    paths = {
+        "human_labels": STAGE3 / "human_labels_round1.jsonl",
+        "perturbation_review": STAGE3 / "perturbation_review.jsonl",
+        "perturbations": STAGE3 / "perturbations.jsonl",
+    }
+    human = {h["claim_id"]: h for h in read_jsonl(paths["human_labels"])}
+    reviews = {r["pert_id"]: r for r in read_jsonl(paths["perturbation_review"])}
+    sel = select_smoke_cases(human, reviews, read_jsonl(paths["perturbations"]))
+    sel["inputs_sha256"] = {k: sha256_file(p) for k, p in paths.items()}
+    out = Path(args.out) if args.out else SMOKE_SELECTION
+    text = json.dumps(sel, indent=2, ensure_ascii=False) + "\n"
+    if out.exists() and out.read_text(encoding="utf-8") != text and not args.force:
+        raise FileExistsError(f"{out} ya existe con otro contenido (selección congelada)")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(text, encoding="utf-8", newline="\n")
+    for c in sel["cases"]:
+        print(f"{c['case_id']}  {c['stratum']:<26} {c['type']:<12} {c['id']}")
+    print(f"cases_sha256={sel['cases_sha256']}")
+    print(f"-> {out.relative_to(PROJECT_ROOT).as_posix()}")
+
+
+def cmd_faith_judge(args) -> None:
+    """Corre el juez sobre la selección congelada. No lee etiquetas humanas."""
+    from rag_lab.faithfulness.judge_config import load_judge_config
+    from rag_lab.faithfulness.judge_run import load_cases, plan_run, run_judge
+    from rag_lab.faithfulness.prepare import STAGE3
+    from rag_lab.faithfulness.schema import read_jsonl
+    from rag_lab.generation.calls import ResponseCache
+    from rag_lab.hashing import sha256_file
+
+    cfg = load_judge_config(args.config)
+    sel_path = Path(args.selection) if args.selection else SMOKE_SELECTION
+    selection = json.loads(sel_path.read_text(encoding="utf-8"))
+    from rag_lab.hashing import sha256_json
+
+    if sha256_json(selection["cases"]) != selection["cases_sha256"]:
+        raise ValueError("la selección no coincide con su cases_sha256 (¿fue editada?)")
+    paths = {
+        "answers": STAGE3 / "answers.jsonl",
+        "claims": STAGE3 / "claims_proposed.jsonl",
+        "perturbations": STAGE3 / "perturbations.jsonl",
+    }
+    answers = {a["answer_id"]: a for a in read_jsonl(paths["answers"])}
+    claims = {c["claim_id"]: c for c in read_jsonl(paths["claims"])}
+    perts = {p["pert_id"]: p for p in read_jsonl(paths["perturbations"])}
+    cases = load_cases(selection, claims, perts)
+    plan = plan_run(cases, answers, cfg)
+    print(json.dumps(plan, indent=2, ensure_ascii=False))
+    if args.dry_run:
+        print("dry-run: no se envió ninguna solicitud")
+        return
+    if not plan["fits_calls"]:
+        raise ValueError("la selección tiene más casos que el tope de llamadas")
+    inputs = {k: sha256_file(p) for k, p in paths.items()} | {
+        "selection_path": sel_path.relative_to(PROJECT_ROOT).as_posix(),
+        "selection_sha256": sha256_file(sel_path),
+        "cases_sha256": selection["cases_sha256"],
+    }
+    key = None
+    if cfg.model.provider == "groq":
+        from rag_lab.faithfulness.judge_client import JudgeGroqClient
+        from rag_lab.generation.credentials import get_api_key
+
+        key = get_api_key()
+        if not key:
+            raise ValueError("Falta GROQ_API_KEY (variable de entorno o .env)")
+        client = JudgeGroqClient(cfg, key)
+    else:
+        raise ValueError("el juez online solo admite provider = groq")
+    cache = None if args.no_cache else ResponseCache(CACHE_DIR / "judge")
+    out = Path(args.out) if args.out else JUDGE_RUNS / cfg.name
+    run_judge(
+        cases, answers, cfg, client, out, cache=cache, secret=key, force=args.force, inputs=inputs
+    )
+    m = json.loads((out / "judge_manifest.json").read_text(encoding="utf-8"))
+    print(
+        json.dumps(
+            {
+                k: m[k]
+                for k in (
+                    "run_status",
+                    "abort_reason",
+                    "counts",
+                    "budget",
+                    "tokens_real",
+                    "latency_s",
+                )
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
+    print(f"-> {out.relative_to(PROJECT_ROOT).as_posix()}")
+
+
+def cmd_faith_judge_compare(args) -> None:
+    """Compara predicciones ya guardadas con la referencia humana (no las modifica)."""
+    from rag_lab.faithfulness.judge_compare import compare_run
+    from rag_lab.faithfulness.prepare import STAGE3
+    from rag_lab.faithfulness.schema import read_jsonl
+
+    run_dir = Path(args.run)
+    sel_path = Path(args.selection) if args.selection else SMOKE_SELECTION
+    selection = json.loads(sel_path.read_text(encoding="utf-8"))
+    human = {h["claim_id"]: h for h in read_jsonl(STAGE3 / "human_labels_round1.jsonl")}
+    reviews = {r["pert_id"]: r for r in read_jsonl(STAGE3 / "perturbation_review.jsonl")}
+    perts = {p["pert_id"]: p for p in read_jsonl(STAGE3 / "perturbations.jsonl")}
+    rep = compare_run(run_dir, selection, human, reviews, perts)
+    for r in rep["per_case"]:
+        c, x = r["label_cited"], r["label_context"]
+        print(
+            f"{r['case_id']} {r['source_id']:<20} {r['status']:<12} "
+            f"cited: humano={c['reference']} juez={c['judge_final']} [{c['outcome']}] | "
+            f"context: humano={x['reference']} juez={x['judge_final']} [{x['outcome']}]"
+        )
+    for f, cmp in rep["per_field"].items():
+        print(
+            f"{f}: n={cmp['n_compared']} acuerdo={cmp['agreement']['value']} "
+            f"IC95={cmp['agreement']['wilson95']} resultados={cmp['outcomes']} "
+            f"juez supported / humano no: {cmp['evaluated_supported_reference_not']['claim_ids']}"
+        )
+    out = Path(args.out) if args.out else REPORTS_DIR / f"judge_{run_dir.name}_comparison.json"
+    _dump(rep, out)
+
+
 def main(argv: list[str] | None = None) -> int:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
@@ -433,6 +569,26 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--evaluated", required=True, help="juez verificado u otra persona")
     s.add_argument("--out")
     s.set_defaults(func=cmd_faith_agreement)
+
+    s = sub.add_parser("faith-judge-select", help="Etapa 3B: congela la selección del smoke")
+    s.add_argument("--out")
+    s.add_argument("--force", action="store_true")
+    s.set_defaults(func=cmd_faith_judge_select)
+
+    s = sub.add_parser("faith-judge", help="Etapa 3B: corre el juez sobre la selección")
+    s.add_argument("--config", required=True)
+    s.add_argument("--selection")
+    s.add_argument("--out", help="default: runs/stage3/judge/<nombre>")
+    s.add_argument("--dry-run", action="store_true", help="solo dimensiona; no llama a la API")
+    s.add_argument("--no-cache", action="store_true")
+    s.add_argument("--force", action="store_true", help="sobrescribe predicciones existentes")
+    s.set_defaults(func=cmd_faith_judge)
+
+    s = sub.add_parser("faith-judge-compare", help="Etapa 3B: juez vs referencia humana")
+    s.add_argument("--run", required=True, help="p. ej. runs/stage3/judge/<nombre>")
+    s.add_argument("--selection")
+    s.add_argument("--out")
+    s.set_defaults(func=cmd_faith_judge_compare)
 
     args = p.parse_args(argv)
     try:

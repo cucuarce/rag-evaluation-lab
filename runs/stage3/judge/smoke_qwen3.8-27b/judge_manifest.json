@@ -1,0 +1,121 @@
+{
+  "stage": "3B",
+  "created_at": "2026-11-17T17:12:56+00:00",
+  "run_status": "complete",
+  "abort_reason": null,
+  "judge_config": {
+    "name": "smoke_qwen3.8-27b",
+    "prompt_version": "judge-v1",
+    "reference_date": "2026-11-01",
+    "model": {
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "temperature": 0.0,
+      "max_completion_tokens": 1536,
+      "seed": 7,
+      "include_reasoning": false,
+      "reasoning_effort": null
+    },
+    "limits": {
+      "timeout_s": 60,
+      "max_retries": 0,
+      "max_retry_after_s": 30,
+      "backoff_base_s": 2.0,
+      "max_concurrency": 1,
+      "min_interval_s": 3.0,
+      "max_calls": 8,
+      "max_total_tokens": 25000,
+      "max_consecutive_failures": 2
+    }
+  },
+  "judge_config_hash": "bd911d00d517bc2ad44c562160a102162f88dece44c2097de7b93c4ecc1f3967",
+  "request_params": {
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "max_completion_tokens": 1536,
+    "seed": 7,
+    "include_reasoning": false,
+    "reasoning_effort": null,
+    "response_format": "json_schema",
+    "strict": true,
+    "schema_name": "faithfulness_judgment"
+  },
+  "json_schema_name": "faithfulness_judgment",
+  "judge_schema_sha256": "6d455b3b1b7aa53eec6c6f033bedfb3123785e69483447e81db77d405ea44869",
+  "prompt_version": "judge-v1",
+  "prompt_template_sha256": "11687c04272e745701fa846631afc9b28fb9f03e803d7c0881cba3cc2be5163c",
+  "request_claim_id": "A1",
+  "inputs": {
+    "answers": "161ae86b42f6b72d9daf96727d9f09344a651ca3085cb518c37a8808dc94a27b",
+    "claims": "50fcb1c4e95fcde41908c13e042fef297433f48615398220d4947bdfda917b56",
+    "perturbations": "04332f0fd7a9cd45b40b701a469a3243d51d53ff82a7a14d23eb3faaf5e139fb",
+    "selection_path": "data/stage3/judge_smoke_selection.json",
+    "selection_sha256": "575694e791abded95447084a169dd5bfc07cd85a8a15f819ea09cb07b639683f",
+    "cases_sha256": "f7f6251f0e7e7e03d4474875458d99d8abce3b1fc9ee65fb0f4f217c01a3fc54"
+  },
+  "counts": {
+    "n_cases": 8,
+    "status": {
+      "ok": 8
+    },
+    "http_requests": 8,
+    "llm_responses_real": 8,
+    "cache_hits": 0
+  },
+  "budget": {
+    "max_calls": 8,
+    "max_total_tokens": 25000,
+    "calls_reserved": 8,
+    "tokens_counted": 14474
+  },
+  "tokens_real": {
+    "prompt_tokens": 13146,
+    "completion_tokens": 1328,
+    "reasoning_tokens": 0,
+    "total_tokens": 14474
+  },
+  "latency_s": {
+    "total": 10.6,
+    "mean": 1.325,
+    "max": 2.339
+  },
+  "ratelimit_first": {
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "8000",
+    "x-ratelimit-remaining-requests": "999",
+    "x-ratelimit-remaining-tokens": "5922",
+    "x-ratelimit-reset-requests": "1m26.4s",
+    "x-ratelimit-reset-tokens": "15.585s"
+  },
+  "ratelimit_last": {
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "8000",
+    "x-ratelimit-remaining-requests": "992",
+    "x-ratelimit-remaining-tokens": "2561",
+    "x-ratelimit-reset-requests": "11m31.2s",
+    "x-ratelimit-reset-tokens": "44.142s"
+  },
+  "pacer_wait_s": 60.16,
+  "predictions_sha256": "75156bd63e7e6b9f7674775893792d246f489a0cd7050a6b289924b9046ca24c",
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "torch_num_threads": 8,
+    "packages": {
+      "chromadb": "1.5.9",
+      "sentence-transformers": "6.2.0",
+      "transformers": "5.22.1",
+      "tokenizers": "0.23.3",
+      "torch": "2.15.0+cpu",
+      "numpy": "2.5.4",
+      "rank-bm25": "0.2.2",
+      "huggingface-hub": "2.4.0"
+    },
+    "uv_lock_sha256": "dbffedba468acf9384f843e96fc8e80e9c974dea66a5680312d80947fae69cc8",
+    "git_commit": "c2fb189ae0f55b0e7e0dd5cca855b964c1f74d89",
+    "groq_sdk": "1.7.0"
+  }
+}

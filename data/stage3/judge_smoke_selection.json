@@ -1,0 +1,97 @@
+{
+  "purpose": "smoke del juez semántico (Etapa 3B): selección congelada antes de ejecutar",
+  "seed": "stage3b-smoke-v1",
+  "quotas": [
+    [
+      "orig_partially_supported",
+      2
+    ],
+    [
+      "pert_number",
+      2
+    ],
+    [
+      "pert_negation",
+      1
+    ],
+    [
+      "pert_unit",
+      1
+    ],
+    [
+      "orig_supported",
+      2
+    ]
+  ],
+  "pool_sizes": {
+    "orig_partially_supported": 3,
+    "pert_number": 6,
+    "pert_negation": 7,
+    "pert_unit": 4,
+    "orig_supported": 27
+  },
+  "cases": [
+    {
+      "case_id": "J01",
+      "type": "claim",
+      "id": "e05-c3",
+      "qid": "e05",
+      "stratum": "orig_partially_supported"
+    },
+    {
+      "case_id": "J02",
+      "type": "claim",
+      "id": "e28-c1",
+      "qid": "e28",
+      "stratum": "orig_partially_supported"
+    },
+    {
+      "case_id": "J03",
+      "type": "perturbation",
+      "id": "e18-c1-p-number",
+      "qid": "e18",
+      "stratum": "pert_number"
+    },
+    {
+      "case_id": "J04",
+      "type": "perturbation",
+      "id": "e14-c1-p-number",
+      "qid": "e14",
+      "stratum": "pert_number"
+    },
+    {
+      "case_id": "J05",
+      "type": "perturbation",
+      "id": "e27-c1-p-negation",
+      "qid": "e27",
+      "stratum": "pert_negation"
+    },
+    {
+      "case_id": "J06",
+      "type": "perturbation",
+      "id": "e19-c2-p-unit",
+      "qid": "e19",
+      "stratum": "pert_unit"
+    },
+    {
+      "case_id": "J07",
+      "type": "claim",
+      "id": "e21-c2",
+      "qid": "e21",
+      "stratum": "orig_supported"
+    },
+    {
+      "case_id": "J08",
+      "type": "claim",
+      "id": "e10-c1",
+      "qid": "e10",
+      "stratum": "orig_supported"
+    }
+  ],
+  "cases_sha256": "f7f6251f0e7e7e03d4474875458d99d8abce3b1fc9ee65fb0f4f217c01a3fc54",
+  "inputs_sha256": {
+    "human_labels": "500df4f895db21518426205a6207149cd45b24b14c0df58266a0600bd88f57c1",
+    "perturbation_review": "734ddb7b00203eeba6ba57cf6bee507494aadc63e1790eaf9c3dcd01930453f2",
+    "perturbations": "04332f0fd7a9cd45b40b701a469a3243d51d53ff82a7a14d23eb3faaf5e139fb"
+  }
+}
