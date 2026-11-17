@@ -125,8 +125,17 @@ semántica de la Etapa 3 (juez + revisión humana).
   mensajes, esquema). Solo se cachean respuestas HTTP exitosas. Un hit no consume presupuesto.
 - Presupuesto por comando (`max_calls`, `max_total_tokens`): al agotarse, la corrida se marca
   `aborted` y las preguntas restantes quedan `not_run`. No se comparan corridas incompletas.
-- Ritmo: `min_interval_s` entre llamadas y espera al reset si `x-ratelimit-remaining-tokens`
-  no alcanza para otra llamada como la anterior.
+- Estimación previa conservadora de cada llamada: `ceil(caracteres del prompt / 2,5)` +
+  `max_completion_tokens` (1024, incluye razonamiento). En este corpus se midió ~3,2
+  caracteres/token, así que la estimación sobreestima.
+- El presupuesto reserva esa estimación **antes** de enviar: si `usados + estimación` supera
+  el tope, la corrida se frena. `generate --max-calls/--max-tokens` solo pueden achicar los
+  topes de la config (para repartir un presupuesto global entre A y B); el valor efectivo
+  queda en `gen_manifest.json` (`budget`) y la config no cambia.
+- Ritmo: `min_interval_s` entre llamadas (≤ 24 RPM) y cubeta de tokens a partir de
+  `x-ratelimit-limit-tokens` / `x-ratelimit-remaining-tokens` de la última respuesta:
+  disponibles(t) = min(L, R + Δt·L/60); se espera hasta tener estimación × 1,15. Si
+  `x-ratelimit-remaining-requests` < 5 (cuota diaria), la corrida se frena.
 - Reintentos (máx. 3) solo ante timeout, conexión, 5xx o 429 con `retry-after` ≤ 60 s.
   429 con `retry-after` mayor, 401/403/404 o 3 fallos consecutivos frenan la corrida.
   400/422 se registran por pregunta sin reintento. El SDK se usa con `max_retries=0`.

@@ -16,7 +16,7 @@ from pathlib import Path
 
 from rag_lab.config import PROJECT_ROOT, relative_to_root, resolve_path
 from rag_lab.corpus import load_corpus
-from rag_lab.generation.calls import Budget, Pacer, ResponseCache, cache_key
+from rag_lab.generation.calls import Budget, Pacer, ResponseCache, cache_key, estimate_tokens
 from rag_lab.generation.config import GenerationConfig
 from rag_lab.generation.context import ChunkStore
 from rag_lab.generation.credentials import redact
@@ -78,10 +78,11 @@ class _Runner:
             hit = self.cache.get(key)
             if hit is not None:
                 return {"status": "ok", "result": hit, "cache_key": key}
-        self.budget.reserve()  # BudgetExceeded (AbortRun) si no hay presupuesto
+        estimate = estimate_tokens(messages, self.cfg.model.max_completion_tokens)
+        self.budget.reserve_with_estimate(estimate)  # BudgetExceeded (AbortRun)
 
         def once():
-            self.pacer.wait_turn()
+            self.pacer.wait_turn(estimate)
             return self.generator.generate(messages, ANSWER_SCHEMA)
 
         try:
@@ -125,6 +126,8 @@ def run_generation(
     gate_path: Path | None = None,
     sleep: Callable[[float], None] | None = None,
     secret: str | None = None,
+    max_calls: int | None = None,
+    max_tokens: int | None = None,
 ) -> Path:
     import time
 
@@ -133,6 +136,15 @@ def run_generation(
     if generator.provider != cfg.model.provider:
         raise ValueError("el generador no coincide con el provider de la configuración")
     sleep = sleep or time.sleep
+    # Topes por comando: los de la config, o más chicos si se pasan (nunca más grandes).
+    for name, value, cap in (
+        ("max_calls", max_calls, cfg.limits.max_calls),
+        ("max_tokens", max_tokens, cfg.limits.max_total_tokens),
+    ):
+        if value is not None and not 1 <= value <= cap:
+            raise ValueError(f"{name}={value} debe estar en [1, {cap}] (tope de la config)")
+    budget_calls = max_calls or cfg.limits.max_calls
+    budget_tokens = max_tokens or cfg.limits.max_total_tokens
     manifest = json.loads((retrieval_run_dir / "manifest.json").read_text(encoding="utf-8"))
     method = manifest["config"]["retrieval"]["method"]
     rows = _read_jsonl(retrieval_run_dir / "retrieval_results.jsonl")
@@ -157,7 +169,7 @@ def run_generation(
         cfg,
         generator,
         cache,
-        Budget(cfg.limits.max_calls, cfg.limits.max_total_tokens),
+        Budget(budget_calls, budget_tokens),
         Pacer(cfg.limits.min_interval_s, sleep=sleep),
         sleep,
         secret,
@@ -305,6 +317,13 @@ def run_generation(
             "cache_hits": sum(1 for x in llm_rows if x.get("cached")),
             "budget_calls_reserved": runner.budget.calls,
         },
+        "budget": {
+            "max_calls": budget_calls,
+            "max_tokens": budget_tokens,
+            "overridden_by_cli": max_calls is not None or max_tokens is not None,
+            "tokens_counted": runner.budget.tokens,
+        },
+        "pacer_wait_s": round(runner.pacer.total_wait_s, 2),
         "tokens_real": tokens_real,
         "latency_s_real_total": round(sum(x["latency_s"] for x in real), 3),
         "environment": environment() | {"groq_sdk": _groq_version()},

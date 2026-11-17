@@ -186,7 +186,15 @@ def cmd_generate(args) -> None:
     run_dir = Path(args.retrieval_run)
     out = Path(args.out) if args.out else None
     gen_dir = run_generation(
-        run_dir, cfg, generator, out_dir=out, cache=cache, qids=qids, secret=secret
+        run_dir,
+        cfg,
+        generator,
+        out_dir=out,
+        cache=cache,
+        qids=qids,
+        secret=secret,
+        max_calls=args.max_calls,
+        max_tokens=args.max_tokens,
     )
     gm = json.loads((gen_dir / "gen_manifest.json").read_text(encoding="utf-8"))
     summary = score_generation(gen_dir)  # fase 2: recién acá se leen etiquetas
@@ -285,6 +293,8 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--qids", help="subconjunto separado por comas (smoke)")
     s.add_argument("--out", help="default: <retrieval_run>/gen/<nombre>")
     s.add_argument("--no-cache", action="store_true")
+    s.add_argument("--max-calls", type=int, help="tope de llamadas reales (<= config)")
+    s.add_argument("--max-tokens", type=int, help="tope de tokens reales (<= config)")
     s.set_defaults(func=cmd_generate)
 
     s = sub.add_parser("compare-gen", help="comparación pareada de dos generaciones")

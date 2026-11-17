@@ -284,3 +284,75 @@ def test_concurrency_does_not_change_results(tmp_path):
     assert (outs[0] / "generations.jsonl").read_bytes() == (
         outs[1] / "generations.jsonl"
     ).read_bytes()
+
+
+# --- límites efectivos: estimación previa, cubeta de tokens y cuota diaria ----------------
+
+
+def test_estimate_is_conservative():
+    from rag_lab.generation.calls import estimate_tokens
+
+    msgs = [{"role": "user", "content": "x" * 3240}]  # c01 real: 3240 chars -> 1012 tokens
+    assert estimate_tokens(msgs, 1024) == 1296 + 1024
+
+
+def test_budget_refuses_call_whose_estimate_does_not_fit():
+    b = Budget(max_calls=10, max_tokens=5000)
+    b.reserve_with_estimate(2300)
+    b.add_tokens(1200)
+    b.reserve_with_estimate(2300)  # 1200 + 2300 <= 5000
+    b.add_tokens(1200)
+    with pytest.raises(BudgetExceeded, match="insuficiente"):
+        b.reserve_with_estimate(2700)  # 2400 + 2700 > 5000
+    assert b.calls == 2
+
+
+def _rl(limit, remaining, rem_requests=900):
+    r = ok_result(ANSWER_S1, tokens=1200)
+    r.ratelimit = {
+        "x-ratelimit-limit-tokens": str(limit),
+        "x-ratelimit-remaining-tokens": str(remaining),
+        "x-ratelimit-remaining-requests": str(rem_requests),
+    }
+    return r
+
+
+def test_pacer_waits_for_token_bucket_refill_with_margin():
+    now = [100.0]
+    slept = []
+
+    def sleep(s):
+        slept.append(s)
+        now[0] += s
+
+    p = Pacer(0.0, clock=lambda: now[0], sleep=sleep, safety_margin=0.15)
+    p.observe(_rl(8000, 1000))
+    p.wait_turn(2000)  # necesita 2300; hay 1000 -> faltan 1300 tokens a 8000/min
+    assert slept[-1] == pytest.approx(1300 * 60 / 8000 + 0.5)
+    p.observe(_rl(8000, 8000))
+    n = len(slept)
+    p.wait_turn(2000)  # cubeta llena: no espera
+    assert len(slept) == n
+
+
+def test_pacer_aborts_when_daily_requests_are_almost_exhausted():
+    from rag_lab.generation.providers import AbortRun
+
+    p = Pacer(0.0, sleep=lambda s: None, rpd_reserve=5)
+    p.observe(_rl(8000, 8000, rem_requests=3))
+    with pytest.raises(AbortRun, match="cuota diaria"):
+        p.wait_turn(1000)
+
+
+def test_cli_budget_override_can_only_tighten(tmp_path):
+    run, index_root = make_retrieval_run(tmp_path, _rows(3))
+    cfg = replace(fake_cfg(max_calls=10), gate_enabled=False)
+    with pytest.raises(ValueError, match="tope de la config"):
+        run_generation(run, cfg, FakeGenerator(), index_root=index_root, max_calls=11)
+    out = run_generation(
+        run, cfg, FakeGenerator(), out_dir=tmp_path / "g", index_root=index_root, max_calls=2
+    )
+    m = _manifest(out)
+    assert m["budget"]["max_calls"] == 2 and m["budget"]["overridden_by_cli"]
+    assert m["generation_config"]["limits"]["max_calls"] == 10  # la config no cambia
+    assert [r["status"] for r in _read(out)] == ["ok", "ok", "not_run"]
