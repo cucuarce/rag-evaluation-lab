@@ -1,0 +1,18 @@
+# Dashboard local (Etapa 4A): solo en esta máquina y sin telemetría.
+[browser]
+gatherUsageStats = false
+serverAddress = "localhost"
+
+[server]
+address = "localhost"
+headless = true
+runOnSave = false
+
+[theme]
+base = "light"
+primaryColor = "#2f5d8a"
+font = "sans serif"
+
+[client]
+# Oculta "Deploy" y las opciones de desarrollador de la barra superior.
+toolbarMode = "minimal"

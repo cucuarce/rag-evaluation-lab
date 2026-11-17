@@ -17,6 +17,9 @@ dependencies = [
 rag-lab = "rag_lab.cli:main"
 
 [dependency-groups]
+dashboard = [
+    "streamlit>=1.40",
+]
 dev = [
     "pytest>=8",
     "ruff>=0.15",

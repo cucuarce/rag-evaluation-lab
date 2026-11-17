@@ -21,8 +21,10 @@ documentos, preguntas y datos son inventados para este proyecto.
 >   (negación sintética etiquetada `supported`).
 >
 > n chico, selección no aleatoria y negativos sintéticos: no estima la confiabilidad general del
-> juez. Estudios de caso y limitaciones en [`docs/judge.md`](docs/judge.md). No hay Ragas,
-> dashboard ni configuración C.
+> juez. Estudios de caso y limitaciones en [`docs/judge.md`](docs/judge.md).
+>
+> **Etapa 4A (en revisión):** dashboard Streamlit local, de solo lectura, sobre los resultados
+> congelados ([`docs/dashboard.md`](docs/dashboard.md)). No hay Ragas ni configuración C.
 
 ## Qué hace hoy
 
@@ -143,6 +145,17 @@ uv run rag-lab faith-agreement --reference <etiquetas_humanas.jsonl> --evaluated
 
 Documentos: [`docs/lexical_v2.md`](docs/lexical_v2.md), [`docs/faithfulness.md`](docs/faithfulness.md)
 y [`docs/annotation_guide.md`](docs/annotation_guide.md).
+
+## Dashboard local (Etapa 4A, ver [`docs/dashboard.md`](docs/dashboard.md))
+
+Dashboard Streamlit de **solo lectura**: muestra los resultados ya congelados y no llama a
+modelos. Streamlit está en un grupo de dependencias opcional.
+
+```bash
+uv sync --group dashboard
+uv run --group dashboard streamlit run src/rag_lab/dashboard/app.py
+# -> http://localhost:8501 (solo localhost, sin telemetría: .streamlit/config.toml)
+```
 
 ## Salidas
 
