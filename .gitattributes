@@ -1,2 +1,6 @@
 * text=auto eol=lf
 *.npy binary
+
+# Planilla anotada: se versiona byte a byte (CRLF incluido) para que su sha256 coincida con
+# sheet_sha256 de data/stage3/human_labels_round1.jsonl.
+data/stage3/annotation/annotation_sheet_completed.csv -text
