@@ -1,0 +1,112 @@
+{
+  "generation": "groq_gpt-oss-120b",
+  "runs": {
+    "A": {
+      "run_status": "complete",
+      "inputs_unchanged": {
+        "questions_sha256": true,
+        "retrieval_results_sha256": true,
+        "index_id": true,
+        "generation_config": true,
+        "prompt_template_sha256": true,
+        "answer_schema_sha256": true,
+        "gate_threshold": true
+      },
+      "rescoring_reproduces_saved": true,
+      "prompts": {
+        "sent": 32,
+        "sha256_reproduced": 32,
+        "with_reference_data": 0,
+        "schema_valid": 32
+      },
+      "counts": {
+        "n_questions": 40,
+        "status": {
+          "ok": 40
+        },
+        "gate_abstentions": 8,
+        "llm_requests_real": 29,
+        "http_attempts_real": 29,
+        "cache_hits": 3,
+        "budget_calls_reserved": 29
+      },
+      "tokens_real": {
+        "prompt_tokens": 32037,
+        "completion_tokens": 3224,
+        "reasoning_tokens": 988,
+        "total_tokens": 35261
+      },
+      "budget": {
+        "max_calls": 40,
+        "max_tokens": 55000,
+        "overridden_by_cli": true,
+        "tokens_counted": 35261
+      }
+    },
+    "B": {
+      "run_status": "complete",
+      "inputs_unchanged": {
+        "questions_sha256": true,
+        "retrieval_results_sha256": true,
+        "index_id": true,
+        "generation_config": true,
+        "prompt_template_sha256": true,
+        "answer_schema_sha256": true,
+        "gate_threshold": true
+      },
+      "rescoring_reproduces_saved": true,
+      "prompts": {
+        "sent": 32,
+        "sha256_reproduced": 32,
+        "with_reference_data": 0,
+        "schema_valid": 32
+      },
+      "counts": {
+        "n_questions": 40,
+        "status": {
+          "ok": 40
+        },
+        "gate_abstentions": 8,
+        "llm_requests_real": 29,
+        "http_attempts_real": 29,
+        "cache_hits": 3,
+        "budget_calls_reserved": 29
+      },
+      "tokens_real": {
+        "prompt_tokens": 32264,
+        "completion_tokens": 3104,
+        "reasoning_tokens": 912,
+        "total_tokens": 35368
+      },
+      "budget": {
+        "max_calls": 40,
+        "max_tokens": 74739,
+        "overridden_by_cli": true,
+        "tokens_counted": 35368
+      }
+    }
+  },
+  "leakage_excluded_verbatim_in_corpus": [
+    "10 años.",
+    "10 usuarios.",
+    "15 minutos.",
+    "8 horas hábiles."
+  ],
+  "comparable": true,
+  "consumption": {
+    "benchmark_calls": 58,
+    "benchmark_tokens": 70629,
+    "authorized": {
+      "calls": 80,
+      "tokens": 110000
+    },
+    "smoke_calls": 4,
+    "smoke_tokens": 4709
+  },
+  "secret_scan": {
+    "files_with_matches": [],
+    "checked_configured_key": true
+  },
+  "failures": [],
+  "ok": true
+}

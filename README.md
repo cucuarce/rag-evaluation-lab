@@ -97,6 +97,14 @@ uv run rag-lab compare-gen runs/eval/A_dense_k5/gen/groq_gpt-oss-120b     runs/e
 Con la caché poblada, re-ejecutar los pasos 4 no hace llamadas: reproduce las métricas a
 partir de las respuestas guardadas.
 
+Resultados y conclusiones de la Etapa 2: [`docs/stage2_report.md`](docs/stage2_report.md).
+Verificación sin API de los artefactos versionados (hashes de entradas, comparabilidad A/B,
+re-scoring, ausencia de fuga, esquema, secretos y presupuesto):
+
+```bash
+uv run python scripts/verify_stage2.py   # escribe reports/verify_stage2.json
+```
+
 ## Salidas
 
 | Ruta | Contenido |

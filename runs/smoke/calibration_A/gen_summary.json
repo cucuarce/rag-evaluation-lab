@@ -1,0 +1,105 @@
+{
+  "retrieval_run_name": "A_dense_k5",
+  "generation": "groq_gpt-oss-120b",
+  "model": "openai/gpt-oss-120b",
+  "split": "calibration",
+  "run_status": "complete",
+  "partial_qids": [
+    "c01",
+    "c09"
+  ],
+  "labels_sha256": "47a7526cbfedc95e7c9106a536c1fe74bc452e50d4480e7267f3ef850c6c508b",
+  "gate": {
+    "threshold": 0.868271,
+    "score_type": "cosine_top1",
+    "rule": "midpoint(max_unanswerable, min_answerable) si separables; si no, min_answerable",
+    "calibration_sha256": "dcaa43069f9e531f73494e4ca9a807eac228eba314845569cf5b3cf9e79e04a5"
+  },
+  "metrics": {
+    "status_counts": {
+      "ok": 2
+    },
+    "n_ok": 2,
+    "answerable": {
+      "n": 1,
+      "answered": 1,
+      "abstained_gate": 0,
+      "abstained_llm": 0,
+      "over_abstention": 0,
+      "abstained_with_incomplete_evidence": 0,
+      "answered_with_incomplete_evidence": 0,
+      "over_abstention_rate": 0.0
+    },
+    "unanswerable": {
+      "n": 1,
+      "abstained_gate": 1,
+      "abstained_llm": 0,
+      "improper_answers": 0,
+      "improper_answer_rate": 0.0
+    },
+    "answered_answerable": {
+      "required_facts_coverage": {
+        "value": 1,
+        "n": 1
+      },
+      "all_required_facts": {
+        "value": 1,
+        "n": 1
+      },
+      "forbidden_present": {
+        "value": null,
+        "n": 0
+      },
+      "citation_precision": {
+        "value": 1.0,
+        "n": 1
+      },
+      "cited_evidence_recall": {
+        "value": 1.0,
+        "n": 1
+      }
+    },
+    "citations_all_answered": {
+      "n_answered": 1,
+      "citation_validity": {
+        "value": 1.0,
+        "n": 1
+      },
+      "answers_with_invalid_citations": 0,
+      "uncited_answers": 0
+    },
+    "version_selection": {
+      "checked": [],
+      "errors": [],
+      "temporal_rule_disagreements": []
+    },
+    "abstention_causes": {
+      "gate": 1,
+      "llm": 0
+    },
+    "errors": {
+      "format_errors": 0,
+      "api_errors": 0,
+      "not_run": 0,
+      "consistency_issues": 0
+    }
+  },
+  "calls": {
+    "n_questions": 2,
+    "status": {
+      "ok": 2
+    },
+    "gate_abstentions": 1,
+    "llm_requests_real": 1,
+    "http_attempts_real": 1,
+    "cache_hits": 0,
+    "budget_calls_reserved": 1
+  },
+  "tokens_real": {
+    "prompt_tokens": 1012,
+    "completion_tokens": 77,
+    "reasoning_tokens": 15,
+    "total_tokens": 1089
+  },
+  "note": "Métricas léxicas/estructurales. No son faithfulness semántica (Etapa 3)."
+}
