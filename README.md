@@ -4,9 +4,12 @@ Laboratorio local y reproducible para medir la calidad de un sistema RAG sobre l
 conocimiento de **Kestrel Billing**, una SaaS de facturación **ficticia**. Todos los
 documentos, preguntas y datos son inventados para este proyecto.
 
-> **Estado: Etapa 2 — generación con citas y abstención** sobre el retrieval de la Etapa 1.
-> No hay Ragas, juez LLM, dashboard ni configuración C. La Etapa 1 y todo el pipeline de la
-> Etapa 2 corren offline; solo la generación real usa la API de Groq (`GROQ_API_KEY`).
+> **Estado: Etapa 3A — faithfulness por afirmación, preparación offline.** La Etapa 2
+> (generación con citas y abstención) está cerrada. En la 3A no se llama a ningún modelo: hay
+> normalización léxica v2, respuestas únicas, afirmaciones propuestas, planilla de anotación
+> humana, contrato y validador del futuro juez, métricas de acuerdo y perturbaciones. No hay
+> juez real, Ragas, dashboard ni configuración C. Solo la generación de la Etapa 2 usó la API
+> de Groq (`GROQ_API_KEY`).
 
 ## Qué hace hoy
 
@@ -105,6 +108,28 @@ re-scoring, ausencia de fuga, esquema, secretos y presupuesto):
 uv run python scripts/verify_stage2.py   # escribe reports/verify_stage2.json
 ```
 
+## Etapa 3A: faithfulness offline (ver [`docs/faithfulness.md`](docs/faithfulness.md))
+
+Nada de esta sección llama a una API.
+
+```bash
+# Métricas de hechos con normalización léxica v1 (oficial) y v2, por separado
+uv run rag-lab rescore-lexical runs/eval/A_dense_k5/gen/groq_gpt-oss-120b runs/eval/B_hybrid_k5/gen/groq_gpt-oss-120b
+
+# Respuestas únicas, perturbaciones y planillas de anotación (idempotente; no pisa planillas editadas)
+uv run rag-lab faith-prepare
+
+# Después de anotar (guía: docs/annotation_guide.md)
+uv run rag-lab faith-import data/stage3/annotation/annotation_sheet.csv --round 1
+uv run rag-lab faith-import data/stage3/annotation/perturbation_review.csv --kind perturbations
+
+# Acuerdo entre dos archivos de etiquetas (humano vs humano hoy; humano vs juez en la 3B)
+uv run rag-lab faith-agreement --reference <etiquetas_humanas.jsonl> --evaluated <otro.jsonl>
+```
+
+Documentos: [`docs/lexical_v2.md`](docs/lexical_v2.md), [`docs/faithfulness.md`](docs/faithfulness.md)
+y [`docs/annotation_guide.md`](docs/annotation_guide.md).
+
 ## Salidas
 
 | Ruta | Contenido |
@@ -122,6 +147,12 @@ uv run python scripts/verify_stage2.py   # escribe reports/verify_stage2.json
 | `runs/<split>/<run>/gen/<gen>/gen_summary.json` | métricas de generación (`gen_per_question.jsonl` por pregunta) |
 | `reports/compare_gen_*.json` | comparación pareada de generación A vs B |
 | `cache/llm/` | caché de respuestas de la API (no versionada) |
+| `reports/lexical_v2_*.json` | métricas de hechos v1 vs v2 por corrida |
+| `data/stage3/answers.jsonl` | respuestas únicas de A/B con fragmentos y ocurrencias por corrida |
+| `data/stage3/claims_proposed.jsonl` | afirmaciones propuestas (sin etiquetas) |
+| `data/stage3/perturbations.jsonl` | perturbaciones candidatas con sus comprobaciones |
+| `data/stage3/annotation/` | planilla ciega, paquete de lectura y revisión de perturbaciones |
+| `data/stage3/stage3a_manifest.json` | procedencia, hashes, conteos y dimensionamiento del juez |
 
 ## Dataset
 
@@ -139,7 +170,8 @@ uv run python scripts/verify_stage2.py   # escribe reports/verify_stage2.json
 ```
 configs/            a_dense_k5.toml, b_hybrid_k5.toml (difieren solo en name y method)
 data/               corpus/, eval/, calibration/
-docs/metrics.md     definiciones normativas
+docs/               metrics.md, generation.md, stage2_report.md, lexical_v2.md,
+                    faithfulness.md, annotation_guide.md
 src/rag_lab/
   corpus.py         carga y validación de versiones
   chunking.py       fragmentación con offsets
@@ -148,7 +180,11 @@ src/rag_lab/
   retrieval.py      DenseRetriever, BM25Ranker, HybridRetriever (RRF)
   questions.py      carga estricta de preguntas
   runner.py         fase 1 (retrieval, sin etiquetas) y fase 2 (scoring)
-  evaluation/       labels.py, metrics.py
+  evaluation/       labels.py, metrics.py, gen_metrics.py, gen_scoring.py,
+                    gate_calibration.py, lexical_v2.py
+  generation/       contexto, prompt, proveedores, caché, gate (Etapa 2)
+  faithfulness/     answers, schema, annotation, judge_prompt, judge_verify,
+                    agreement, perturbations, prepare (Etapa 3A, offline)
   compare.py        comparación pareada
   stability.py      verificación de estabilidad
   validate.py       validación de datos

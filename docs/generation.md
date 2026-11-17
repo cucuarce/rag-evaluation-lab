@@ -115,6 +115,8 @@ colapsados; coincidencia con límites (`"5"` no matchea `"15"` ni `"5,5"`; `"USD
 SLA contractual") cuenta como faltante, y mencionar un dato prohibido para contrastarlo
 ("antes eran 14 días") cuenta como presente. Por eso se publican las respuestas completas.
 
+> **Corrección (Etapa 3A):** la frase "`"5"` no matchea `"5,5"`" es inexacta. El límite izquierdo no excluye la parte decimal de otro número, así que `"5"` sí coincide con el `5` final de `"5,5"` o `"2,5"`. Ninguna de las 104 comprobaciones de hechos del benchmark cambia con un límite más estricto, así que las métricas reportadas no se ven afectadas. Ver [`lexical_v2.md`](lexical_v2.md).
+
 `citation_precision` subestima si el modelo cita un chunk relevante no etiquetado como gold, y
 una cita correcta no prueba que la afirmación esté en el chunk: verificarlo es la faithfulness
 semántica de la Etapa 3 (juez + revisión humana).

@@ -1,0 +1,358 @@
+{
+  "lexical_version": "v2",
+  "design_note": "La normalización v2 se diseñó después de observar los falsos negativos e29 y e31 del benchmark de la Etapa 2 (eval). Corrige la medición, no el sistema. La v1 sigue siendo la métrica oficial de la Etapa 2; v1 y v2 se reportan por separado.",
+  "retrieval_run_name": "B_hybrid_k5",
+  "generation": "groq_gpt-oss-120b",
+  "split": "eval",
+  "generations_sha256": "9ba74a9bf9ed204232f3ee1a09426ae58ad3a98f1b1c7b7d9302ef5275b22677",
+  "labels_sha256": "ee9c0f3ac62a40dc16c91cbfae87c9f83c117ec7ec59b3a3e8fe7e9cab932ab6",
+  "scope": "respondibles respondidas (mismo denominador que gen_summary.json)",
+  "v1_reproduces_saved": true,
+  "v1_mismatch_qids": [],
+  "metrics": {
+    "required_facts_coverage": {
+      "v1": {
+        "value": 0.9107,
+        "n": 28
+      },
+      "v2": {
+        "value": 0.9464,
+        "n": 28
+      }
+    },
+    "all_required_facts": {
+      "v1": {
+        "value": 0.8929,
+        "n": 28
+      },
+      "v2": {
+        "value": 0.9286,
+        "n": 28
+      }
+    },
+    "forbidden_present": {
+      "v1": {
+        "value": 0,
+        "n": 9
+      },
+      "v2": {
+        "value": 0,
+        "n": 9
+      }
+    }
+  },
+  "changed_qids": [
+    "e31"
+  ],
+  "per_question": [
+    {
+      "qid": "e01",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e02",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e04",
+      "required_facts_coverage_v1": 0.5,
+      "required_facts_coverage_v2": 0.5,
+      "all_required_facts_v1": 0,
+      "all_required_facts_v2": 0,
+      "missing_facts_v1": [
+        "Retry-After"
+      ],
+      "missing_facts_v2": [
+        "Retry-After"
+      ],
+      "changed": false
+    },
+    {
+      "qid": "e05",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e06",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e07",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e09",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e10",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e11",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e12",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e15",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e16",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e18",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e19",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e20",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e21",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e23",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e24",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e25",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e27",
+      "required_facts_coverage_v1": 0,
+      "required_facts_coverage_v2": 0,
+      "all_required_facts_v1": 0,
+      "all_required_facts_v2": 0,
+      "missing_facts_v1": [
+        "no tienen SLA contractual"
+      ],
+      "missing_facts_v2": [
+        "no tienen SLA contractual"
+      ],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e28",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e29",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    },
+    {
+      "qid": "e31",
+      "required_facts_coverage_v1": 0,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 0,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [
+        "HMAC-SHA256",
+        "Kestrel-Signature"
+      ],
+      "missing_facts_v2": [],
+      "changed": true
+    },
+    {
+      "qid": "e32",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e35",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e36",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e38",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "changed": false
+    },
+    {
+      "qid": "e39",
+      "required_facts_coverage_v1": 1,
+      "required_facts_coverage_v2": 1,
+      "all_required_facts_v1": 1,
+      "all_required_facts_v2": 1,
+      "missing_facts_v1": [],
+      "missing_facts_v2": [],
+      "forbidden_present_v1": 0,
+      "forbidden_present_v2": 0,
+      "changed": false
+    }
+  ]
+}

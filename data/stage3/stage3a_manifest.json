@@ -1,0 +1,112 @@
+{
+  "stage": "3A",
+  "sources": [
+    {
+      "run": "A_dense_k5",
+      "gen_dir": "runs/eval/A_dense_k5/gen/groq_gpt-oss-120b",
+      "generation": "groq_gpt-oss-120b",
+      "split": "eval",
+      "index_id": "70d9384dbab6e92b",
+      "generations_sha256": "2d1acfa384b6ba070c53c40f5f543c27efcae121b67b3ab5cea86d4cca803201"
+    },
+    {
+      "run": "B_hybrid_k5",
+      "gen_dir": "runs/eval/B_hybrid_k5/gen/groq_gpt-oss-120b",
+      "generation": "groq_gpt-oss-120b",
+      "split": "eval",
+      "index_id": "70d9384dbab6e92b",
+      "generations_sha256": "9ba74a9bf9ed204232f3ee1a09426ae58ad3a98f1b1c7b7d9302ef5275b22677"
+    }
+  ],
+  "reference_date": "2026-11-01",
+  "answers": {
+    "unique_answers": 54,
+    "distinct_answer_texts": 42,
+    "occurrences": 57,
+    "shared_by_A_and_B": [
+      "e02",
+      "e21",
+      "e32"
+    ],
+    "answers_sha256": "161ae86b42f6b72d9daf96727d9f09344a651ca3085cb518c37a8808dc94a27b"
+  },
+  "claims": {
+    "path": "data/stage3/claims_proposed.jsonl",
+    "sha256": "50fcb1c4e95fcde41908c13e042fef297433f48615398220d4947bdfda917b56",
+    "n_claims": 30,
+    "n_answers_with_claims": 20,
+    "qids": [
+      "e01",
+      "e02",
+      "e04",
+      "e05",
+      "e06",
+      "e10",
+      "e14",
+      "e18",
+      "e19",
+      "e21",
+      "e23",
+      "e27",
+      "e28",
+      "e29",
+      "e31",
+      "e32",
+      "e36",
+      "e39"
+    ],
+    "by_subtype": {
+      "numeric": 18,
+      "extractive": 3,
+      "derived": 8,
+      "multi_hop": 12,
+      "version": 4,
+      "negation": 4
+    },
+    "by_run": {
+      "A_dense_k5": 24,
+      "A_dense_k5+B_hybrid_k5": 4,
+      "B_hybrid_k5": 2
+    }
+  },
+  "perturbations": {
+    "n": 55,
+    "by_kind": {
+      "number": 16,
+      "negation": 25,
+      "unit": 12,
+      "version": 2
+    },
+    "by_reference_status": {
+      "candidate": 41,
+      "requires_review": 12,
+      "invalid": 2
+    },
+    "selected_for_review": 21,
+    "selected_by_kind": {
+      "number/-": 6,
+      "version/-": 2,
+      "negation/add": 4,
+      "negation/remove": 5,
+      "unit/-": 4
+    },
+    "selected_by_reference_status": {
+      "candidate": 18,
+      "requires_review": 3
+    },
+    "note": "Candidatas sintéticas: no son etiquetas de referencia hasta que una persona confirme la expectativa y la afirmación original sea supported."
+  },
+  "judge_contract": {
+    "prompt_version": "judge-v1",
+    "template_sha256": "11687c04272e745701fa846631afc9b28fb9f03e803d7c0881cba3cc2be5163c",
+    "schema_sha256": "6d455b3b1b7aa53eec6c6f033bedfb3123785e69483447e81db77d405ea44869",
+    "dry_run_requests": 20,
+    "dry_run_estimated_tokens_total": 64933,
+    "estimate_rule": "ceil(caracteres/2,5) + 1024 de salida por solicitud (sobreestima)",
+    "note": "Estimación sin llamadas. Ningún juez real fue ejecutado en la Etapa 3A."
+  },
+  "annotation_files": {
+    "annotation_sheet.csv": "escrito",
+    "perturbation_review.csv": "escrito"
+  }
+}

@@ -1,4 +1,4 @@
-"""CLI rag-lab: retrieval (Etapa 1) y generación (Etapa 2). Ver README."""
+"""CLI rag-lab: retrieval (Etapa 1), generación (Etapa 2) y faithfulness offline (Etapa 3A)."""
 
 from __future__ import annotations
 
@@ -242,6 +242,114 @@ def cmd_compare_gen(args) -> None:
     _dump(report, out)
 
 
+def cmd_rescore_lexical(args) -> None:
+    from rag_lab.evaluation.lexical_v2 import rescore_lexical
+
+    for d in args.gen_dirs:
+        rep = rescore_lexical(Path(d))
+        m = rep["metrics"]
+        print(
+            f"{rep['retrieval_run_name']} [{rep['generation']}] v1 reproduce lo guardado: "
+            f"{rep['v1_reproduces_saved']}"
+        )
+        for key, v in m.items():
+            print(
+                f"  {key:<26} v1={v['v1']['value']!s:<7} v2={v['v2']['value']!s:<7} "
+                f"n={v['v1']['n']}"
+            )
+        print(f"  cambian con v2: {rep['changed_qids']}")
+        out = REPORTS_DIR / f"lexical_v2_{rep['generation']}_{rep['retrieval_run_name']}.json"
+        _dump(rep, out)
+        if not rep["v1_reproduces_saved"]:
+            raise ValueError("la v1 recalculada no coincide con las métricas guardadas")
+
+
+def cmd_faith_prepare(args) -> None:
+    from rag_lab.faithfulness.prepare import prepare
+
+    m = prepare(force=args.force)
+    print(
+        json.dumps(
+            {
+                k: m[k]
+                for k in (
+                    "answers",
+                    "claims",
+                    "perturbations",
+                    "judge_contract",
+                    "annotation_files",
+                )
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
+    print(
+        "-> data/stage3/ (answers.jsonl, perturbations.jsonl, annotation/, stage3a_manifest.json)"
+    )
+
+
+def cmd_faith_import(args) -> None:
+    from rag_lab.faithfulness.annotation import (
+        import_human_labels,
+        import_perturbation_review,
+    )
+    from rag_lab.faithfulness.prepare import STAGE3
+    from rag_lab.faithfulness.schema import read_jsonl, write_jsonl
+
+    sheet = Path(args.sheet)
+    if args.kind == "claims":
+        claims = {c["claim_id"]: c for c in read_jsonl(STAGE3 / "claims_proposed.jsonl")}
+        answers = {a["answer_id"]: a for a in read_jsonl(STAGE3 / "answers.jsonl")}
+        res = import_human_labels(sheet, claims, answers, args.round)
+        rows = res["labels"]
+        out = Path(args.out) if args.out else STAGE3 / f"human_labels_round{args.round}.jsonl"
+    else:
+        perts = {p["pert_id"]: p for p in read_jsonl(STAGE3 / "perturbations.jsonl")}
+        res = import_perturbation_review(sheet, perts)
+        rows = res["reviews"]
+        out = Path(args.out) if args.out else STAGE3 / "perturbation_review.jsonl"
+    write_jsonl(out, rows)
+    print(f"importadas: {len(rows)}; pendientes (sin completar): {len(res['pending'])}")
+    _dump_path = out.relative_to(PROJECT_ROOT) if out.is_relative_to(PROJECT_ROOT) else out
+    print(f"-> {Path(_dump_path).as_posix()}")
+
+
+def _label_map(path: Path, field: str) -> dict[str, str]:
+    from rag_lab.faithfulness.schema import read_jsonl
+
+    out = {}
+    for r in read_jsonl(path):
+        if r.get("split_decision") == "rechazar" or r.get("missing"):
+            continue
+        if r.get(field):
+            out[r["claim_id"]] = r[field]
+    return out
+
+
+def cmd_faith_agreement(args) -> None:
+    from rag_lab.faithfulness.agreement import compare_labels
+
+    ref, ev = Path(args.reference), Path(args.evaluated)
+    report = {}
+    for field in ("label_cited", "label_context"):
+        r = compare_labels(_label_map(ref, field), _label_map(ev, field), ref.name, ev.name)
+        report[field] = r
+        print(
+            f"{field}: n={r['n_compared']} acuerdo={r['agreement']['value']} "
+            f"kappa={r['cohen_kappa']['value']} ({r['cohen_kappa']['note'] or 'ok'}); "
+            f"evaluado supported / referencia no: "
+            f"{r['evaluated_supported_reference_not']['claim_ids']}"
+        )
+        print(f"  {r['warning']}")
+    out = (
+        Path(args.out)
+        if args.out
+        else REPORTS_DIR / f"faith_agreement_{ref.stem}_vs_{ev.stem}.json"
+    )
+    _dump(report, out)
+
+
 def main(argv: list[str] | None = None) -> int:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
@@ -303,10 +411,33 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--out")
     s.set_defaults(func=cmd_compare_gen)
 
+    s = sub.add_parser("rescore-lexical", help="métricas de hechos con normalización v1 y v2")
+    s.add_argument("gen_dirs", nargs="+", help="p. ej. runs/eval/A_dense_k5/gen/<nombre>")
+    s.set_defaults(func=cmd_rescore_lexical)
+
+    s = sub.add_parser(
+        "faith-prepare", help="Etapa 3A: respuestas únicas, perturbaciones y planillas"
+    )
+    s.add_argument("--force", action="store_true", help="sobrescribe planillas ya editadas")
+    s.set_defaults(func=cmd_faith_prepare)
+
+    s = sub.add_parser("faith-import", help="importa una planilla anotada (valida todo o nada)")
+    s.add_argument("sheet")
+    s.add_argument("--kind", choices=["claims", "perturbations"], default="claims")
+    s.add_argument("--round", type=int, default=1, help="ronda de anotación (claims)")
+    s.add_argument("--out")
+    s.set_defaults(func=cmd_faith_import)
+
+    s = sub.add_parser("faith-agreement", help="acuerdo entre dos archivos de etiquetas")
+    s.add_argument("--reference", required=True, help="etiquetas humanas (referencia)")
+    s.add_argument("--evaluated", required=True, help="juez verificado u otra persona")
+    s.add_argument("--out")
+    s.set_defaults(func=cmd_faith_agreement)
+
     args = p.parse_args(argv)
     try:
         args.func(args)
-    except (ValueError, FileNotFoundError) as exc:
+    except (ValueError, FileNotFoundError, FileExistsError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
     return 0
