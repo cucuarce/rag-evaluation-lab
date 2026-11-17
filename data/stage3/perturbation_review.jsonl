@@ -1,0 +1,17 @@
+{"pert_id": "e01-c1-p-number", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e02-c1-p-number", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e04-c1-p-number", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e05-c2-p-number", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e14-c1-p-number", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e14-c2-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e18-c1-p-number", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e18-c2-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e19-c1-p-unit", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e19-c2-p-unit", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e21-c1-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e21-c2-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e23-c1-p-unit", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e27-c1-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e27-c2-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e28-c2-p-negation", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}
+{"pert_id": "e39-c1-p-unit", "human_confirms_expected": "si", "notes": "", "annotator": "h1", "sheet_sha256": "ec57069da02ce2d8c35b5e2f4780ccf0758767f90c20267b8326d774d71134a3"}

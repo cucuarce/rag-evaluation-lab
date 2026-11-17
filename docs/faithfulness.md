@@ -263,3 +263,45 @@ Código en `agreement.py`; comando `rag-lab faith-agreement --reference <humano>
 - **El juez no es la verdad.** Aunque el acuerdo resulte alto, las etiquetas humanas siguen siendo la referencia.
 - **La verificación literal** puede rechazar respaldos legítimos si el juez parafrasea la cita. Eso aparece como `judge_unverifiable` y se cuenta en contra del juez, no a favor.
 - **Las reglas de etiquetado** (inferencias, generalizaciones, negaciones por enumeración) son decisiones de diseño discutibles. Si la anotación muestra casos ambiguos, conviene ajustar la guía **antes** de correr el juez, no después.
+
+## 10. Anotación humana, ronda 1 (cerrada)
+
+Una sola persona (`h1`) anotó las 30 afirmaciones y revisó las 21 perturbaciones. No se llamó a ningún modelo.
+
+### Afirmaciones
+
+| Archivo | sha256 |
+|---|---|
+| `data/stage3/annotation/annotation_sheet_completed.csv` (planilla anotada) | `d2f85a70…5bb36` |
+| `data/stage3/human_labels_round1.jsonl` (30 etiquetas importadas; `sheet_sha256` apunta a la planilla) | `500df4f8…f57c1` |
+
+- Las 30 se aceptaron sin editar y ninguna se rechazó. En todas, `version_issue` es `no`.
+- `label_cited`: 27 `supported` y 3 `partially_supported` (e05-c1, e05-c3, e28-c1).
+- `label_context`: 29 `supported` y 1 `partially_supported` (e28-c1).
+- No hay `unsupported` ni `insufficient_context`: la muestra real casi no tiene afirmaciones sin respaldo, así que los negativos dependen de las perturbaciones (§7, §9).
+
+**Correcciones que pidió la persona antes de importar,** después de validar la planilla contra esta guía y el importador:
+- completó `split_decision` y `version_issue`, que estaban vacíos en las 30 filas;
+- en e05-c1 y e05-c3 cambió `label_cited` de `insufficient_context` a `partially_supported`. Lo citado (S1) trata el tema pero no trae la premisa "Pro incluye 10 usuarios": es la regla "Cuentas" de la guía;
+- en e05-c1 cambió `support_cite_ids` de `S3` a `S1,S3`, porque una etiqueta `partially_supported` exige incluir un fragmento citado.
+
+### Perturbaciones
+
+| Archivo | sha256 |
+|---|---|
+| `data/stage3/annotation/perturbation_review.csv` (planilla revisada) | `ec57069d…34a3` |
+| `data/stage3/perturbation_review.jsonl` (17 confirmaciones importadas) | `734ddb7b…53f2` |
+
+- **17 confirmadas** (`human_confirms_expected = si`, con expectativa `unsupported` / `unsupported`): 7 de negación, 6 numéricas y 4 de unidad. Las 17 cumplen las tres condiciones de `usable_perturbations`.
+- **4 reservadas**, que quedan vacías (pendientes) y no se importaron. El esquema solo admite `si` y `no`, y `no` significaría que la expectativa es incorrecta, así que los motivos se registran acá:
+
+| Perturbación | Motivo |
+|---|---|
+| `e06-c1-p-version` | Reservada para una evaluación específica de versiones. |
+| `e10-c1-p-version` | Reservada para una evaluación específica de versiones. |
+| `e28-c1-p-negation` | La afirmación original tiene respaldo parcial (además, `usable_perturbations` la excluiría). |
+| `e36-c1-p-negation` | El respaldo de la negación original es indirecto (se deduce de una lista de planes). |
+
+Consecuencia: **ningún control confirmado prueba errores de versión.**
+
+`rag-lab faith-prepare` no sobrescribe las planillas anotadas; solo lo haría con `--force`. Las versiones en blanco siguen en el commit de la Etapa 3A (`a222dbb`).

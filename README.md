@@ -7,9 +7,10 @@ documentos, preguntas y datos son inventados para este proyecto.
 > **Estado: Etapa 3A — faithfulness por afirmación, preparación offline.** La Etapa 2
 > (generación con citas y abstención) está cerrada. En la 3A no se llama a ningún modelo: hay
 > normalización léxica v2, respuestas únicas, afirmaciones propuestas, planilla de anotación
-> humana, contrato y validador del futuro juez, métricas de acuerdo y perturbaciones. No hay
-> juez real, Ragas, dashboard ni configuración C. Solo la generación de la Etapa 2 usó la API
-> de Groq (`GROQ_API_KEY`).
+> humana, contrato y validador del futuro juez, métricas de acuerdo y perturbaciones. La ronda 1
+> de anotación humana está cerrada: 30 afirmaciones etiquetadas y 17 perturbaciones confirmadas
+> como controles negativos (ver `docs/faithfulness.md` §10). No hay juez real, Ragas, dashboard
+> ni configuración C. Solo la generación de la Etapa 2 usó la API de Groq (`GROQ_API_KEY`).
 
 ## Qué hace hoy
 
@@ -120,7 +121,8 @@ uv run rag-lab rescore-lexical runs/eval/A_dense_k5/gen/groq_gpt-oss-120b runs/e
 uv run rag-lab faith-prepare
 
 # Después de anotar (guía: docs/annotation_guide.md)
-uv run rag-lab faith-import data/stage3/annotation/annotation_sheet.csv --round 1
+# (la ronda 1 se importó desde annotation_sheet_completed.csv; ver docs/faithfulness.md §10)
+uv run rag-lab faith-import data/stage3/annotation/annotation_sheet_completed.csv --round 1
 uv run rag-lab faith-import data/stage3/annotation/perturbation_review.csv --kind perturbations
 
 # Acuerdo entre dos archivos de etiquetas (humano vs humano hoy; humano vs juez en la 3B)
