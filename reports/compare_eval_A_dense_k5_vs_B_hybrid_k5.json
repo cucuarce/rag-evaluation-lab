@@ -1,0 +1,1423 @@
+{
+  "run_a": {
+    "name": "A_dense_k5",
+    "method": "dense",
+    "dir": "runs/eval/A_dense_k5",
+    "created_at": "2026-11-16T22:24:21+00:00"
+  },
+  "run_b": {
+    "name": "B_hybrid_k5",
+    "method": "hybrid",
+    "dir": "runs/eval/B_hybrid_k5",
+    "created_at": "2026-11-16T22:25:25+00:00"
+  },
+  "shared": {
+    "index_id": "70d9384dbab6e92b",
+    "questions_sha256": "447d773c466a9f24a16dc6605e779d284eb403cab68b9e4bcd5df7fa9cb2bf91",
+    "labels_sha256": "ee9c0f3ac62a40dc16c91cbfae87c9f83c117ec7ec59b3a3e8fe7e9cab932ab6",
+    "split": "eval",
+    "k": 5,
+    "span_coverage_threshold": 0.5
+  },
+  "summary_a": {
+    "overall": {
+      "n": 30,
+      "hit": 1,
+      "hit_n": 30,
+      "recall": 0.9889,
+      "recall_n": 30,
+      "complete": 0.9667,
+      "complete_n": 30,
+      "mrr": 0.9333,
+      "mrr_n": 30,
+      "distractor": 0.1818,
+      "distractor_n": 11,
+      "deprecated_in_topk": 0.1724,
+      "deprecated_in_topk_n": 29
+    },
+    "by_category": {
+      "distractor": {
+        "n": 8,
+        "hit": 1,
+        "hit_n": 8,
+        "recall": 1.0,
+        "recall_n": 8,
+        "complete": 1,
+        "complete_n": 8,
+        "mrr": 0.75,
+        "mrr_n": 8,
+        "distractor": 0.25,
+        "distractor_n": 8,
+        "deprecated_in_topk": 0.25,
+        "deprecated_in_topk_n": 8
+      },
+      "multi_hop": {
+        "n": 8,
+        "hit": 1,
+        "hit_n": 8,
+        "recall": 0.9583,
+        "recall_n": 8,
+        "complete": 0.875,
+        "complete_n": 8,
+        "mrr": 1.0,
+        "mrr_n": 8,
+        "distractor": 0,
+        "distractor_n": 2,
+        "deprecated_in_topk": 0.1429,
+        "deprecated_in_topk_n": 7
+      },
+      "single": {
+        "n": 14,
+        "hit": 1,
+        "hit_n": 14,
+        "recall": 1.0,
+        "recall_n": 14,
+        "complete": 1,
+        "complete_n": 14,
+        "mrr": 1.0,
+        "mrr_n": 14,
+        "distractor": 0,
+        "distractor_n": 1,
+        "deprecated_in_topk": 0.1429,
+        "deprecated_in_topk_n": 14
+      }
+    }
+  },
+  "summary_b": {
+    "overall": {
+      "n": 30,
+      "hit": 1,
+      "hit_n": 30,
+      "recall": 0.9833,
+      "recall_n": 30,
+      "complete": 0.9667,
+      "complete_n": 30,
+      "mrr": 0.95,
+      "mrr_n": 30,
+      "distractor": 0.2727,
+      "distractor_n": 11,
+      "deprecated_in_topk": 0.1724,
+      "deprecated_in_topk_n": 29
+    },
+    "by_category": {
+      "distractor": {
+        "n": 8,
+        "hit": 1,
+        "hit_n": 8,
+        "recall": 1.0,
+        "recall_n": 8,
+        "complete": 1,
+        "complete_n": 8,
+        "mrr": 0.875,
+        "mrr_n": 8,
+        "distractor": 0.25,
+        "distractor_n": 8,
+        "deprecated_in_topk": 0.25,
+        "deprecated_in_topk_n": 8
+      },
+      "multi_hop": {
+        "n": 8,
+        "hit": 1,
+        "hit_n": 8,
+        "recall": 0.9375,
+        "recall_n": 8,
+        "complete": 0.875,
+        "complete_n": 8,
+        "mrr": 1.0,
+        "mrr_n": 8,
+        "distractor": 0,
+        "distractor_n": 2,
+        "deprecated_in_topk": 0.1429,
+        "deprecated_in_topk_n": 7
+      },
+      "single": {
+        "n": 14,
+        "hit": 1,
+        "hit_n": 14,
+        "recall": 1.0,
+        "recall_n": 14,
+        "complete": 1,
+        "complete_n": 14,
+        "mrr": 0.9643,
+        "mrr_n": 14,
+        "distractor": 1,
+        "distractor_n": 1,
+        "deprecated_in_topk": 0.1429,
+        "deprecated_in_topk_n": 14
+      }
+    }
+  },
+  "paired": {
+    "hit": {
+      "a_better": 0,
+      "b_better": 0,
+      "ties": 30,
+      "n": 30,
+      "sign_test_p": null,
+      "mean_a": 1,
+      "mean_b": 1,
+      "delta_b_minus_a": 0,
+      "higher_is_better": true
+    },
+    "recall": {
+      "a_better": 1,
+      "b_better": 1,
+      "ties": 28,
+      "n": 30,
+      "sign_test_p": 1.0,
+      "mean_a": 0.9889,
+      "mean_b": 0.9833,
+      "delta_b_minus_a": -0.0056,
+      "higher_is_better": true
+    },
+    "complete": {
+      "a_better": 1,
+      "b_better": 1,
+      "ties": 28,
+      "n": 30,
+      "sign_test_p": 1.0,
+      "mean_a": 0.9667,
+      "mean_b": 0.9667,
+      "delta_b_minus_a": 0.0,
+      "higher_is_better": true
+    },
+    "rr": {
+      "a_better": 1,
+      "b_better": 2,
+      "ties": 27,
+      "n": 30,
+      "sign_test_p": 1.0,
+      "mean_a": 0.9333,
+      "mean_b": 0.95,
+      "delta_b_minus_a": 0.0167,
+      "higher_is_better": true
+    },
+    "distractor": {
+      "a_better": 1,
+      "b_better": 0,
+      "ties": 10,
+      "n": 11,
+      "sign_test_p": 1.0,
+      "mean_a": 0.1818,
+      "mean_b": 0.2727,
+      "delta_b_minus_a": 0.0909,
+      "higher_is_better": false
+    }
+  },
+  "n_topk_identical": 3,
+  "n_questions": 40,
+  "questions_with_metric_change": [
+    "e05",
+    "e14",
+    "e16",
+    "e33",
+    "e39"
+  ],
+  "per_question": [
+    {
+      "qid": "e01",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#001",
+        "planes-y-precios#002",
+        "limites-api#002",
+        "planes-y-precios#003",
+        "planes-y-precios#000"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#001",
+        "planes-y-precios#002",
+        "planes-y-precios#003",
+        "planes-y-precios#000",
+        "integraciones-webhooks#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e02",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": true,
+      "topk_same_set": true,
+      "a_retrieved": [
+        "limites-api#001",
+        "novedades-2026#003",
+        "limites-api#004",
+        "limites-api#003",
+        "limites-api#002"
+      ],
+      "b_retrieved": [
+        "limites-api#001",
+        "novedades-2026#003",
+        "limites-api#004",
+        "limites-api#003",
+        "limites-api#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e03",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#000",
+        "sla#001",
+        "politica-reembolsos-v3#003",
+        "planes-y-precios#004",
+        "seguridad-de-cuenta#002"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#000",
+        "facturacion-faq#005",
+        "politica-reembolsos-v3#003",
+        "planes-y-precios#004",
+        "retencion-de-datos#000"
+      ]
+    },
+    {
+      "qid": "e04",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "limites-api#003",
+        "limites-api#004",
+        "limites-api#000",
+        "limites-api#001",
+        "limites-api#005"
+      ],
+      "b_retrieved": [
+        "limites-api#003",
+        "limites-api#001",
+        "limites-api#004",
+        "limites-api#000",
+        "novedades-2026#003"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e05",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#005",
+        "planes-y-precios#003",
+        "planes-y-precios#002",
+        "sla#001",
+        "sla#002"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#005",
+        "planes-y-precios#003",
+        "guia-migracion-planes#002",
+        "planes-y-precios#002",
+        "planes-y-precios#000"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 0.6666666666666666,
+      "b_recall": 1.0,
+      "a_complete": 0,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [
+        "ev3"
+      ],
+      "b_missing": []
+    },
+    {
+      "qid": "e06",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": true,
+      "a_retrieved": [
+        "politica-reembolsos-v2#001",
+        "politica-reembolsos-v3#001",
+        "politica-reembolsos-v3#002",
+        "politica-reembolsos-v2#004",
+        "politica-reembolsos-v3#005"
+      ],
+      "b_retrieved": [
+        "politica-reembolsos-v2#001",
+        "politica-reembolsos-v3#001",
+        "politica-reembolsos-v3#005",
+        "politica-reembolsos-v2#004",
+        "politica-reembolsos-v3#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 0.5,
+      "b_rr": 0.5,
+      "a_distractor": 1,
+      "b_distractor": 1,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e07",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "retencion-de-datos#002",
+        "limites-api#004",
+        "limites-api#003",
+        "limites-api#001",
+        "limites-api#002"
+      ],
+      "b_retrieved": [
+        "retencion-de-datos#002",
+        "limites-api#003",
+        "limites-api#002",
+        "limites-api#004",
+        "limites-api#000"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e08",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "facturacion-faq#005",
+        "seguridad-de-cuenta#002",
+        "planes-y-precios#000",
+        "planes-y-precios#001",
+        "seguridad-de-cuenta#000"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#000",
+        "facturacion-faq#005",
+        "seguridad-de-cuenta#000",
+        "planes-y-precios#001",
+        "procedimiento-incidentes#003"
+      ]
+    },
+    {
+      "qid": "e09",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "seguridad-de-cuenta#000",
+        "seguridad-de-cuenta#002",
+        "retencion-de-datos#000",
+        "novedades-2026#001",
+        "integraciones-webhooks#003"
+      ],
+      "b_retrieved": [
+        "seguridad-de-cuenta#000",
+        "novedades-2026#001",
+        "retencion-de-datos#000",
+        "facturacion-faq#005",
+        "integraciones-webhooks#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e10",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "politica-reembolsos-v3#000",
+        "novedades-2026#002",
+        "politica-reembolsos-v2#000",
+        "politica-reembolsos-v3#001",
+        "politica-reembolsos-v2#001"
+      ],
+      "b_retrieved": [
+        "politica-reembolsos-v3#000",
+        "novedades-2026#002",
+        "politica-reembolsos-v3#001",
+        "politica-reembolsos-v2#001",
+        "novedades-2026#003"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e11",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#003",
+        "planes-y-precios#005",
+        "planes-y-precios#002",
+        "sla#002",
+        "sla#001"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#003",
+        "planes-y-precios#005",
+        "planes-y-precios#002",
+        "planes-y-precios#000",
+        "sla#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e12",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "integraciones-webhooks#003",
+        "facturacion-faq#003",
+        "integraciones-webhooks#000",
+        "integraciones-webhooks#002",
+        "novedades-2026#006"
+      ],
+      "b_retrieved": [
+        "integraciones-webhooks#003",
+        "facturacion-faq#003",
+        "integraciones-webhooks#002",
+        "integraciones-webhooks#000",
+        "facturacion-faq#005"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e13",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": true,
+      "a_retrieved": [
+        "facturacion-faq#000",
+        "facturacion-faq#005",
+        "planes-y-precios#000",
+        "facturacion-faq#003",
+        "seguridad-de-cuenta#002"
+      ],
+      "b_retrieved": [
+        "facturacion-faq#000",
+        "facturacion-faq#005",
+        "seguridad-de-cuenta#002",
+        "facturacion-faq#003",
+        "planes-y-precios#000"
+      ]
+    },
+    {
+      "qid": "e14",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "retencion-de-datos#003",
+        "integraciones-webhooks#004",
+        "retencion-de-datos#002",
+        "procedimiento-incidentes#001",
+        "politica-reembolsos-v2#002"
+      ],
+      "b_retrieved": [
+        "retencion-de-datos#003",
+        "procedimiento-incidentes#001",
+        "politica-reembolsos-v2#002",
+        "politica-reembolsos-v3#002",
+        "retencion-de-datos#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 0.5,
+      "a_complete": 1,
+      "b_complete": 0,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": [
+        "ev2"
+      ]
+    },
+    {
+      "qid": "e15",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "procedimiento-incidentes#001",
+        "procedimiento-incidentes#004",
+        "procedimiento-incidentes#003",
+        "procedimiento-incidentes#002",
+        "integraciones-webhooks#003"
+      ],
+      "b_retrieved": [
+        "procedimiento-incidentes#001",
+        "procedimiento-incidentes#004",
+        "procedimiento-incidentes#002",
+        "procedimiento-incidentes#003",
+        "sla#005"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e16",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#005",
+        "planes-y-precios#002",
+        "planes-y-precios#003",
+        "novedades-2026#003",
+        "sla#001"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#002",
+        "planes-y-precios#003",
+        "planes-y-precios#005",
+        "guia-migracion-planes#002",
+        "limites-api#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 0.5,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e17",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "seguridad-de-cuenta#002",
+        "seguridad-de-cuenta#000",
+        "retencion-de-datos#000",
+        "integraciones-webhooks#002",
+        "integraciones-webhooks#003"
+      ],
+      "b_retrieved": [
+        "retencion-de-datos#000",
+        "facturacion-faq#005",
+        "planes-y-precios#000",
+        "integraciones-webhooks#002",
+        "seguridad-de-cuenta#002"
+      ]
+    },
+    {
+      "qid": "e18",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "facturacion-faq#003",
+        "facturacion-faq#002",
+        "politica-reembolsos-v3#001",
+        "politica-reembolsos-v2#001",
+        "facturacion-faq#001"
+      ],
+      "b_retrieved": [
+        "facturacion-faq#003",
+        "politica-reembolsos-v3#001",
+        "facturacion-faq#002",
+        "politica-reembolsos-v2#001",
+        "facturacion-faq#005"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e19",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "retencion-de-datos#002",
+        "guia-migracion-planes#001",
+        "limites-api#004",
+        "limites-api#001",
+        "limites-api#002"
+      ],
+      "b_retrieved": [
+        "retencion-de-datos#002",
+        "guia-migracion-planes#001",
+        "limites-api#004",
+        "retencion-de-datos#001",
+        "limites-api#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e20",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "seguridad-de-cuenta#002",
+        "seguridad-de-cuenta#000",
+        "retencion-de-datos#000",
+        "planes-y-precios#001",
+        "limites-api#000"
+      ],
+      "b_retrieved": [
+        "seguridad-de-cuenta#002",
+        "seguridad-de-cuenta#000",
+        "planes-y-precios#005",
+        "retencion-de-datos#000",
+        "facturacion-faq#005"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e21",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": true,
+      "topk_same_set": true,
+      "a_retrieved": [
+        "politica-reembolsos-v2#003",
+        "politica-reembolsos-v3#003",
+        "facturacion-faq#006",
+        "guia-migracion-planes#002",
+        "planes-y-precios#004"
+      ],
+      "b_retrieved": [
+        "politica-reembolsos-v2#003",
+        "politica-reembolsos-v3#003",
+        "facturacion-faq#006",
+        "guia-migracion-planes#002",
+        "planes-y-precios#004"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 0.5,
+      "b_rr": 0.5,
+      "a_distractor": 1,
+      "b_distractor": 1,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e22",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#000",
+        "planes-y-precios#001",
+        "seguridad-de-cuenta#002",
+        "facturacion-faq#005",
+        "limites-api#000"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#000",
+        "facturacion-faq#005",
+        "retencion-de-datos#000",
+        "limites-api#000",
+        "seguridad-de-cuenta#002"
+      ]
+    },
+    {
+      "qid": "e23",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#006",
+        "novedades-2026#003",
+        "planes-y-precios#003",
+        "planes-y-precios#002",
+        "sla#001"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#006",
+        "planes-y-precios#002",
+        "planes-y-precios#003",
+        "retencion-de-datos#003",
+        "planes-y-precios#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e24",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "procedimiento-incidentes#003",
+        "sla#005",
+        "procedimiento-incidentes#001",
+        "procedimiento-incidentes#004",
+        "seguridad-de-cuenta#003"
+      ],
+      "b_retrieved": [
+        "procedimiento-incidentes#003",
+        "sla#005",
+        "procedimiento-incidentes#001",
+        "procedimiento-incidentes#004",
+        "sla#003"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e25",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "retencion-de-datos#001",
+        "facturacion-faq#001",
+        "retencion-de-datos#003",
+        "facturacion-faq#005",
+        "facturacion-faq#003"
+      ],
+      "b_retrieved": [
+        "retencion-de-datos#001",
+        "facturacion-faq#001",
+        "retencion-de-datos#003",
+        "retencion-de-datos#000",
+        "planes-y-precios#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e26",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "retencion-de-datos#000",
+        "seguridad-de-cuenta#000",
+        "facturacion-faq#003",
+        "facturacion-faq#005",
+        "integraciones-webhooks#003"
+      ],
+      "b_retrieved": [
+        "retencion-de-datos#000",
+        "novedades-2026#004",
+        "facturacion-faq#005",
+        "retencion-de-datos#004",
+        "planes-y-precios#000"
+      ]
+    },
+    {
+      "qid": "e27",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "sla#001",
+        "sla#002",
+        "sla#000",
+        "planes-y-precios#003",
+        "novedades-2026#003"
+      ],
+      "b_retrieved": [
+        "sla#001",
+        "sla#000",
+        "sla#002",
+        "planes-y-precios#003",
+        "guia-migracion-planes#000"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e28",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#001",
+        "guia-migracion-planes#002",
+        "guia-migracion-planes#000",
+        "planes-y-precios#002",
+        "limites-api#002"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#001",
+        "planes-y-precios#002",
+        "guia-migracion-planes#000",
+        "guia-migracion-planes#002",
+        "planes-y-precios#003"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e29",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "sla#003",
+        "sla#001",
+        "sla#002",
+        "facturacion-faq#002",
+        "limites-api#004"
+      ],
+      "b_retrieved": [
+        "sla#003",
+        "sla#001",
+        "sla#002",
+        "novedades-2026#007",
+        "sla#000"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e30",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#002",
+        "planes-y-precios#003",
+        "planes-y-precios#000",
+        "planes-y-precios#005",
+        "novedades-2026#003"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#003",
+        "planes-y-precios#002",
+        "limites-api#002",
+        "novedades-2026#003",
+        "sla#001"
+      ]
+    },
+    {
+      "qid": "e31",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "integraciones-webhooks#002",
+        "integraciones-webhooks#003",
+        "integraciones-webhooks#000",
+        "seguridad-de-cuenta#002",
+        "facturacion-faq#003"
+      ],
+      "b_retrieved": [
+        "integraciones-webhooks#002",
+        "seguridad-de-cuenta#000",
+        "integraciones-webhooks#000",
+        "guia-migracion-planes#002",
+        "retencion-de-datos#000"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e32",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": true,
+      "topk_same_set": true,
+      "a_retrieved": [
+        "integraciones-webhooks#001",
+        "limites-api#001",
+        "novedades-2026#003",
+        "limites-api#004",
+        "guia-migracion-planes#002"
+      ],
+      "b_retrieved": [
+        "integraciones-webhooks#001",
+        "limites-api#001",
+        "novedades-2026#003",
+        "limites-api#004",
+        "guia-migracion-planes#002"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e33",
+      "category": "distractor",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "limites-api#001",
+        "planes-y-precios#003",
+        "guia-migracion-planes#000",
+        "sla#001",
+        "planes-y-precios#006"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#003",
+        "procedimiento-incidentes#001",
+        "guia-migracion-planes#000",
+        "planes-y-precios#002",
+        "limites-api#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 0.5,
+      "b_rr": 1.0,
+      "a_distractor": 0,
+      "b_distractor": 0,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e34",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "planes-y-precios#000",
+        "planes-y-precios#002",
+        "retencion-de-datos#000",
+        "planes-y-precios#004",
+        "planes-y-precios#001"
+      ],
+      "b_retrieved": [
+        "planes-y-precios#000",
+        "retencion-de-datos#000",
+        "planes-y-precios#002",
+        "planes-y-precios#004",
+        "planes-y-precios#005"
+      ]
+    },
+    {
+      "qid": "e35",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "facturacion-faq#005",
+        "planes-y-precios#002",
+        "planes-y-precios#001",
+        "facturacion-faq#003",
+        "seguridad-de-cuenta#002"
+      ],
+      "b_retrieved": [
+        "facturacion-faq#005",
+        "planes-y-precios#002",
+        "planes-y-precios#001",
+        "planes-y-precios#003",
+        "facturacion-faq#000"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e36",
+      "category": "multi_hop",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "guia-migracion-planes#000",
+        "seguridad-de-cuenta#001",
+        "guia-migracion-planes#002",
+        "planes-y-precios#003",
+        "seguridad-de-cuenta#003"
+      ],
+      "b_retrieved": [
+        "guia-migracion-planes#000",
+        "seguridad-de-cuenta#001",
+        "planes-y-precios#003",
+        "guia-migracion-planes#002",
+        "limites-api#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e37",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "facturacion-faq#000",
+        "facturacion-faq#005",
+        "seguridad-de-cuenta#002",
+        "politica-reembolsos-v3#003",
+        "integraciones-webhooks#000"
+      ],
+      "b_retrieved": [
+        "facturacion-faq#000",
+        "facturacion-faq#005",
+        "planes-y-precios#001",
+        "politica-reembolsos-v3#003",
+        "seguridad-de-cuenta#002"
+      ]
+    },
+    {
+      "qid": "e38",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "seguridad-de-cuenta#003",
+        "procedimiento-incidentes#001",
+        "facturacion-faq#003",
+        "limites-api#001",
+        "novedades-2026#006"
+      ],
+      "b_retrieved": [
+        "seguridad-de-cuenta#003",
+        "facturacion-faq#003",
+        "procedimiento-incidentes#001",
+        "novedades-2026#006",
+        "integraciones-webhooks#003"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 1.0,
+      "a_distractor": null,
+      "b_distractor": null,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e39",
+      "category": "single",
+      "answerable": true,
+      "topk_identical": false,
+      "topk_same_set": true,
+      "a_retrieved": [
+        "politica-reembolsos-v3#005",
+        "politica-reembolsos-v2#004",
+        "politica-reembolsos-v3#002",
+        "politica-reembolsos-v3#001",
+        "politica-reembolsos-v2#002"
+      ],
+      "b_retrieved": [
+        "politica-reembolsos-v2#004",
+        "politica-reembolsos-v3#005",
+        "politica-reembolsos-v3#002",
+        "politica-reembolsos-v2#002",
+        "politica-reembolsos-v3#001"
+      ],
+      "a_hit": 1,
+      "b_hit": 1,
+      "a_recall": 1.0,
+      "b_recall": 1.0,
+      "a_complete": 1,
+      "b_complete": 1,
+      "a_rr": 1.0,
+      "b_rr": 0.5,
+      "a_distractor": 0,
+      "b_distractor": 1,
+      "a_missing": [],
+      "b_missing": []
+    },
+    {
+      "qid": "e40",
+      "category": "unanswerable",
+      "answerable": false,
+      "topk_identical": false,
+      "topk_same_set": false,
+      "a_retrieved": [
+        "facturacion-faq#005",
+        "guia-migracion-planes#002",
+        "facturacion-faq#002",
+        "retencion-de-datos#001",
+        "planes-y-precios#002"
+      ],
+      "b_retrieved": [
+        "limites-api#005",
+        "planes-y-precios#002",
+        "planes-y-precios#003",
+        "facturacion-faq#005",
+        "guia-migracion-planes#002"
+      ]
+    }
+  ],
+  "caveat": "n pequeño: diferencias de pocas preguntas no son concluyentes. El test de signo ignora empates y no corrige por comparaciones múltiples."
+}

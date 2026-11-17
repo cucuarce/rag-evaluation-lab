@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Índice regenerable (Chroma + embeddings): `rag-lab index`
+artifacts/
+
+# Secretos locales (GROQ_API_KEY, etc.). Nunca versionar.
+.env
+.env.*
+!.env.example
+
+# Caché de respuestas LLM (regenerable con la API; los resultados quedan en runs/)
+cache/

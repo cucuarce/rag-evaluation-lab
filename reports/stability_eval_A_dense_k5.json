@@ -1,0 +1,43 @@
+{
+  "run_name": "A_dense_k5",
+  "method": "dense",
+  "split": "eval",
+  "k": 5,
+  "repeats": 3,
+  "index_id": "70d9384dbab6e92b",
+  "reencode": [
+    {
+      "bitwise_equal_to_index": true,
+      "max_abs_diff": 0.0
+    },
+    {
+      "bitwise_equal_to_index": true,
+      "max_abs_diff": 0.0
+    },
+    {
+      "bitwise_equal_to_index": true,
+      "max_abs_diff": 0.0
+    }
+  ],
+  "chroma_roundtrip_max_abs_diff": 7.450580596923828e-09,
+  "topk_identical_across_repeats": true,
+  "questions_with_different_topk": [],
+  "max_abs_score_diff_across_repeats": 0.0,
+  "ann_vs_exact_topk_mismatch": [],
+  "ann_vs_exact_pool_mismatch": [],
+  "dense_min_adjacent_gap_topk1": {
+    "min": 4.460370621539589e-05,
+    "median": 0.0005052075445767801,
+    "near_tie_threshold": 0.0001,
+    "questions_with_near_ties": [
+      "e04",
+      "e08",
+      "e26",
+      "e29",
+      "e32",
+      "e35",
+      "e37"
+    ]
+  },
+  "scope": "Misma máquina, mismo proceso, modelo recargado en cada repetición. No garantiza igualdad en otro hardware/SO."
+}

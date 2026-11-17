@@ -1,0 +1,31 @@
+# Configuración B: hybrid BM25 + dense con Reciprocal Rank Fusion.
+# Solo cambia [experiment].name y [retrieval].method respecto de A.
+
+[experiment]
+name = "B_hybrid_k5"
+
+[paths]
+corpus_dir = "data/corpus"
+index_dir = "artifacts/index"
+
+[chunking]
+max_chars = 700
+
+[embedding]
+model = "intfloat/multilingual-e5-small"
+revision = "614241f622f53c4eeff9890bdc4f31cfecc418b3"
+query_prefix = "query: "
+passage_prefix = "passage: "
+normalize = true
+batch_size = 32
+device = "cpu"
+
+[retrieval]
+method = "hybrid"
+k = 5
+candidate_pool = 50
+rrf_k = 60
+score_decimals = 6
+
+[evaluation]
+span_coverage_threshold = 0.5

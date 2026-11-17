@@ -1,0 +1,40 @@
+{"qid": "e01", "question": "¿Cuántas facturas por mes puede emitir una cuenta del plan Starter?"}
+{"qid": "e02", "question": "¿Cuál es el límite de requests por minuto de la API para una cuenta Pro?"}
+{"qid": "e03", "question": "¿Kestrel ofrece descuentos para organizaciones sin fines de lucro?"}
+{"qid": "e04", "question": "¿Qué código de respuesta devuelve la API cuando una cuenta supera el límite de requests?"}
+{"qid": "e05", "question": "Un cliente Pro Plus con 18 usuarios activos pasa al plan Pro. ¿Cuánto pagará por mes por los usuarios que exceden lo incluido en Pro?"}
+{"qid": "e06", "question": "¿Cuántos días tiene un cliente para pedir el reembolso de una suscripción mensual nueva?"}
+{"qid": "e07", "question": "¿Cuánto tiempo se conservan los logs de llamadas a la API?"}
+{"qid": "e08", "question": "¿Cuál es el número de teléfono del soporte de Kestrel?"}
+{"qid": "e09", "question": "¿Qué métodos de autenticación en dos pasos acepta Kestrel?"}
+{"qid": "e10", "question": "¿Cuál era el plazo para pedir el reembolso de un plan mensual antes de marzo de 2026?"}
+{"qid": "e11", "question": "¿Cuánto cuesta por mes el plan Pro Plus?"}
+{"qid": "e12", "question": "¿Cuántas veces reintenta Kestrel el envío de un webhook que falló?"}
+{"qid": "e13", "question": "¿Se puede pagar la suscripción de Kestrel con criptomonedas?"}
+{"qid": "e14", "question": "Si un cliente cancela su cuenta, ¿durante cuánto tiempo puede exportar sus datos y en qué formatos?"}
+{"qid": "e15", "question": "¿Cuál es el tiempo de respuesta objetivo para un incidente SEV1?"}
+{"qid": "e16", "question": "¿Cuántos usuarios incluye el plan Pro?"}
+{"qid": "e17", "question": "¿Kestrel tiene certificación ISO 27001?"}
+{"qid": "e18", "question": "¿Qué ocurre si falla el cobro de la suscripción de un cliente?"}
+{"qid": "e19", "question": "Un cliente Pro en la región Unión Europea migra a Enterprise. ¿Hasta cuántos días puede conservar sus logs de API y desde cuándo aplica?"}
+{"qid": "e20", "question": "¿Qué roles de usuario existen en Kestrel?"}
+{"qid": "e21", "question": "Al pasar a un plan inferior, ¿se devuelve la diferencia de precio al medio de pago?"}
+{"qid": "e22", "question": "¿Existe una aplicación móvil de Kestrel para iOS?"}
+{"qid": "e23", "question": "¿Cuánto dura el período de prueba gratuito y qué plan incluye?"}
+{"qid": "e24", "question": "Durante un incidente SEV1 que afecta a un cliente Enterprise, ¿cada cuánto se actualiza la página de estado y qué plazo tiene el cliente para pedir un crédito por SLA?"}
+{"qid": "e25", "question": "¿Cuánto tiempo se conservan las facturas emitidas en la región Unión Europea?"}
+{"qid": "e26", "question": "¿En qué fecha se habilitará una región de Kestrel en Asia?"}
+{"qid": "e27", "question": "¿El plan Pro tiene SLA de disponibilidad?"}
+{"qid": "e28", "question": "Una cuenta Starter llegó a su límite de facturas del mes. ¿Qué opciones tiene para seguir emitiendo y cuándo se aplicaría un cambio de plan?"}
+{"qid": "e29", "question": "¿Qué crédito corresponde a una cuenta Enterprise si su disponibilidad mensual fue de 99,2%?"}
+{"qid": "e30", "question": "¿Cuál es el precio del plan Pro en pesos argentinos?"}
+{"qid": "e31", "question": "¿Cómo puede un receptor verificar que un webhook fue enviado por Kestrel?"}
+{"qid": "e32", "question": "¿Cuántos endpoints de webhook y cuántas requests por minuto permite una cuenta Pro Plus?"}
+{"qid": "e33", "question": "¿En cuánto tiempo responde soporte por primera vez a un cliente Pro Plus?"}
+{"qid": "e34", "question": "¿Cuántos empleados tiene Kestrel Billing?"}
+{"qid": "e35", "question": "¿Por cuánto tiempo están disponibles en el portal las facturas que Kestrel emite al cliente?"}
+{"qid": "e36", "question": "¿Puede un cliente del plan Pro usar inicio de sesión único (SSO)? Si no, ¿qué debe hacer para habilitarlo?"}
+{"qid": "e37", "question": "¿Kestrel puede enviar las facturas por correo postal a los compradores?"}
+{"qid": "e38", "question": "¿Después de cuántos intentos fallidos de inicio de sesión se bloquea un usuario y por cuánto tiempo?"}
+{"qid": "e39", "question": "¿Cuántos días hábiles tarda en acreditarse un reembolso ya aprobado?"}
+{"qid": "e40", "question": "¿Cuál es el tamaño máximo de un archivo adjunto en una factura?"}

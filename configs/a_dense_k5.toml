@@ -1,0 +1,32 @@
+# Configuración A: retrieval dense puro.
+# Chunking, embeddings, corpus y evaluación DEBEN ser idénticos a b_hybrid_k5.toml
+# (`rag-lab compare` lo verifica vía index_id, hashes de datos, k y τ).
+
+[experiment]
+name = "A_dense_k5"
+
+[paths]
+corpus_dir = "data/corpus"
+index_dir = "artifacts/index"
+
+[chunking]
+max_chars = 700
+
+[embedding]
+model = "intfloat/multilingual-e5-small"
+revision = "614241f622f53c4eeff9890bdc4f31cfecc418b3"
+query_prefix = "query: "
+passage_prefix = "passage: "
+normalize = true
+batch_size = 32
+device = "cpu"
+
+[retrieval]
+method = "dense"
+k = 5
+candidate_pool = 50
+rrf_k = 60          # no se usa en dense; se mantiene igual que en B
+score_decimals = 6
+
+[evaluation]
+span_coverage_threshold = 0.5

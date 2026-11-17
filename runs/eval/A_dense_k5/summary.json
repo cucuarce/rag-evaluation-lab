@@ -1,0 +1,76 @@
+{
+  "run_name": "A_dense_k5",
+  "split": "eval",
+  "k": 5,
+  "method": "dense",
+  "span_coverage_threshold": 0.5,
+  "labels_sha256": "ee9c0f3ac62a40dc16c91cbfae87c9f83c117ec7ec59b3a3e8fe7e9cab932ab6",
+  "n_questions": 40,
+  "n_answerable": 30,
+  "n_unanswerable": 10,
+  "metrics": {
+    "overall": {
+      "n": 30,
+      "hit": 1,
+      "hit_n": 30,
+      "recall": 0.9889,
+      "recall_n": 30,
+      "complete": 0.9667,
+      "complete_n": 30,
+      "mrr": 0.9333,
+      "mrr_n": 30,
+      "distractor": 0.1818,
+      "distractor_n": 11,
+      "deprecated_in_topk": 0.1724,
+      "deprecated_in_topk_n": 29
+    },
+    "by_category": {
+      "distractor": {
+        "n": 8,
+        "hit": 1,
+        "hit_n": 8,
+        "recall": 1.0,
+        "recall_n": 8,
+        "complete": 1,
+        "complete_n": 8,
+        "mrr": 0.75,
+        "mrr_n": 8,
+        "distractor": 0.25,
+        "distractor_n": 8,
+        "deprecated_in_topk": 0.25,
+        "deprecated_in_topk_n": 8
+      },
+      "multi_hop": {
+        "n": 8,
+        "hit": 1,
+        "hit_n": 8,
+        "recall": 0.9583,
+        "recall_n": 8,
+        "complete": 0.875,
+        "complete_n": 8,
+        "mrr": 1.0,
+        "mrr_n": 8,
+        "distractor": 0,
+        "distractor_n": 2,
+        "deprecated_in_topk": 0.1429,
+        "deprecated_in_topk_n": 7
+      },
+      "single": {
+        "n": 14,
+        "hit": 1,
+        "hit_n": 14,
+        "recall": 1.0,
+        "recall_n": 14,
+        "complete": 1,
+        "complete_n": 14,
+        "mrr": 1.0,
+        "mrr_n": 14,
+        "distractor": 0,
+        "distractor_n": 1,
+        "deprecated_in_topk": 0.1429,
+        "deprecated_in_topk_n": 14
+      }
+    }
+  },
+  "note": "Métricas de retrieval solo sobre preguntas respondibles; las no respondibles se evalúan en la Etapa 2 (abstención)."
+}
