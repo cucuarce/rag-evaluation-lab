@@ -138,15 +138,32 @@ def cmd_gen_check(args) -> None:
         "api_key": key_status(),
     }
     if args.online and cfg.model.provider == "groq":
-        from groq import Groq
+        import groq
+
+        from rag_lab.generation.credentials import redact
+        from rag_lab.generation.providers import RATELIMIT_HEADERS
 
         key = get_api_key()
         if not key:
             raise ValueError("Falta GROQ_API_KEY")
-        models = Groq(api_key=key, max_retries=0, timeout=30).models.list()
+        client = groq.Groq(api_key=key, max_retries=0, timeout=30)
+        try:
+            raw = client.models.with_raw_response.list()
+        except groq.APIError as exc:
+            status = getattr(exc, "status_code", None)
+            raise ValueError(
+                f"gen-check online falló: {type(exc).__name__} (HTTP {status}): "
+                f"{redact(str(exc.message), key)}"
+            ) from exc
+        models = raw.parse()
         ids = sorted(m.id for m in models.data)
+        target = next((m for m in models.data if m.id == cfg.model.model), None)
         report["online"] = {
-            "model_available": cfg.model.model in ids,
+            "model_available": target is not None,
+            "model_info": target.model_dump() if target is not None else None,
+            "ratelimit_headers_on_models_endpoint": {
+                h: raw.headers.get(h) for h in RATELIMIT_HEADERS if raw.headers.get(h)
+            },
             "n_models_listed": len(ids),
             "models_listed": ids,
         }

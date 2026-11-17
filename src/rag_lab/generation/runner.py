@@ -229,6 +229,7 @@ def run_generation(
             "model_returned": r.model_returned,
             "finish_reason": r.finish_reason,
             "request_id": r.request_id,
+            "ratelimit": r.ratelimit,
             "raw_content": r.content,
             "parsed": parsed.to_dict(),
         }
