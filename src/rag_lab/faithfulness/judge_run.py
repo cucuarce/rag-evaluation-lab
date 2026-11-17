@@ -23,6 +23,8 @@ semántico solo se define al comparar con la referencia humana (judge_compare).
 from __future__ import annotations
 
 import json
+import os
+import re
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
@@ -43,11 +45,21 @@ from rag_lab.generation.calls import (
     cache_key,
     estimate_tokens,
 )
-from rag_lab.generation.credentials import redact
+from rag_lab.generation.credentials import redact as _redact_secret
 from rag_lab.generation.providers import AbortRun, ProviderError, call_with_retries
 from rag_lab.hashing import sha256_file, sha256_json
 
 REQUEST_CLAIM_ID = "A1"
+PROGRESS_FILE = "predictions.progress.jsonl"
+# Los mensajes de error de Groq incluyen el identificador de la organización: no se guarda.
+ORG_ID_RE = re.compile(r"\borg_[A-Za-z0-9]+")
+
+
+def redact(text: str, secret: str | None) -> str:
+    """Quita la clave y los identificadores de organización de un texto de error."""
+    return ORG_ID_RE.sub("org_[REDACTADO]", _redact_secret(text, secret))
+
+
 CASE_TYPES = ("claim", "perturbation")
 USAGE_KEYS = ("prompt_tokens", "completion_tokens", "reasoning_tokens", "total_tokens")
 
@@ -88,26 +100,37 @@ def judge_messages(case: dict, answer: dict, reference_date: str) -> list[dict]:
     return build_judge_messages(answer, [(REQUEST_CLAIM_ID, case["claim_text"])], reference_date)
 
 
-def plan_run(cases: list[dict], answers: dict[str, dict], cfg: JudgeConfig) -> dict:
-    """Dimensionamiento previo (sin red): estimación conservadora por caso."""
+def plan_run(
+    cases: list[dict],
+    answers: dict[str, dict],
+    cfg: JudgeConfig,
+    cache: ResponseCache | None = None,
+) -> dict:
+    """Dimensionamiento previo (sin red): estimación conservadora por caso. Con caché, los
+    casos ya respondidos (misma solicitud exacta) no cuentan para llamadas ni tokens."""
     rows = []
     for c in cases:
         msgs = judge_messages(c, answers[c["answer_id"]], cfg.reference_date)
+        key = cache_key(cfg.request_params(), msgs, JUDGE_SCHEMA)
         rows.append(
             {
                 "case_id": c["case_id"],
                 "prompt_chars": sum(len(m["content"]) for m in msgs),
                 "estimate_tokens": estimate_tokens(msgs, cfg.model.max_completion_tokens),
+                "cached": cache is not None and cache.get(key) is not None,
             }
         )
-    total = sum(r["estimate_tokens"] for r in rows)
+    pending = [r for r in rows if not r["cached"]]
+    total = sum(r["estimate_tokens"] for r in pending)
     return {
         "n_cases": len(rows),
+        "n_cached": len(rows) - len(pending),
+        "n_to_request": len(pending),
         "per_case": rows,
         "estimate_total_tokens": total,
         "max_calls": cfg.limits.max_calls,
         "max_total_tokens": cfg.limits.max_total_tokens,
-        "fits_calls": len(rows) <= cfg.limits.max_calls,
+        "fits_calls": len(pending) <= cfg.limits.max_calls,
         "fits_tokens_conservative": total <= cfg.limits.max_total_tokens,
     }
 
@@ -295,16 +318,24 @@ def run_judge(
         secret,
     )
     preds = []
-    for case in cases:
-        answer = answers[case["answer_id"]]
-        messages = judge_messages(case, answer, cfg.reference_date)
-        pred = _prediction(case, answer, messages, caller.call(messages))
-        preds.append(pred)
-        if pred["status"] in ("format_error", "incomplete") and not caller.abort_reason:
-            # Con strict=true una salida fuera del esquema es un problema de esquema: se frena.
-            caller.abort_reason = f"{pred['case_id']}: {pred['status']} (se detiene la corrida)"
-
     out_dir.mkdir(parents=True, exist_ok=True)
+    # Registro incremental: cada predicción se agrega y se fuerza a disco apenas existe, para
+    # que una interrupción del proceso no pierda lo hecho. Las respuestas exitosas además
+    # quedan en la caché, de modo que una reanudación no repite solicitudes.
+    progress_path = out_dir / PROGRESS_FILE
+    with progress_path.open("w", encoding="utf-8", newline="\n") as progress:
+        for case in cases:
+            answer = answers[case["answer_id"]]
+            messages = judge_messages(case, answer, cfg.reference_date)
+            pred = _prediction(case, answer, messages, caller.call(messages))
+            preds.append(pred)
+            progress.write(json.dumps(pred, ensure_ascii=False) + "\n")
+            progress.flush()
+            os.fsync(progress.fileno())
+            if pred["status"] in ("format_error", "incomplete") and not caller.abort_reason:
+                # Con strict=true una salida fuera del esquema es un problema de esquema.
+                caller.abort_reason = f"{pred['case_id']}: {pred['status']} (se detiene la corrida)"
+
     write_jsonl(pred_path, preds)
 
     real = [p["llm"] for p in preds if p["llm"] and p["llm"].get("cached") is False]

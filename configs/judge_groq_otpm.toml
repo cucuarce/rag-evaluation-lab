@@ -1,0 +1,35 @@
+# Juez semántico de faithfulness (Etapa 3B), configuración judge-v1-otpm.
+# Igual que el smoke (modelo, prompt judge-v1, esquema, temperature, seed) salvo:
+# - max_completion_tokens = 640: Groq rechazó max 1536 por el límite de salida por minuto
+#   (OTPM 1000, "Request too large"). Salidas observadas: 111-254 tokens, 0 de razonamiento.
+#   Una salida truncada (finish_reason=length) es format_error y detiene la corrida.
+# - ritmo de 1 solicitud cada 65 s, para que incluso reservando 640 tokens de salida por
+#   solicitud nunca haya dos dentro de la misma ventana de un minuto.
+# Corrida nueva y homogénea sobre los 47 casos congelados: no reutiliza predicciones ni caché
+# de judge-v1 (las claves de caché cambian porque cambia max_completion_tokens).
+# Independiente de las configs A/B y de generación. La clave se lee de GROQ_API_KEY.
+
+[judge]
+name = "judge-v1-otpm_qwen3.8-27b"
+prompt_version = "judge-v1"     # src/rag_lab/faithfulness/judge_prompt.py (sin cambios desde la 3A)
+reference_date = "2026-11-01"   # la misma "fecha de hoy" que usó la generación de la Etapa 2
+
+[model]
+provider = "groq"
+model = "qwen/qwen3.8-27b"
+temperature = 0.0
+max_completion_tokens = 640     # < OTPM 1000; incluye razonamiento (no se devuelve)
+seed = 7
+include_reasoning = false       # el razonamiento no se devuelve ni se guarda
+# reasoning_effort: sin definir = valor por defecto del proveedor (no se envía)
+
+[limits]
+timeout_s = 60
+max_retries = 0                 # sin reintentos: cada caso es como máximo 1 solicitud HTTP
+max_retry_after_s = 30
+backoff_base_s = 2.0
+max_concurrency = 1
+min_interval_s = 65.0           # ritmo conservador para OTPM (no informado en los encabezados)
+max_calls = 47                  # los 47 casos congelados, sin reutilizar nada
+max_total_tokens = 100000       # PROPUESTO, pendiente de aprobación (tokens contabilizados)
+max_consecutive_failures = 2

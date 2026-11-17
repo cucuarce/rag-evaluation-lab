@@ -15,16 +15,26 @@ import pytest
 
 from rag_lab.config import PROJECT_ROOT
 from rag_lab.faithfulness.judge_client import JudgeGroqClient
-from rag_lab.faithfulness.judge_compare import compare_run
+from rag_lab.faithfulness.judge_compare import compare_run, pilot_stability, reuse_check
 from rag_lab.faithfulness.judge_config import load_judge_config, validate_judge_config
 from rag_lab.faithfulness.judge_run import (
     REQUEST_CLAIM_ID,
     judge_messages,
     load_cases,
+    plan_run,
     run_judge,
 )
-from rag_lab.faithfulness.schema import JUDGE_SCHEMA, JUDGE_UNVERIFIABLE, read_jsonl
-from rag_lab.faithfulness.smoke_selection import SMOKE_QUOTAS, select_smoke_cases
+from rag_lab.faithfulness.schema import (
+    JUDGE_SCHEMA,
+    JUDGE_UNVERIFIABLE,
+    read_jsonl,
+    write_jsonl,
+)
+from rag_lab.faithfulness.smoke_selection import (
+    SMOKE_QUOTAS,
+    select_full_cases,
+    select_smoke_cases,
+)
 from rag_lab.generation.calls import ResponseCache
 from rag_lab.generation.providers import GenerationResult, ProviderError
 from rag_lab.hashing import sha256_file, sha256_json
@@ -32,6 +42,8 @@ from rag_lab.hashing import sha256_file, sha256_json
 PKG = PROJECT_ROOT / "src/rag_lab/faithfulness"
 STAGE3 = PROJECT_ROOT / "data/stage3"
 CFG_PATH = PROJECT_ROOT / "configs/judge_groq.toml"
+FULL_CFG_PATH = PROJECT_ROOT / "configs/judge_groq_full.toml"
+SELECTIONS = ("judge_smoke_selection.json", "judge_full_selection.json")
 FAKE_KEY = "gsk_test_not_a_real_key_0123456789"
 
 ANSWERS = {a["answer_id"]: a for a in read_jsonl(STAGE3 / "answers.jsonl")}
@@ -207,14 +219,16 @@ def test_judge_side_modules_never_reference_reference_data(name):
         ), (name, word)
 
 
-def test_cases_carry_only_whitelisted_fields():
-    sel = json.loads((STAGE3 / "judge_smoke_selection.json").read_text(encoding="utf-8"))
+@pytest.mark.parametrize("sel_name", SELECTIONS)
+def test_cases_carry_only_whitelisted_fields(sel_name):
+    sel = json.loads((STAGE3 / sel_name).read_text(encoding="utf-8"))
     for c in load_cases(sel, CLAIMS, PERTS):
         assert set(c) == {"case_id", "type", "source_id", "qid", "answer_id", "claim_text"}
 
 
-def test_real_smoke_prompts_contain_no_reference_data():
-    sel = json.loads((STAGE3 / "judge_smoke_selection.json").read_text(encoding="utf-8"))
+@pytest.mark.parametrize("sel_name", SELECTIONS)
+def test_real_prompts_contain_no_reference_data(sel_name):
+    sel = json.loads((STAGE3 / sel_name).read_text(encoding="utf-8"))
     leaks = ["perturb", "stratum", "supported_", "pert_", "-p-", "h1", "esperad"]
     leaks += [c["id"] for c in sel["cases"]] + [c["stratum"] for c in sel["cases"]]
     leaks += [h["notes"] for h in HUMAN.values() if h["notes"]]
@@ -227,7 +241,15 @@ def test_real_smoke_prompts_contain_no_reference_data():
         assert f"<<<AFIRMACION {REQUEST_CLAIM_ID} " in prompt
         assert case["claim_text"] in prompt
         if case["type"] == "perturbation":
-            assert PERTS[case["source_id"]]["original_text"] not in prompt
+            # El texto original no entra por la afirmación. Puede figurar literalmente en el
+            # contexto recuperado (afirmación extractiva): eso es dato legítimo del caso.
+            original = PERTS[case["source_id"]]["original_text"]
+            neutral = judge_messages(
+                case | {"claim_text": "<afirmación neutra>"},
+                ANSWERS[case["answer_id"]],
+                "2026-11-01",
+            )[0]["content"]
+            assert prompt.count(original) == neutral.count(original), case["case_id"]
 
 
 def test_run_judge_signature_has_no_label_inputs():
@@ -469,3 +491,206 @@ def test_compare_rejects_tampered_predictions(cfg, tmp_path):
     p.write_text(p.read_text(encoding="utf-8").replace("supported", "unsupported"), "utf-8")
     with pytest.raises(ValueError, match="sha256"):
         compare_run(out, sel, HUMAN, REVIEWS, PERTS)
+
+
+# --- Evaluación completa de judge-v1 ----------------------------------------------------
+
+
+def test_full_config_only_changes_name_and_limits():
+    smoke, full = load_judge_config(CFG_PATH), load_judge_config(FULL_CFG_PATH)
+    assert full.request_params() == smoke.request_params()
+    assert full.model == smoke.model and full.prompt_version == smoke.prompt_version
+    assert full.reference_date == smoke.reference_date
+    assert full.name == "full_qwen3.8-27b"
+    assert (full.limits.max_calls, full.limits.max_total_tokens) == (39, 90000)
+    assert replace(full.limits, max_calls=8, max_total_tokens=25000) == smoke.limits
+
+
+def test_full_selection_covers_exactly_the_authorized_cases():
+    smoke = json.loads((STAGE3 / "judge_smoke_selection.json").read_text(encoding="utf-8"))
+    frozen = json.loads((STAGE3 / "judge_full_selection.json").read_text(encoding="utf-8"))
+    sel = select_full_cases(smoke, HUMAN, REVIEWS, list(PERTS.values()))
+    assert sel["cases"] == frozen["cases"] and sel["cases_sha256"] == frozen["cases_sha256"]
+    cases = frozen["cases"]
+    ids = [(c["type"], c["id"]) for c in cases]
+    assert len(ids) == len(set(ids)) == 47
+    claims = {i for t, i in ids if t == "claim"}
+    pert_ids = {i for t, i in ids if t == "perturbation"}
+    assert claims == {c for c, h in HUMAN.items() if h["split_decision"] == "aceptar"}
+    assert pert_ids == {p for p, r in REVIEWS.items() if r["human_confirms_expected"] == "si"}
+    # Los 8 del smoke conservan case_id, tipo e id, y van primero.
+    assert [(c["case_id"], c["type"], c["id"]) for c in cases[:8]] == [
+        (c["case_id"], c["type"], c["id"]) for c in smoke["cases"]
+    ]
+    assert [c["case_id"] for c in cases] == [f"J{i:02d}" for i in range(1, 48)]
+    assert {e["id"] for e in frozen["excluded"]} == {
+        "e06-c1-p-version",
+        "e10-c1-p-version",
+        "e28-c1-p-negation",
+        "e36-c1-p-negation",
+    }
+    assert not pert_ids & {e["id"] for e in frozen["excluded"]}
+
+
+def test_plan_counts_only_uncached_cases(cfg, tmp_path):
+    cache = ResponseCache(tmp_path / "cache")
+    cases = _cases(*THREE)
+    _run(cfg, ScriptedJudge(_content()), tmp_path, cases[:1], cache=cache)
+    plan = plan_run(cases, ANSWERS, cfg, cache)
+    assert (plan["n_cached"], plan["n_to_request"]) == (1, 2)
+    assert [r["cached"] for r in plan["per_case"]] == [True, False, False]
+    assert plan["estimate_total_tokens"] == sum(r["estimate_tokens"] for r in plan["per_case"][1:])
+    tight = replace(cfg, limits=replace(cfg.limits, max_calls=2))
+    assert plan_run(cases, ANSWERS, tight, cache)["fits_calls"]
+    assert not plan_run(cases, ANSWERS, tight)["fits_calls"]  # sin caché no entra
+
+
+def test_reuse_from_smoke_is_byte_identical_via_cache(cfg, tmp_path):
+    cache = ResponseCache(tmp_path / "cache")
+    first = _cases(("claim", "e01-c1"))
+    _, _, smoke_out = _run(cfg, ScriptedJudge(_content()), tmp_path, first, cache=cache, name="s")
+    full_cfg = replace(cfg, name="full", limits=replace(cfg.limits, max_calls=1))
+    client = ScriptedJudge(_content(lc="unsupported", lx="unsupported", quote=None))
+    _, m, full_out = _run(full_cfg, client, tmp_path, _cases(*THREE[:2]), cache=cache, name="f")
+    assert client.calls == 1 and m["counts"]["cache_hits"] == 1
+    chk = reuse_check(full_out, smoke_out)
+    assert chk["all_identical"] and chk["n"] == 1
+    # Una predicción reutilizada que difiere se detecta.
+    p = full_out / "predictions.jsonl"
+    rows = read_jsonl(p)
+    rows[0]["judge"]["label_cited"] = "partially_supported"
+    write_jsonl(p, rows)
+    bad = reuse_check(full_out, smoke_out)
+    assert not bad["all_identical"] and bad["cases"][0]["diffs"] == ["judge"]
+
+
+def test_compare_separates_originals_and_synthetic_controls(cfg, tmp_path):
+    sel = _selection(
+        ("claim", "e01-c1"),
+        ("claim", "e05-c3"),  # humano: partially / supported
+        ("perturbation", "e01-c1-p-number"),
+    )
+    cases = load_cases(sel, CLAIMS, PERTS)
+    client = ScriptedJudge(_content(), _content(), _content())
+    _, _, out = _run(cfg, client, tmp_path, cases)
+    rep = compare_run(out, sel, HUMAN, REVIEWS, PERTS)
+    g = rep["per_group"]
+    assert g["originales"]["label_cited"]["n_compared"] == 2
+    assert g["perturbaciones_sinteticas"]["label_cited"]["n_compared"] == 1
+    assert g["perturbaciones_sinteticas"]["label_cited"]["evaluated_supported_reference_not"][
+        "claim_ids"
+    ] == ["J03"]
+    by = {r["case_id"]: r for r in rep["per_case"]}
+    assert by["J03"]["synthetic_control"] and not by["J01"]["synthetic_control"]
+    assert by["J03"]["subtypes"] == ["numeric"]
+    assert by["J01"]["subtypes"] == HUMAN["e01-c1"]["subtypes_final"]
+    num = rep["by_subtype"]["perturbaciones_sinteticas:numeric"]["label_cited"]
+    assert num["judge_supported_reference_not"] == ["J03"] and num["n"] == 1
+
+
+# --- Configuración judge-v1-otpm (preparada, sin generar) -------------------------------
+
+OTPM_CFG_PATH = PROJECT_ROOT / "configs/judge_groq_otpm.toml"
+GROQ_OTPM_LIMIT = 1000
+
+
+def test_otpm_config_only_changes_max_completion_and_limits():
+    smoke, otpm = load_judge_config(CFG_PATH), load_judge_config(OTPM_CFG_PATH)
+    validate_judge_config(otpm)
+    assert otpm.model == replace(smoke.model, max_completion_tokens=640)
+    assert otpm.model.max_completion_tokens < GROQ_OTPM_LIMIT
+    assert (otpm.prompt_version, otpm.reference_date) == (smoke.prompt_version, "2026-11-01")
+    params = otpm.request_params()
+    assert params == smoke.request_params() | {"max_completion_tokens": 640}
+    # Ritmo: como mucho una solicitud por ventana de un minuto.
+    assert otpm.limits.min_interval_s > 60 and otpm.limits.max_concurrency == 1
+    assert otpm.limits.max_retries == 0 and otpm.limits.max_calls == 47
+    assert otpm.name != smoke.name and otpm.name != load_judge_config(FULL_CFG_PATH).name
+
+
+def test_otpm_run_never_reuses_judge_v1_cache(tmp_path):
+    smoke = load_judge_config(CFG_PATH)
+    otpm = load_judge_config(OTPM_CFG_PATH)
+    sel = json.loads((STAGE3 / "judge_full_selection.json").read_text(encoding="utf-8"))
+    cases = load_cases(sel, CLAIMS, PERTS)
+    cache = ResponseCache(tmp_path / "cache")
+    fast = replace(smoke, limits=replace(smoke.limits, min_interval_s=0.0, max_calls=2))
+    run_judge(
+        cases[:2],
+        ANSWERS,
+        fast,
+        ScriptedJudge(_content(), _content()),
+        tmp_path / "v1",
+        cache=cache,
+        sleep=lambda s: None,
+    )
+    assert plan_run(cases[:2], ANSWERS, smoke, cache)["n_cached"] == 2
+    plan = plan_run(cases, ANSWERS, otpm, cache)
+    assert plan["n_cached"] == 0 and plan["n_to_request"] == 47 and plan["fits_calls"]
+
+
+def test_otpm_truncated_output_is_an_error_not_an_evaluation(tmp_path):
+    otpm = load_judge_config(OTPM_CFG_PATH)
+    cfg = replace(otpm, limits=replace(otpm.limits, min_interval_s=0.0))
+
+    class Truncating(ScriptedJudge):
+        def generate(self, messages, schema):
+            r = super().generate(messages, schema)
+            r.finish_reason = "length"
+            return r
+
+    preds, m, _ = _run(
+        cfg,
+        Truncating('{"claims": [{"claim_id": "A1", "label_cited": "supp', _content()),
+        tmp_path,
+        _cases(("claim", "e01-c1"), ("claim", "e02-c1")),
+    )
+    assert preds[0]["status"] == "format_error" and preds[0]["judge"] is None
+    assert preds[1]["status"] == "not_run"  # la corrida se detiene
+    assert m["run_status"] == "aborted"
+
+
+def test_org_id_from_provider_errors_is_not_stored(cfg, tmp_path):
+    msg = "Request too large for model `m` in organization `org_01abcDEF234` on (OTPM)"
+    exc = ProviderError("rate_limit", msg, 429)
+    _, _, out = _run(cfg, ScriptedJudge(exc), tmp_path, _cases(("claim", "e01-c1")))
+    for f in out.iterdir():
+        text = f.read_text(encoding="utf-8")
+        assert "org_01abcDEF234" not in text
+    preds = read_jsonl(out / "predictions.jsonl")
+    assert "org_[REDACTADO]" in preds[0]["technical_error"]["message"]
+
+
+def test_predictions_are_persisted_incrementally_before_an_interruption(cfg, tmp_path):
+    class Crash(ScriptedJudge):
+        def generate(self, messages, schema):
+            if self.calls == 1:
+                raise KeyboardInterrupt  # el proceso se corta tras la primera respuesta
+            return super().generate(messages, schema)
+
+    out = tmp_path / "run"
+    with pytest.raises(KeyboardInterrupt):
+        run_judge(_cases(*THREE), ANSWERS, cfg, Crash(_content()), out, sleep=lambda s: None)
+    assert not (out / "predictions.jsonl").exists()
+    saved = read_jsonl(out / "predictions.progress.jsonl")
+    assert [p["case_id"] for p in saved] == ["J01"] and saved[0]["status"] == "ok"
+
+
+def test_pilot_stability_compares_without_mixing(cfg, tmp_path):
+    cases = _cases(("claim", "e01-c1"), ("claim", "e02-c1"))
+    _, _, pilot = _run(cfg, ScriptedJudge(_content(), _content()), tmp_path, cases, name="p")
+    other = replace(cfg, model=replace(cfg.model, max_completion_tokens=640))
+    client = ScriptedJudge(_content(), _content(lc="unsupported", quote=None))
+    _, _, cur = _run(other, client, tmp_path, cases, name="c")
+    st = pilot_stability(cur, [pilot])
+    assert st["n_comparable"] == 2 and st["changed"] == ["J02"]
+    assert st["same"] == {"label_cited": 1, "label_context": 2}
+    # El mismo caso en dos pilotos (reutilizado por caché) cuenta una sola vez.
+    st2 = pilot_stability(cur, [pilot, pilot])
+    assert st2["n_pilot_ok"] == 2 and len(st2["duplicates_skipped"]) == 2
+    with pytest.raises(ValueError, match="otra configuración"):
+        pilot_stability(pilot, [pilot])
+    p = pilot / "predictions.jsonl"
+    p.write_text(p.read_text(encoding="utf-8").replace("simulado", "editado"), "utf-8")
+    with pytest.raises(ValueError, match="manifiesto"):
+        pilot_stability(cur, [pilot])

@@ -9,8 +9,20 @@ documentos, preguntas y datos son inventados para este proyecto.
 > normalización léxica v2, respuestas únicas, afirmaciones propuestas, planilla de anotación
 > humana, contrato y validador del futuro juez, métricas de acuerdo y perturbaciones. La ronda 1
 > de anotación humana está cerrada: 30 afirmaciones etiquetadas y 17 perturbaciones confirmadas
-> como controles negativos (ver `docs/faithfulness.md` §10). No hay juez real, Ragas, dashboard
-> ni configuración C. Solo la generación de la Etapa 2 usó la API de Groq (`GROQ_API_KEY`).
+> como controles negativos (ver `docs/faithfulness.md` §10).
+>
+> **Etapa 3B (cerrada):** juez semántico `judge-v1` con `qwen/qwen3.8-27b` en Groq, sin
+> optimizar después de observar errores. La evaluación definitiva usa `judge-v1-otpm` (47/47
+> casos, 84.698 tokens). Solo cambia `max_completion_tokens` de 1536 a 640, un cambio
+> operativo por el límite OTPM de Groq; el piloto con 1536 queda separado.
+> - **Originales:** acuerdo de 28/30 en `label_cited` y 29/30 en `label_context`.
+> - **Controles sintéticos:** 16/17.
+> - **Errores:** J02 (generalización), J12 (cita fuera de los fragmentos citados) y J46
+>   (negación sintética etiquetada `supported`).
+>
+> n chico, selección no aleatoria y negativos sintéticos: no estima la confiabilidad general del
+> juez. Estudios de caso y limitaciones en [`docs/judge.md`](docs/judge.md). No hay Ragas,
+> dashboard ni configuración C.
 
 ## Qué hace hoy
 

@@ -1,0 +1,417 @@
+{
+  "purpose": "evaluación completa de judge-v1 (Etapa 3B): todos los casos autorizados, congelada antes de ejecutar",
+  "smoke_cases_sha256": "f7f6251f0e7e7e03d4474875458d99d8abce3b1fc9ee65fb0f4f217c01a3fc54",
+  "counts": {
+    "claims": 30,
+    "perturbations": 17,
+    "from_smoke": 8,
+    "pending": 39
+  },
+  "excluded": [
+    {
+      "type": "perturbation",
+      "id": "e06-c1-p-version",
+      "reason": "sin revisión humana (reservada en la ronda 1)"
+    },
+    {
+      "type": "perturbation",
+      "id": "e10-c1-p-version",
+      "reason": "sin revisión humana (reservada en la ronda 1)"
+    },
+    {
+      "type": "perturbation",
+      "id": "e28-c1-p-negation",
+      "reason": "sin revisión humana (reservada en la ronda 1)"
+    },
+    {
+      "type": "perturbation",
+      "id": "e36-c1-p-negation",
+      "reason": "sin revisión humana (reservada en la ronda 1)"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "J01",
+      "type": "claim",
+      "id": "e05-c3",
+      "qid": "e05",
+      "stratum": "orig_partially_supported",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J02",
+      "type": "claim",
+      "id": "e28-c1",
+      "qid": "e28",
+      "stratum": "orig_partially_supported",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J03",
+      "type": "perturbation",
+      "id": "e18-c1-p-number",
+      "qid": "e18",
+      "stratum": "pert_number",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J04",
+      "type": "perturbation",
+      "id": "e14-c1-p-number",
+      "qid": "e14",
+      "stratum": "pert_number",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J05",
+      "type": "perturbation",
+      "id": "e27-c1-p-negation",
+      "qid": "e27",
+      "stratum": "pert_negation",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J06",
+      "type": "perturbation",
+      "id": "e19-c2-p-unit",
+      "qid": "e19",
+      "stratum": "pert_unit",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J07",
+      "type": "claim",
+      "id": "e21-c2",
+      "qid": "e21",
+      "stratum": "orig_supported",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J08",
+      "type": "claim",
+      "id": "e10-c1",
+      "qid": "e10",
+      "stratum": "orig_supported",
+      "origin": "smoke"
+    },
+    {
+      "case_id": "J09",
+      "type": "claim",
+      "id": "e01-c1",
+      "qid": "e01",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J10",
+      "type": "claim",
+      "id": "e02-c1",
+      "qid": "e02",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J11",
+      "type": "claim",
+      "id": "e04-c1",
+      "qid": "e04",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J12",
+      "type": "claim",
+      "id": "e05-c1",
+      "qid": "e05",
+      "stratum": "orig_partially_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J13",
+      "type": "claim",
+      "id": "e05-c2",
+      "qid": "e05",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J14",
+      "type": "claim",
+      "id": "e05-c4",
+      "qid": "e05",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J15",
+      "type": "claim",
+      "id": "e06-c1",
+      "qid": "e06",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J16",
+      "type": "claim",
+      "id": "e14-c1",
+      "qid": "e14",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J17",
+      "type": "claim",
+      "id": "e14-c2",
+      "qid": "e14",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J18",
+      "type": "claim",
+      "id": "e18-c1",
+      "qid": "e18",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J19",
+      "type": "claim",
+      "id": "e18-c2",
+      "qid": "e18",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J20",
+      "type": "claim",
+      "id": "e19-c1",
+      "qid": "e19",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J21",
+      "type": "claim",
+      "id": "e19-c2",
+      "qid": "e19",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J22",
+      "type": "claim",
+      "id": "e21-c1",
+      "qid": "e21",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J23",
+      "type": "claim",
+      "id": "e23-c1",
+      "qid": "e23",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J24",
+      "type": "claim",
+      "id": "e27-c1",
+      "qid": "e27",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J25",
+      "type": "claim",
+      "id": "e27-c2",
+      "qid": "e27",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J26",
+      "type": "claim",
+      "id": "e28-c2",
+      "qid": "e28",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J27",
+      "type": "claim",
+      "id": "e29-c1",
+      "qid": "e29",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J28",
+      "type": "claim",
+      "id": "e31-c1",
+      "qid": "e31",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J29",
+      "type": "claim",
+      "id": "e31-c2",
+      "qid": "e31",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J30",
+      "type": "claim",
+      "id": "e32-c1",
+      "qid": "e32",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J31",
+      "type": "claim",
+      "id": "e36-c1",
+      "qid": "e36",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J32",
+      "type": "claim",
+      "id": "e36-c2",
+      "qid": "e36",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J33",
+      "type": "claim",
+      "id": "e36-c3",
+      "qid": "e36",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J34",
+      "type": "claim",
+      "id": "e39-c1",
+      "qid": "e39",
+      "stratum": "orig_supported",
+      "origin": "full"
+    },
+    {
+      "case_id": "J35",
+      "type": "perturbation",
+      "id": "e01-c1-p-number",
+      "qid": "e01",
+      "stratum": "pert_number",
+      "origin": "full"
+    },
+    {
+      "case_id": "J36",
+      "type": "perturbation",
+      "id": "e02-c1-p-number",
+      "qid": "e02",
+      "stratum": "pert_number",
+      "origin": "full"
+    },
+    {
+      "case_id": "J37",
+      "type": "perturbation",
+      "id": "e04-c1-p-number",
+      "qid": "e04",
+      "stratum": "pert_number",
+      "origin": "full"
+    },
+    {
+      "case_id": "J38",
+      "type": "perturbation",
+      "id": "e05-c2-p-number",
+      "qid": "e05",
+      "stratum": "pert_number",
+      "origin": "full"
+    },
+    {
+      "case_id": "J39",
+      "type": "perturbation",
+      "id": "e14-c2-p-negation",
+      "qid": "e14",
+      "stratum": "pert_negation",
+      "origin": "full"
+    },
+    {
+      "case_id": "J40",
+      "type": "perturbation",
+      "id": "e18-c2-p-negation",
+      "qid": "e18",
+      "stratum": "pert_negation",
+      "origin": "full"
+    },
+    {
+      "case_id": "J41",
+      "type": "perturbation",
+      "id": "e19-c1-p-unit",
+      "qid": "e19",
+      "stratum": "pert_unit",
+      "origin": "full"
+    },
+    {
+      "case_id": "J42",
+      "type": "perturbation",
+      "id": "e21-c1-p-negation",
+      "qid": "e21",
+      "stratum": "pert_negation",
+      "origin": "full"
+    },
+    {
+      "case_id": "J43",
+      "type": "perturbation",
+      "id": "e21-c2-p-negation",
+      "qid": "e21",
+      "stratum": "pert_negation",
+      "origin": "full"
+    },
+    {
+      "case_id": "J44",
+      "type": "perturbation",
+      "id": "e23-c1-p-unit",
+      "qid": "e23",
+      "stratum": "pert_unit",
+      "origin": "full"
+    },
+    {
+      "case_id": "J45",
+      "type": "perturbation",
+      "id": "e27-c2-p-negation",
+      "qid": "e27",
+      "stratum": "pert_negation",
+      "origin": "full"
+    },
+    {
+      "case_id": "J46",
+      "type": "perturbation",
+      "id": "e28-c2-p-negation",
+      "qid": "e28",
+      "stratum": "pert_negation",
+      "origin": "full"
+    },
+    {
+      "case_id": "J47",
+      "type": "perturbation",
+      "id": "e39-c1-p-unit",
+      "qid": "e39",
+      "stratum": "pert_unit",
+      "origin": "full"
+    }
+  ],
+  "cases_sha256": "9fffef230d7572673c50e88f1e459148e03b64871f9e4c0e76f159f90ee72711",
+  "inputs_sha256": {
+    "human_labels": "500df4f895db21518426205a6207149cd45b24b14c0df58266a0600bd88f57c1",
+    "perturbation_review": "734ddb7b00203eeba6ba57cf6bee507494aadc63e1790eaf9c3dcd01930453f2",
+    "perturbations": "04332f0fd7a9cd45b40b701a469a3243d51d53ff82a7a14d23eb3faaf5e139fb",
+    "smoke_selection": "575694e791abded95447084a169dd5bfc07cd85a8a15f819ea09cb07b639683f"
+  }
+}

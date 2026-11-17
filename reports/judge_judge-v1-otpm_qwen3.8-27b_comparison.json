@@ -1,0 +1,2805 @@
+{
+  "run_dir": "runs/stage3/judge/judge-v1-otpm_qwen3.8-27b",
+  "predictions_sha256": "73a6613c3900085770f4eb197a24935d7c33c5111ab2b8dc141bd6d4b062db25",
+  "n_cases": 47,
+  "n_with_reference": 47,
+  "n_technical_ok": 47,
+  "per_case": [
+    {
+      "case_id": "J01",
+      "type": "claim",
+      "source_id": "e05-c3",
+      "qid": "e05",
+      "stratum": "orig_partially_supported",
+      "origin": "smoke",
+      "synthetic_control": false,
+      "claim_text": "El cliente pagará USD 96 por mes por los usuarios que exceden lo incluido en el plan Pro.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "partially_supported",
+        "judge_raw": "partially_supported",
+        "judge_final": "partially_supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "El fragmento citado S1 establece el costo por usuario adicional (USD 12), pero no indica cuántos usuarios incluye el plan Pro. Por lo tanto, no se puede calcular el total de 96 USD (8 usuarios excedentes * 12) usando solo S1. Sin embargo, el fragmento S3 del contexto indica que el plan Pro incluye 10 usuarios. Combinando S1 y S3, se deduce que 18 usuarios - 10 incluidos = 8 excedentes, y 8 * 12 = 96 USD. Como la etiqueta 'supported' requiere que la deducción sea explícita y trivial con premí",
+      "subtypes": [
+        "derived",
+        "numeric",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J02",
+      "type": "claim",
+      "source_id": "e28-c1",
+      "qid": "e28",
+      "stratum": "orig_partially_supported",
+      "origin": "smoke",
+      "synthetic_control": false,
+      "claim_text": "El cambio de una cuenta Starter a un plan superior (por ejemplo, Pro) se aplica de inmediato.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "partially_supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "semantic_error"
+      },
+      "label_context": {
+        "reference": "partially_supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "semantic_error"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1 (citado) establece que al alcanzar el límite, la emisión queda bloqueada hasta que la cuenta pase a un plan superior. El fragmento S3 (citado) establece explícitamente que \"Un cambio de Starter a Pro... se aplica de inmediato\". Por lo tanto, la afirmación de que el cambio se aplica de inmediato está totalmente respaldada por los fragmentos citados.",
+      "subtypes": [
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J03",
+      "type": "perturbation",
+      "source_id": "e18-c1-p-number",
+      "qid": "e18",
+      "stratum": "pert_number",
+      "origin": "smoke",
+      "synthetic_control": true,
+      "claim_text": "Si un cobro falla, Kestrel lo reintenta automáticamente tres veces: el día 2, el día 3 y el día 7.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que los reintentos ocurren el día 2, el día 3 y el día 7. El fragmento S1 (citado y vigente) establece explícitamente que los reintentos son al día 1, al día 3 y al día 7. Existe una contradicción directa en la fecha del primer reintento (día 2 vs día 1).",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J04",
+      "type": "perturbation",
+      "source_id": "e14-c1-p-number",
+      "qid": "e14",
+      "stratum": "pert_number",
+      "origin": "smoke",
+      "synthetic_control": true,
+      "claim_text": "Tras cancelar la cuenta, el cliente puede exportar sus datos durante los 37 días de modo solo lectura.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que el período es de 37 días, pero el fragmento S1 (citado y vigente) establece explícitamente que el modo de solo lectura dura 30 días. Por lo tanto, los fragmentos contradicen la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J05",
+      "type": "perturbation",
+      "source_id": "e27-c1-p-negation",
+      "qid": "e27",
+      "stratum": "pert_negation",
+      "origin": "smoke",
+      "synthetic_control": true,
+      "claim_text": "El plan Pro tiene SLA contractual.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación dice que el plan Pro tiene SLA contractual, pero el fragmento S1 (citado y vigente) establece explícitamente que 'Los planes Starter y Pro no tienen SLA contractual'. Por lo tanto, los fragmentos contradicen la afirmación.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J06",
+      "type": "perturbation",
+      "source_id": "e19-c2-p-unit",
+      "qid": "e19",
+      "stratum": "pert_unit",
+      "origin": "smoke",
+      "synthetic_control": true,
+      "claim_text": "Antes de que finalice la migración a Enterprise, se aplica la retención estándar de 90 meses para los logs de la API.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica una retención de '90 meses', mientras que el fragmento S1 establece explícitamente que los logs se conservan durante '90 días'. Además, la afirmación sugiere que esta retención estándar se aplica antes de la migración, pero el fragmento S2 indica que el plan anterior sigue vigente durante la transición, lo que implica que la retención sería la del plan Pro (no especificada en los fragmentos como diferente a la estándar, pero la unidad de tiempo en la afirmación es erróne",
+      "subtypes": [
+        "unit"
+      ]
+    },
+    {
+      "case_id": "J07",
+      "type": "claim",
+      "source_id": "e21-c2",
+      "qid": "e21",
+      "stratum": "orig_supported",
+      "origin": "smoke",
+      "synthetic_control": false,
+      "claim_text": "Al pasar a un plan inferior, la diferencia de precio se acredita como saldo a favor en la cuenta.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que la diferencia se acredita como saldo a favor. El fragmento S2, que es el único citado y está vigente, establece textualmente que \"se acredita como saldo a favor en la cuenta\". Por lo tanto, la afirmación está completamente respaldada por el fragmento citado y por el contexto general.",
+      "subtypes": [
+        "extractive"
+      ]
+    },
+    {
+      "case_id": "J08",
+      "type": "claim",
+      "source_id": "e10-c1",
+      "qid": "e10",
+      "stratum": "orig_supported",
+      "origin": "smoke",
+      "synthetic_control": false,
+      "claim_text": "El plazo para solicitar el reembolso de una suscripción mensual nueva era de 14 días corridos después del primer cobro.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación se basa en la política vigente antes de marzo de 2026 (versión 2). El fragmento S5, que es la versión 2 (histórica, vigente hasta 2026-02-28), establece explícitamente que el plazo es de 14 días corridos posteriores al primer cobro para una suscripción mensual nueva. Esto coincide exactamente con la afirmación.",
+      "subtypes": [
+        "numeric",
+        "version"
+      ]
+    },
+    {
+      "case_id": "J09",
+      "type": "claim",
+      "source_id": "e01-c1",
+      "qid": "e01",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Una cuenta del plan Starter puede emitir hasta 500 facturas por mes.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es VIGENTE y está citado por la respuesta, afirma textualmente que el plan Starter permite emitir hasta 500 facturas por mes, lo cual respalda completamente la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J10",
+      "type": "claim",
+      "source_id": "e02-c1",
+      "qid": "e02",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Una cuenta Pro tiene un límite de 300 requests por minuto en la API.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "La afirmación indica que una cuenta Pro tiene un límite de 300 requests por minuto. El fragmento S1 (citado) establece explícitamente: 'Una cuenta Pro puede hacer hasta 300 requests por minuto.' El fragmento S2 (citado) confirma este valor actualizado: 'El límite de la API del plan Pro aumenta de 200 a 300 requests por minuto.' Ambos fragmentos son vigentes y respaldan directamente la cifra y la unidad mencionadas en la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J11",
+      "type": "claim",
+      "source_id": "e04-c1",
+      "qid": "e04",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "La API devuelve el código HTTP 429 (Too Many Requests) cuando una cuenta supera el límite de requests.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es VIGENTE y está citado por la respuesta, afirma textualmente que la API responde con el código HTTP 429 (Too Many Requests) cuando una cuenta supera el límite, lo cual respalda completamente la afirmación.",
+      "subtypes": [
+        "extractive",
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J12",
+      "type": "claim",
+      "source_id": "e05-c1",
+      "qid": "e05",
+      "stratum": "orig_partially_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "8 usuarios de la cuenta exceden lo incluido en el plan Pro.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "partially_supported",
+        "judge_raw": "partially_supported",
+        "judge_final": "judge_unverifiable",
+        "outcome": "citation_error"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": true,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación dice que 8 usuarios exceden el plan Pro. El fragmento S3 (citado) establece que el plan Pro incluye 10 usuarios. La pregunta establece que el cliente tiene 18 usuarios. La deducción (18 - 10 = 8) es válida y trivial, pero requiere la premisa de la pregunta (18 usuarios) y el dato del fragmento (10 incluidos). Como la etiqueta 'supported' requiere que todo el contenido esté en los fragmentos o se deduzca de ellos, y aquí una premisa clave (18 usuarios) viene de la pregunta, técñ",
+      "subtypes": [
+        "derived",
+        "numeric",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J13",
+      "type": "claim",
+      "source_id": "e05-c2",
+      "qid": "e05",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Cada usuario adicional del plan Pro cuesta USD 12 por mes.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es VIGENTE y está citado por la respuesta, afirma textualmente que 'Cada usuario adicional cuesta USD 12 por mes' para los planes Pro y Pro Plus. Esto respalda completamente la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J14",
+      "type": "claim",
+      "source_id": "e05-c4",
+      "qid": "e05",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "El cliente pagará USD 96 al mes por los 8 usuarios que exceden el límite del plan Pro.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "La afirmación es correcta. El fragmento S4 (citado) establece que el plan Pro incluye 10 usuarios. La pregunta indica que el cliente tiene 18 usuarios activos. Por lo tanto, hay 8 usuarios excedentes (18 - 10 = 8). El fragmento S1 (citado) establece que cada usuario adicional cuesta USD 12 por mes. El cálculo es 8 usuarios * USD 12/usuario = USD 96. Todos los datos necesarios están en los fragmentos citados y la pregunta.",
+      "subtypes": [
+        "derived",
+        "numeric",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J15",
+      "type": "claim",
+      "source_id": "e06-c1",
+      "qid": "e06",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Un cliente tiene 30 días corridos desde el primer cobro para solicitar el reembolso de una suscripción mensual nueva.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación coincide exactamente con el texto del fragmento S2, que es la versión vigente (VIGENTE desde 2026-03-01) y está citado por la respuesta. El fragmento S1 es histórico y contradice el número de días, pero la regla de vigencia prioriza al S2 para el alcance 'current'.",
+      "subtypes": [
+        "numeric",
+        "version"
+      ]
+    },
+    {
+      "case_id": "J16",
+      "type": "claim",
+      "source_id": "e14-c1",
+      "qid": "e14",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Tras cancelar la cuenta, el cliente puede exportar sus datos durante los 30 días de modo solo lectura.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es vigente y citado, establece explícitamente que tras la cancelación la cuenta pasa a modo de solo lectura durante 30 días y que durante ese período el cliente puede exportar sus datos. Esto respalda completamente la afirmación.",
+      "subtypes": [
+        "numeric",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J17",
+      "type": "claim",
+      "source_id": "e14-c2",
+      "qid": "e14",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Los datos pueden exportarse en formato CSV y JSON.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S2, citado por la respuesta, afirma explícitamente que los datos pueden exportarse en formato CSV o JSON. Esto respalda completamente la afirmación.",
+      "subtypes": [
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J18",
+      "type": "claim",
+      "source_id": "e18-c1",
+      "qid": "e18",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Si un cobro falla, Kestrel lo reintenta automáticamente tres veces: el día 1, el día 3 y el día 7.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación coincide textualmente con el contenido del fragmento S1, que es vigente y citado por la respuesta. Los detalles sobre los reintentos (días 1, 3 y 7) están explícitamente respaldados.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J19",
+      "type": "claim",
+      "source_id": "e18-c2",
+      "qid": "e18",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Si la deuda no se regulariza, la cuenta se suspende a los 21 días del primer cobro fallido.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación es una copia textual de la última oración del fragmento S1, que es VIGENTE y está citado por la respuesta.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J20",
+      "type": "claim",
+      "source_id": "e19-c1",
+      "qid": "e19",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Una vez finalizada la migración a Enterprise, los logs de la API pueden conservarse hasta 365 días.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "El fragmento S1 establece que las cuentas Enterprise pueden extender la retención de logs hasta 365 días. El fragmento S2 confirma que esta retención extendida se activa cuando la migración finaliza. Por lo tanto, la afirmación de que los logs pueden conservarse hasta 365 días una vez finalizada la migración está completamente respaldada por los fragmentos citados.",
+      "subtypes": [
+        "numeric",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J21",
+      "type": "claim",
+      "source_id": "e19-c2",
+      "qid": "e19",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Antes de que finalice la migración a Enterprise, se aplica la retención estándar de 90 días para los logs de la API.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "El fragmento S1 establece que los logs se conservan 90 días en todas las regiones (lo que incluye a la cuenta Pro antes de migrar). El fragmento S2 indica que la retención extendida (exclusiva de Enterprise) se activa cuando la migración finaliza, lo que implica que hasta ese momento se aplica la retención estándar de 90 días mencionada en S1. La afirmación está completamente respaldada por la combinación de estos dos fragmentos citados.",
+      "subtypes": [
+        "derived",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J22",
+      "type": "claim",
+      "source_id": "e21-c1",
+      "qid": "e21",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Al pasar a un plan inferior, la diferencia de precio no se devuelve al medio de pago.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación coincide textualmente con el fragmento S2, que es el documento vigente (VIGENTE desde 2026-03-01) y está citado por la respuesta. El fragmento S1 es histórico y contradice la afirmación, pero al ser el alcance temporal 'current' (fecha de referencia 2026-11-01), solo se considera el documento vigente S2.",
+      "subtypes": [
+        "negation",
+        "version"
+      ]
+    },
+    {
+      "case_id": "J23",
+      "type": "claim",
+      "source_id": "e23-c1",
+      "qid": "e23",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "El período de prueba gratuito dura 14 días.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es VIGENTE y está citado por la respuesta, establece explícitamente que las cuentas nuevas pueden probar el plan Pro durante 14 días, lo cual respalda la duración del período de prueba gratuito.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J24",
+      "type": "claim",
+      "source_id": "e27-c1",
+      "qid": "e27",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "El plan Pro no tiene SLA contractual.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es VIGENTE y está citado por la respuesta, afirma textualmente que 'Los planes Starter y Pro no tienen SLA contractual'. Esto respalda completamente la afirmación.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J25",
+      "type": "claim",
+      "source_id": "e27-c2",
+      "qid": "e27",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "El plan Pro cuenta con un objetivo interno de disponibilidad del 99,5% cuyo incumplimiento no genera créditos.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, citado por la respuesta, establece explícitamente que para el plan Pro (junto con Starter) se mantiene un objetivo interno de 99,5% de disponibilidad y que su incumplimiento no genera créditos. Esto respalda completamente la afirmación.",
+      "subtypes": [
+        "numeric",
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J26",
+      "type": "claim",
+      "source_id": "e28-c2",
+      "qid": "e28",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Cambiar a un plan superior permite a la cuenta Starter seguir emitiendo facturas en el mismo ciclo.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "El fragmento S1 establece explícitamente que la emisión queda bloqueada hasta que la cuenta pase a un plan superior, lo que implica que el cambio permite desbloquear la emisión antes del fin del ciclo. El fragmento S3 confirma que el cambio de Starter a un plan superior (Pro) se aplica de inmediato. Por lo tanto, la afirmación de que cambiar de plan permite seguir emitiendo en el mismo ciclo está respaldada por la combinación de estos dos fragmentos citados.",
+      "subtypes": [
+        "derived",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J27",
+      "type": "claim",
+      "source_id": "e29-c1",
+      "qid": "e29",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Una cuenta Enterprise con disponibilidad mensual de 99,2% recibe un crédito del 25 % de la cuota mensual.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1 establece explícitamente que para una cuenta Enterprise, si la disponibilidad es menor a 99,5% pero igual o mayor a 99,0%, el crédito es del 25%. Dado que 99,2% cae en ese rango, la afirmación está totalmente respaldada.",
+      "subtypes": [
+        "numeric",
+        "derived"
+      ]
+    },
+    {
+      "case_id": "J28",
+      "type": "claim",
+      "source_id": "e31-c1",
+      "qid": "e31",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "El receptor debe validar la firma HMAC‑SHA256 incluida en el encabezado Kestrel‑Signature.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, citado por la respuesta y vigente, establece explícitamente que cada webhook incluye una firma HMAC-SHA256 en el encabezado Kestrel-Signature y que el receptor debe verificarla. Esto respalda completamente la afirmación.",
+      "subtypes": [
+        "extractive"
+      ]
+    },
+    {
+      "case_id": "J29",
+      "type": "claim",
+      "source_id": "e31-c2",
+      "qid": "e31",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Validar la firma permite confirmar que el webhook proviene de Kestrel.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, citado por la respuesta, establece explícitamente que cada webhook incluye una firma y que el receptor debe verificarla. Dado que la firma se calcula con el secreto del endpoint de Kestrel, la verificación de dicha firma es el mecanismo descrito para confirmar la autenticidad del envío (que proviene de Kestrel).",
+      "subtypes": [
+        "derived"
+      ]
+    },
+    {
+      "case_id": "J30",
+      "type": "claim",
+      "source_id": "e32-c1",
+      "qid": "e32",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Una cuenta Pro Plus puede registrar hasta 20 endpoints de webhook.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "El fragmento S1, que es vigente y está citado, afirma explícitamente que una cuenta Pro Plus puede registrar hasta 20 endpoints de webhook, lo cual respalda completamente la afirmación.",
+      "subtypes": [
+        "numeric",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J31",
+      "type": "claim",
+      "source_id": "e36-c1",
+      "qid": "e36",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "El plan Pro no incluye inicio de sesión único (SSO).",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "El fragmento S2 (citado) establece explícitamente que el SSO está disponible en los planes Pro Plus y Enterprise, lo que implica que no está disponible en el plan Pro. El fragmento S1 (citado) refuerza esto indicando que el SSO se habilita al pasar de Pro a Pro Plus, confirmando que el plan Pro no lo incluye por defecto.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J32",
+      "type": "claim",
+      "source_id": "e36-c2",
+      "qid": "e36",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Para habilitar SSO, un cliente Pro debe pasar al plan Pro Plus.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "Los fragmentos citados S1 y S2 confirman que el SSO no está disponible en el plan Pro (S2 lo limita a Pro Plus y Enterprise) y que la acción para habilitarlo desde Pro es pasar al plan Pro Plus (S1).",
+      "subtypes": [
+        "derived",
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J33",
+      "type": "claim",
+      "source_id": "e36-c3",
+      "qid": "e36",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Para habilitar SSO, un cliente Pro debe cambiarse a un plan que lo soporte, como Pro Plus o Enterprise.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "La afirmación indica que un cliente Pro debe cambiarse a un plan que soporte SSO, como Pro Plus o Enterprise. El fragmento S2 establece explícitamente que el SSO está disponible en los planes Pro Plus y Enterprise (lo que implica que no está en Pro, dado que S1 menciona que se habilita al pasar a Pro Plus). El fragmento S1 confirma que al pasar de Pro a Pro Plus se habilita el SSO. Por lo tanto, la afirmación está completamente respaldada por los fragmentos citados.",
+      "subtypes": [
+        "multi_hop"
+      ]
+    },
+    {
+      "case_id": "J34",
+      "type": "claim",
+      "source_id": "e39-c1",
+      "qid": "e39",
+      "stratum": "orig_supported",
+      "origin": "full",
+      "synthetic_control": false,
+      "claim_text": "Una vez aprobado, el reembolso se acredita en el medio de pago original en un plazo de 5 a 10 días hábiles.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "human_label_round1",
+      "label_cited": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "supported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación coincide textualmente con el contenido del fragmento S1, que es la versión vigente de la política de reembolsos. El fragmento S2 es histórico y contiene información diferente, pero no invalida el respaldo de la versión vigente.",
+      "subtypes": [
+        "numeric",
+        "version"
+      ]
+    },
+    {
+      "case_id": "J35",
+      "type": "perturbation",
+      "source_id": "e01-c1-p-number",
+      "qid": "e01",
+      "stratum": "pert_number",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Una cuenta del plan Starter puede emitir hasta 1000 facturas por mes.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que el plan Starter permite emitir hasta 1000 facturas por mes. Sin embargo, el fragmento S1 (citado y vigente) establece explícitamente que 'Permite emitir hasta 500 facturas por mes'. Por lo tanto, los fragmentos contradicen la cifra proporcionada en la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J36",
+      "type": "perturbation",
+      "source_id": "e02-c1-p-number",
+      "qid": "e02",
+      "stratum": "pert_number",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Una cuenta Pro tiene un límite de 900 requests por minuto en la API.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "La afirmación indica un límite de 900 requests por minuto. Sin embargo, los fragmentos citados (S1 y S2) establecen explícitamente que el límite para una cuenta Pro es de 300 requests por minuto. Por lo tanto, los fragmentos contradicen la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J37",
+      "type": "perturbation",
+      "source_id": "e04-c1-p-number",
+      "qid": "e04",
+      "stratum": "pert_number",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "La API devuelve el código HTTP 858 (Too Many Requests) cuando una cuenta supera el límite de requests.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que el código es 858, pero el fragmento S1 (citado y vigente) establece explícitamente que el código es 429. Por lo tanto, los fragmentos contradicen la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J38",
+      "type": "perturbation",
+      "source_id": "e05-c2-p-number",
+      "qid": "e05",
+      "stratum": "pert_number",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Cada usuario adicional del plan Pro cuesta USD 36 por mes.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que el costo es de USD 36, pero el fragmento S1 (citado) y el contexto establecen explícitamente que el costo es de USD 12 por mes. Los fragmentos contradicen la cifra de la afirmación.",
+      "subtypes": [
+        "numeric"
+      ]
+    },
+    {
+      "case_id": "J39",
+      "type": "perturbation",
+      "source_id": "e14-c2-p-negation",
+      "qid": "e14",
+      "stratum": "pert_negation",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Los datos no pueden exportarse en formato CSV y JSON.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación A1 sostiene que los datos NO pueden exportarse en CSV y JSON. Sin embargo, el fragmento S2 (citado y vigente) establece explícitamente que \"Los datos de facturas, clientes y pagos pueden exportarse en formato CSV o JSON\". Por lo tanto, los fragmentos contradicen directamente la afirmación.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J40",
+      "type": "perturbation",
+      "source_id": "e18-c2-p-negation",
+      "qid": "e18",
+      "stratum": "pert_negation",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Si la deuda se regulariza, la cuenta se suspende a los 21 días del primer cobro fallido.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 0
+      },
+      "rationale": "La afirmación A1 dice que la cuenta se suspende si la deuda se regulariza. El fragmento S1 (citado) establece explícitamente lo contrario: \"Si la deuda no se regulariza, la cuenta se suspende a los 21 días del primer cobro fallido.\" Por lo tanto, los fragmentos contradicen la afirmación.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J41",
+      "type": "perturbation",
+      "source_id": "e19-c1-p-unit",
+      "qid": "e19",
+      "stratum": "pert_unit",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Una vez finalizada la migración a Enterprise, los logs de la API pueden conservarse hasta 365 meses.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que los logs pueden conservarse hasta 365 meses. El fragmento S1 establece explícitamente que la retención se extiende hasta 365 días. Existe una discrepancia directa en la unidad de tiempo (meses vs días), por lo que la afirmación no está respaldada.",
+      "subtypes": [
+        "unit"
+      ]
+    },
+    {
+      "case_id": "J42",
+      "type": "perturbation",
+      "source_id": "e21-c1-p-negation",
+      "qid": "e21",
+      "stratum": "pert_negation",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Al pasar a un plan inferior, la diferencia de precio se devuelve al medio de pago.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación dice que la diferencia se devuelve al medio de pago. El fragmento S2 (citado y vigente) establece explícitamente lo contrario: 'la diferencia de precio no se devuelve al medio de pago'. El fragmento S1, que sí lo afirmaba, es histórico y no aplica al alcance temporal 'current'.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J43",
+      "type": "perturbation",
+      "source_id": "e21-c2-p-negation",
+      "qid": "e21",
+      "stratum": "pert_negation",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Al pasar a un plan inferior, la diferencia de precio no se acredita como saldo a favor en la cuenta.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación A1 dice que la diferencia 'no se acredita como saldo a favor'. Sin embargo, el fragmento S2 (vigente y citado) establece explícitamente que 'se acredita como saldo a favor en la cuenta'. Por lo tanto, los fragmentos contradicen directamente la afirmación.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J44",
+      "type": "perturbation",
+      "source_id": "e23-c1-p-unit",
+      "qid": "e23",
+      "stratum": "pert_unit",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "El período de prueba gratuito dura 14 meses.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que el período dura 14 meses, pero el fragmento S1 (citado y vigente) establece explícitamente que dura 14 días. La contradicción en la unidad de tiempo (meses vs días) hace que la afirmación sea incorrecta según los documentos.",
+      "subtypes": [
+        "unit"
+      ]
+    },
+    {
+      "case_id": "J45",
+      "type": "perturbation",
+      "source_id": "e27-c2-p-negation",
+      "qid": "e27",
+      "stratum": "pert_negation",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "El plan Pro cuenta con un objetivo interno de disponibilidad del 99,5% cuyo incumplimiento genera créditos.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación sostiene que el incumplimiento del objetivo interno genera créditos. El fragmento S1 (citado y vigente) establece explícitamente lo contrario: \"su incumplimiento no genera créditos\". Por lo tanto, los fragmentos contradicen la afirmación.",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J46",
+      "type": "perturbation",
+      "source_id": "e28-c2-p-negation",
+      "qid": "e28",
+      "stratum": "pert_negation",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Cambiar a un plan superior no permite a la cuenta Starter seguir emitiendo facturas en el mismo ciclo.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "semantic_error"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "supported",
+        "judge_final": "supported",
+        "outcome": "semantic_error"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 2
+      },
+      "rationale": "El fragmento S1 establece que al alcanzar el límite, la emisión queda bloqueada hasta el próximo ciclo o hasta pasar a un plan superior. El fragmento S3 indica que el cambio de Starter a Pro se aplica de inmediato. Combinando ambas premisas, se deduce que cambiar a un plan superior permite desbloquear la emisión de inmediato, por lo que la afirmación de que 'no permite seguir emitiendo en el mismo ciclo' es falsa según los documentos. Sin embargo, revisando la lógica: La afirmación dice 'no'",
+      "subtypes": [
+        "negation"
+      ]
+    },
+    {
+      "case_id": "J47",
+      "type": "perturbation",
+      "source_id": "e39-c1-p-unit",
+      "qid": "e39",
+      "stratum": "pert_unit",
+      "origin": "full",
+      "synthetic_control": true,
+      "claim_text": "Una vez aprobado, el reembolso se acredita en el medio de pago original en un plazo de 5 a 10 días corridos.",
+      "status": "ok",
+      "technical_error": null,
+      "reference_source": "perturbation_confirmed",
+      "label_cited": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "label_context": {
+        "reference": "unsupported",
+        "judge_raw": "unsupported",
+        "judge_final": "unsupported",
+        "outcome": "agree"
+      },
+      "citation_flags": {
+        "unverifiable_cited": false,
+        "unverifiable_context": false,
+        "n_invalid_quotes": 0,
+        "n_quotes": 1
+      },
+      "rationale": "La afirmación indica que el plazo es de '5 a 10 días corridos', mientras que el fragmento S1 (vigente y citado) especifica explícitamente '5 a 10 días hábiles'. Dado que 'días corridos' y 'días hábiles' son unidades de tiempo distintas, la afirmación no está respaldada por los fragmentos.",
+      "subtypes": [
+        "unit"
+      ]
+    }
+  ],
+  "per_field": {
+    "label_cited": {
+      "reference": "humano",
+      "evaluated": "juez",
+      "n_compared": 47,
+      "missing_in_evaluated": [],
+      "missing_in_reference": [],
+      "confusion_matrix": {
+        "rows_reference": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "insufficient_context"
+        ],
+        "cols_evaluated": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "insufficient_context",
+          "judge_unverifiable"
+        ],
+        "counts": {
+          "supported": {
+            "supported": 27,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          },
+          "partially_supported": {
+            "supported": 1,
+            "partially_supported": 1,
+            "unsupported": 0,
+            "insufficient_context": 0,
+            "judge_unverifiable": 1
+          },
+          "unsupported": {
+            "supported": 1,
+            "partially_supported": 0,
+            "unsupported": 16,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          },
+          "insufficient_context": {
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          }
+        }
+      },
+      "agreement": {
+        "value": 0.9362,
+        "k": 44,
+        "n": 47,
+        "wilson95": [
+          0.8284,
+          0.9781
+        ]
+      },
+      "cohen_kappa": {
+        "value": 0.8775,
+        "note": null
+      },
+      "binary": {
+        "agreement": 0.9574,
+        "cohen_kappa": {
+          "value": 0.9118,
+          "note": null
+        }
+      },
+      "evaluated_supported_reference_not": {
+        "claim_ids": [
+          "J02",
+          "J46"
+        ],
+        "detail": [
+          {
+            "claim_id": "J02",
+            "reference": "partially_supported",
+            "evaluated": "supported"
+          },
+          {
+            "claim_id": "J46",
+            "reference": "unsupported",
+            "evaluated": "supported"
+          }
+        ],
+        "k": 2,
+        "n_reference_not_supported": 20,
+        "rate": 0.1,
+        "wilson95": [
+          0.0279,
+          0.301
+        ]
+      },
+      "evaluated_not_reference_supported": {
+        "claim_ids": [],
+        "k": 0,
+        "n_reference_supported": 27,
+        "rate": 0.0,
+        "wilson95": [
+          0.0,
+          0.1246
+        ]
+      },
+      "warning": "Muestra pequeña (n=47): los intervalos son amplios y el acuerdo observado no demuestra confiabilidad del evaluador.",
+      "outcomes": {
+        "agree": 44,
+        "semantic_error": 2,
+        "citation_error": 1
+      }
+    },
+    "label_context": {
+      "reference": "humano",
+      "evaluated": "juez",
+      "n_compared": 47,
+      "missing_in_evaluated": [],
+      "missing_in_reference": [],
+      "confusion_matrix": {
+        "rows_reference": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "insufficient_context"
+        ],
+        "cols_evaluated": [
+          "supported",
+          "partially_supported",
+          "unsupported",
+          "insufficient_context",
+          "judge_unverifiable"
+        ],
+        "counts": {
+          "supported": {
+            "supported": 29,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          },
+          "partially_supported": {
+            "supported": 1,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          },
+          "unsupported": {
+            "supported": 1,
+            "partially_supported": 0,
+            "unsupported": 16,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          },
+          "insufficient_context": {
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "insufficient_context": 0,
+            "judge_unverifiable": 0
+          }
+        }
+      },
+      "agreement": {
+        "value": 0.9574,
+        "k": 45,
+        "n": 47,
+        "wilson95": [
+          0.8575,
+          0.9883
+        ]
+      },
+      "cohen_kappa": {
+        "value": 0.9094,
+        "note": null
+      },
+      "binary": {
+        "agreement": 0.9574,
+        "cohen_kappa": {
+          "value": 0.908,
+          "note": null
+        }
+      },
+      "evaluated_supported_reference_not": {
+        "claim_ids": [
+          "J02",
+          "J46"
+        ],
+        "detail": [
+          {
+            "claim_id": "J02",
+            "reference": "partially_supported",
+            "evaluated": "supported"
+          },
+          {
+            "claim_id": "J46",
+            "reference": "unsupported",
+            "evaluated": "supported"
+          }
+        ],
+        "k": 2,
+        "n_reference_not_supported": 18,
+        "rate": 0.1111,
+        "wilson95": [
+          0.031,
+          0.328
+        ]
+      },
+      "evaluated_not_reference_supported": {
+        "claim_ids": [],
+        "k": 0,
+        "n_reference_supported": 29,
+        "rate": 0.0,
+        "wilson95": [
+          0.0,
+          0.117
+        ]
+      },
+      "warning": "Muestra pequeña (n=47): los intervalos son amplios y el acuerdo observado no demuestra confiabilidad del evaluador.",
+      "outcomes": {
+        "agree": 45,
+        "semantic_error": 2
+      }
+    }
+  },
+  "per_group": {
+    "originales": {
+      "label_cited": {
+        "reference": "humano",
+        "evaluated": "juez",
+        "n_compared": 30,
+        "missing_in_evaluated": [],
+        "missing_in_reference": [],
+        "confusion_matrix": {
+          "rows_reference": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context"
+          ],
+          "cols_evaluated": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context",
+            "judge_unverifiable"
+          ],
+          "counts": {
+            "supported": {
+              "supported": 27,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "partially_supported": {
+              "supported": 1,
+              "partially_supported": 1,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 1
+            },
+            "unsupported": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "insufficient_context": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            }
+          }
+        },
+        "agreement": {
+          "value": 0.9333,
+          "k": 28,
+          "n": 30,
+          "wilson95": [
+            0.7868,
+            0.9815
+          ]
+        },
+        "cohen_kappa": {
+          "value": 0.5745,
+          "note": null
+        },
+        "binary": {
+          "agreement": 0.9667,
+          "cohen_kappa": {
+            "value": 0.7826,
+            "note": null
+          }
+        },
+        "evaluated_supported_reference_not": {
+          "claim_ids": [
+            "J02"
+          ],
+          "detail": [
+            {
+              "claim_id": "J02",
+              "reference": "partially_supported",
+              "evaluated": "supported"
+            }
+          ],
+          "k": 1,
+          "n_reference_not_supported": 3,
+          "rate": 0.3333,
+          "wilson95": [
+            0.0615,
+            0.7923
+          ]
+        },
+        "evaluated_not_reference_supported": {
+          "claim_ids": [],
+          "k": 0,
+          "n_reference_supported": 27,
+          "rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.1246
+          ]
+        },
+        "warning": "Muestra pequeña (n=30): los intervalos son amplios y el acuerdo observado no demuestra confiabilidad del evaluador."
+      },
+      "label_context": {
+        "reference": "humano",
+        "evaluated": "juez",
+        "n_compared": 30,
+        "missing_in_evaluated": [],
+        "missing_in_reference": [],
+        "confusion_matrix": {
+          "rows_reference": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context"
+          ],
+          "cols_evaluated": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context",
+            "judge_unverifiable"
+          ],
+          "counts": {
+            "supported": {
+              "supported": 29,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "partially_supported": {
+              "supported": 1,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "unsupported": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "insufficient_context": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            }
+          }
+        },
+        "agreement": {
+          "value": 0.9667,
+          "k": 29,
+          "n": 30,
+          "wilson95": [
+            0.8333,
+            0.9941
+          ]
+        },
+        "cohen_kappa": {
+          "value": 0.0,
+          "note": null
+        },
+        "binary": {
+          "agreement": 0.9667,
+          "cohen_kappa": {
+            "value": 0.0,
+            "note": null
+          }
+        },
+        "evaluated_supported_reference_not": {
+          "claim_ids": [
+            "J02"
+          ],
+          "detail": [
+            {
+              "claim_id": "J02",
+              "reference": "partially_supported",
+              "evaluated": "supported"
+            }
+          ],
+          "k": 1,
+          "n_reference_not_supported": 1,
+          "rate": 1.0,
+          "wilson95": [
+            0.2065,
+            1.0
+          ]
+        },
+        "evaluated_not_reference_supported": {
+          "claim_ids": [],
+          "k": 0,
+          "n_reference_supported": 29,
+          "rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.117
+          ]
+        },
+        "warning": "Muestra pequeña (n=30): los intervalos son amplios y el acuerdo observado no demuestra confiabilidad del evaluador."
+      }
+    },
+    "perturbaciones_sinteticas": {
+      "label_cited": {
+        "reference": "humano",
+        "evaluated": "juez",
+        "n_compared": 17,
+        "missing_in_evaluated": [],
+        "missing_in_reference": [],
+        "confusion_matrix": {
+          "rows_reference": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context"
+          ],
+          "cols_evaluated": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context",
+            "judge_unverifiable"
+          ],
+          "counts": {
+            "supported": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "partially_supported": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "unsupported": {
+              "supported": 1,
+              "partially_supported": 0,
+              "unsupported": 16,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "insufficient_context": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            }
+          }
+        },
+        "agreement": {
+          "value": 0.9412,
+          "k": 16,
+          "n": 17,
+          "wilson95": [
+            0.7302,
+            0.9895
+          ]
+        },
+        "cohen_kappa": {
+          "value": 0.0,
+          "note": null
+        },
+        "binary": {
+          "agreement": 0.9412,
+          "cohen_kappa": {
+            "value": 0.0,
+            "note": null
+          }
+        },
+        "evaluated_supported_reference_not": {
+          "claim_ids": [
+            "J46"
+          ],
+          "detail": [
+            {
+              "claim_id": "J46",
+              "reference": "unsupported",
+              "evaluated": "supported"
+            }
+          ],
+          "k": 1,
+          "n_reference_not_supported": 17,
+          "rate": 0.0588,
+          "wilson95": [
+            0.0105,
+            0.2698
+          ]
+        },
+        "evaluated_not_reference_supported": {
+          "claim_ids": [],
+          "k": 0,
+          "n_reference_supported": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "warning": "Muestra pequeña (n=17): los intervalos son amplios y el acuerdo observado no demuestra confiabilidad del evaluador."
+      },
+      "label_context": {
+        "reference": "humano",
+        "evaluated": "juez",
+        "n_compared": 17,
+        "missing_in_evaluated": [],
+        "missing_in_reference": [],
+        "confusion_matrix": {
+          "rows_reference": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context"
+          ],
+          "cols_evaluated": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "insufficient_context",
+            "judge_unverifiable"
+          ],
+          "counts": {
+            "supported": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "partially_supported": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "unsupported": {
+              "supported": 1,
+              "partially_supported": 0,
+              "unsupported": 16,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            },
+            "insufficient_context": {
+              "supported": 0,
+              "partially_supported": 0,
+              "unsupported": 0,
+              "insufficient_context": 0,
+              "judge_unverifiable": 0
+            }
+          }
+        },
+        "agreement": {
+          "value": 0.9412,
+          "k": 16,
+          "n": 17,
+          "wilson95": [
+            0.7302,
+            0.9895
+          ]
+        },
+        "cohen_kappa": {
+          "value": 0.0,
+          "note": null
+        },
+        "binary": {
+          "agreement": 0.9412,
+          "cohen_kappa": {
+            "value": 0.0,
+            "note": null
+          }
+        },
+        "evaluated_supported_reference_not": {
+          "claim_ids": [
+            "J46"
+          ],
+          "detail": [
+            {
+              "claim_id": "J46",
+              "reference": "unsupported",
+              "evaluated": "supported"
+            }
+          ],
+          "k": 1,
+          "n_reference_not_supported": 17,
+          "rate": 0.0588,
+          "wilson95": [
+            0.0105,
+            0.2698
+          ]
+        },
+        "evaluated_not_reference_supported": {
+          "claim_ids": [],
+          "k": 0,
+          "n_reference_supported": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "warning": "Muestra pequeña (n=17): los intervalos son amplios y el acuerdo observado no demuestra confiabilidad del evaluador."
+      }
+    }
+  },
+  "by_subtype": {
+    "originales:derived": {
+      "label_cited": {
+        "n": 8,
+        "agree": 7,
+        "agreement": 0.875,
+        "wilson95": [
+          0.5291,
+          0.9776
+        ],
+        "n_reference_not_supported": 2,
+        "judge_supported_reference_not": [],
+        "errors": [
+          "J12"
+        ]
+      },
+      "label_context": {
+        "n": 8,
+        "agree": 8,
+        "agreement": 1.0,
+        "wilson95": [
+          0.6756,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    },
+    "originales:extractive": {
+      "label_cited": {
+        "n": 3,
+        "agree": 3,
+        "agreement": 1.0,
+        "wilson95": [
+          0.4385,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      },
+      "label_context": {
+        "n": 3,
+        "agree": 3,
+        "agreement": 1.0,
+        "wilson95": [
+          0.4385,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    },
+    "originales:multi_hop": {
+      "label_cited": {
+        "n": 12,
+        "agree": 10,
+        "agreement": 0.8333,
+        "wilson95": [
+          0.552,
+          0.953
+        ],
+        "n_reference_not_supported": 3,
+        "judge_supported_reference_not": [
+          "J02"
+        ],
+        "errors": [
+          "J02",
+          "J12"
+        ]
+      },
+      "label_context": {
+        "n": 12,
+        "agree": 11,
+        "agreement": 0.9167,
+        "wilson95": [
+          0.6461,
+          0.9851
+        ],
+        "n_reference_not_supported": 1,
+        "judge_supported_reference_not": [
+          "J02"
+        ],
+        "errors": [
+          "J02"
+        ]
+      }
+    },
+    "originales:negation": {
+      "label_cited": {
+        "n": 4,
+        "agree": 4,
+        "agreement": 1.0,
+        "wilson95": [
+          0.5101,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      },
+      "label_context": {
+        "n": 4,
+        "agree": 4,
+        "agreement": 1.0,
+        "wilson95": [
+          0.5101,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    },
+    "originales:numeric": {
+      "label_cited": {
+        "n": 18,
+        "agree": 17,
+        "agreement": 0.9444,
+        "wilson95": [
+          0.7424,
+          0.9901
+        ],
+        "n_reference_not_supported": 2,
+        "judge_supported_reference_not": [],
+        "errors": [
+          "J12"
+        ]
+      },
+      "label_context": {
+        "n": 18,
+        "agree": 18,
+        "agreement": 1.0,
+        "wilson95": [
+          0.8241,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    },
+    "originales:version": {
+      "label_cited": {
+        "n": 4,
+        "agree": 4,
+        "agreement": 1.0,
+        "wilson95": [
+          0.5101,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      },
+      "label_context": {
+        "n": 4,
+        "agree": 4,
+        "agreement": 1.0,
+        "wilson95": [
+          0.5101,
+          1.0
+        ],
+        "n_reference_not_supported": 0,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    },
+    "perturbaciones_sinteticas:negation": {
+      "label_cited": {
+        "n": 7,
+        "agree": 6,
+        "agreement": 0.8571,
+        "wilson95": [
+          0.4869,
+          0.9743
+        ],
+        "n_reference_not_supported": 7,
+        "judge_supported_reference_not": [
+          "J46"
+        ],
+        "errors": [
+          "J46"
+        ]
+      },
+      "label_context": {
+        "n": 7,
+        "agree": 6,
+        "agreement": 0.8571,
+        "wilson95": [
+          0.4869,
+          0.9743
+        ],
+        "n_reference_not_supported": 7,
+        "judge_supported_reference_not": [
+          "J46"
+        ],
+        "errors": [
+          "J46"
+        ]
+      }
+    },
+    "perturbaciones_sinteticas:numeric": {
+      "label_cited": {
+        "n": 6,
+        "agree": 6,
+        "agreement": 1.0,
+        "wilson95": [
+          0.6097,
+          1.0
+        ],
+        "n_reference_not_supported": 6,
+        "judge_supported_reference_not": [],
+        "errors": []
+      },
+      "label_context": {
+        "n": 6,
+        "agree": 6,
+        "agreement": 1.0,
+        "wilson95": [
+          0.6097,
+          1.0
+        ],
+        "n_reference_not_supported": 6,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    },
+    "perturbaciones_sinteticas:unit": {
+      "label_cited": {
+        "n": 4,
+        "agree": 4,
+        "agreement": 1.0,
+        "wilson95": [
+          0.5101,
+          1.0
+        ],
+        "n_reference_not_supported": 4,
+        "judge_supported_reference_not": [],
+        "errors": []
+      },
+      "label_context": {
+        "n": 4,
+        "agree": 4,
+        "agreement": 1.0,
+        "wilson95": [
+          0.5101,
+          1.0
+        ],
+        "n_reference_not_supported": 4,
+        "judge_supported_reference_not": [],
+        "errors": []
+      }
+    }
+  },
+  "reuse_check": null,
+  "unverifiable_cases": [
+    "J12"
+  ],
+  "invalid_quote_cases": [],
+  "note": "Descriptivo: n chico, casos no aleatorios (afirmaciones de una sola corrida de generación) y perturbaciones sintéticas derivadas de esas mismas afirmaciones. No estima la confiabilidad general del juez ni tasas de error generalizables. Una cita literal válida no demuestra faithfulness.",
+  "pilot_stability": {
+    "note": "control de estabilidad entre configuraciones; no se mezcla en los agregados",
+    "pilots": [
+      {
+        "run": "smoke_qwen3.8-27b",
+        "predictions_sha256": "75156bd63e7e6b9f7674775893792d246f489a0cd7050a6b289924b9046ca24c",
+        "max_completion_tokens": 1536
+      },
+      {
+        "run": "full_qwen3.8-27b",
+        "predictions_sha256": "7047b7c12ee6f1700b075dcbbc1db85e51b6e624353436cc6beb209b1908220a",
+        "max_completion_tokens": 1536
+      }
+    ],
+    "n_pilot_ok": 11,
+    "duplicates_skipped": [
+      {
+        "case_id": "J01",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J02",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J03",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J04",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J05",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J06",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J07",
+        "pilot_run": "full_qwen3.8-27b"
+      },
+      {
+        "case_id": "J08",
+        "pilot_run": "full_qwen3.8-27b"
+      }
+    ],
+    "n_comparable": 11,
+    "same": {
+      "label_cited": 11,
+      "label_context": 11
+    },
+    "changed": [],
+    "cases": [
+      {
+        "case_id": "J01",
+        "source_id": "e05-c3",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "partially_supported",
+          "current": "partially_supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J02",
+        "source_id": "e28-c1",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J03",
+        "source_id": "e18-c1-p-number",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J04",
+        "source_id": "e14-c1-p-number",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J05",
+        "source_id": "e27-c1-p-negation",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J06",
+        "source_id": "e19-c2-p-unit",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "unsupported",
+          "current": "unsupported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J07",
+        "source_id": "e21-c2",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J08",
+        "source_id": "e10-c1",
+        "pilot_run": "smoke_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J09",
+        "source_id": "e01-c1",
+        "pilot_run": "full_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J10",
+        "source_id": "e02-c1",
+        "pilot_run": "full_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      },
+      {
+        "case_id": "J11",
+        "source_id": "e04-c1",
+        "pilot_run": "full_qwen3.8-27b",
+        "current_status": "ok",
+        "label_cited": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        },
+        "label_context": {
+          "pilot": "supported",
+          "current": "supported",
+          "same": true
+        }
+      }
+    ]
+  }
+}

@@ -14,3 +14,13 @@ artifacts/
 
 # Caché de respuestas LLM (regenerable con la API; los resultados quedan en runs/)
 cache/
+
+# Corrida piloto parcial de judge-v1 (Etapa 3B): el mensaje del 429 contiene el identificador
+# real de la organización de Groq. Se conserva localmente sin modificar (hash en el manifiesto).
+runs/stage3/judge/full_qwen3.8-27b/predictions.jsonl
+
+# Registro incremental del juez: copia de trabajo de predictions.jsonl (mismo contenido al terminar).
+runs/stage3/judge/*/predictions.progress.jsonl
+
+# Respaldos locales de planillas tomados antes de editarlas a mano (no son datos del experimento).
+data/stage3/annotation/*.backup.csv
