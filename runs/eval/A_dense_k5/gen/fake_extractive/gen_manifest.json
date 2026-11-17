@@ -1,0 +1,89 @@
+{
+  "stage": 2,
+  "created_at": "2026-11-17T01:45:16+00:00",
+  "run_status": "complete",
+  "abort_reason": null,
+  "partial_qids": null,
+  "split": "eval",
+  "retrieval_run": "runs/eval/A_dense_k5",
+  "retrieval_run_name": "A_dense_k5",
+  "retrieval_method": "dense",
+  "retrieval_config_hash": "e689bd27754e78302b58c7f5a3c9141c58e463a6801dfc43d7d7c3e750ca4b7e",
+  "index_id": "70d9384dbab6e92b",
+  "questions_sha256": "447d773c466a9f24a16dc6605e779d284eb403cab68b9e4bcd5df7fa9cb2bf91",
+  "retrieval_results_sha256": "5d2bf27174b26a547489ab66f8ac32c4f97f38fdf6174915f4cc5a582606f807",
+  "generation_config_path": "configs/gen_fake.toml",
+  "generation_config": {
+    "name": "fake_extractive",
+    "model": {
+      "provider": "fake",
+      "model": "fake-extractive-v1",
+      "temperature": 0.0,
+      "max_completion_tokens": 1024,
+      "reasoning_effort": "low",
+      "seed": 7
+    },
+    "limits": {
+      "timeout_s": 60,
+      "max_retries": 3,
+      "max_retry_after_s": 60,
+      "backoff_base_s": 0.0,
+      "max_concurrency": 1,
+      "min_interval_s": 0.0,
+      "max_calls": 1000,
+      "max_total_tokens": 10000000,
+      "max_consecutive_failures": 3
+    },
+    "prompt_version": "v1",
+    "reference_date": "2026-11-01",
+    "gate_enabled": true
+  },
+  "generation_config_hash": "7ecf64eea53b6892e820e30943a2df76c44bbe3c16a66120427d0405d88f8eeb",
+  "prompt_version": "v1",
+  "prompt_template_sha256": "cc405c86aaecc2631df55604f6e1fe73f3103f5995e8bbb430ed0e4bf0dcf468",
+  "answer_schema_sha256": "bb9f0efa1b2b68d206e0aaa6991971aa4418cad387caf6dbe49a88230b664ea9",
+  "gate": {
+    "threshold": 0.868271,
+    "score_type": "cosine_top1",
+    "rule": "midpoint(max_unanswerable, min_answerable) si separables; si no, min_answerable",
+    "calibration_sha256": "dcaa43069f9e531f73494e4ca9a807eac228eba314845569cf5b3cf9e79e04a5"
+  },
+  "counts": {
+    "n_questions": 40,
+    "status": {
+      "ok": 40
+    },
+    "gate_abstentions": 8,
+    "llm_requests_real": 32,
+    "http_attempts_real": 32,
+    "cache_hits": 0,
+    "budget_calls_reserved": 32
+  },
+  "tokens_real": {
+    "prompt_tokens": 28807,
+    "completion_tokens": 1351,
+    "reasoning_tokens": 0,
+    "total_tokens": 30158
+  },
+  "latency_s_real_total": 0.0,
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "torch_num_threads": 8,
+    "packages": {
+      "chromadb": "1.5.9",
+      "sentence-transformers": "6.2.0",
+      "transformers": "5.22.1",
+      "tokenizers": "0.23.3",
+      "torch": "2.15.0+cpu",
+      "numpy": "2.5.4",
+      "rank-bm25": "0.2.2",
+      "huggingface-hub": "2.4.0"
+    },
+    "uv_lock_sha256": "dbffedba468acf9384f843e96fc8e80e9c974dea66a5680312d80947fae69cc8",
+    "git_commit": "25a09509e2050074d249c8ac2f4bc1f2b7a5e1fe",
+    "groq_sdk": "1.7.0"
+  }
+}

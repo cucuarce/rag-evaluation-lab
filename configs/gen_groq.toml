@@ -1,0 +1,29 @@
+# Generación con Groq (Etapa 2). Se aplica igual a las corridas de retrieval A y B.
+# La clave se lee de GROQ_API_KEY (variable de entorno o .env local, ignorado por git).
+
+[generation]
+name = "groq_gpt-oss-120b"
+prompt_version = "v1"
+reference_date = "2026-11-01"   # "hoy" para distinguir consultas vigentes de históricas
+
+[model]
+provider = "groq"
+model = "openai/gpt-oss-120b"   # producción en Groq; structured outputs con strict=true
+temperature = 0.2               # baja; ver docs/generation.md (gpt-oss es un modelo de razonamiento)
+max_completion_tokens = 1024    # incluye tokens de razonamiento
+reasoning_effort = "low"
+seed = 7
+
+[limits]
+timeout_s = 60
+max_retries = 3                 # solo errores transitorios: timeout, conexión, 5xx, 429 corto
+max_retry_after_s = 60          # 429 con retry-after mayor => cuota agotada: se frena la corrida
+backoff_base_s = 2.0
+max_concurrency = 1
+min_interval_s = 2.5            # <= 24 RPM (límite publicado: 30 RPM)
+max_calls = 45                  # por comando: 40 preguntas + margen
+max_total_tokens = 120000       # por comando (límite publicado: 200K tokens/día)
+max_consecutive_failures = 3
+
+[gate]
+enabled = true                  # umbral calibrado SOLO con el split calibration

@@ -4,8 +4,9 @@ Laboratorio local y reproducible para medir la calidad de un sistema RAG sobre l
 conocimiento de **Kestrel Billing**, una SaaS de facturación **ficticia**. Todos los
 documentos, preguntas y datos son inventados para este proyecto.
 
-> **Estado: Etapa 1 — evaluación de retrieval.** No hay generación con LLM, prompts,
-> abstención, Ragas, jueces ni dashboard todavía. No requiere LLM, API externa ni credenciales.
+> **Estado: Etapa 2 — generación con citas y abstención** sobre el retrieval de la Etapa 1.
+> No hay Ragas, juez LLM, dashboard ni configuración C. La Etapa 1 y todo el pipeline de la
+> Etapa 2 corren offline; solo la generación real usa la API de Groq (`GROQ_API_KEY`).
 
 ## Qué hace hoy
 
@@ -67,6 +68,35 @@ uv run ruff check . && uv run ruff format --check .
 El split `calibration` (10 preguntas separadas) se evalúa con `--split calibration`. Está
 reservado para calibrar umbrales en la Etapa 2; no debe usarse para elegir configuraciones.
 
+## Etapa 2: generación (ver [`docs/generation.md`](docs/generation.md))
+
+```bash
+# 0. Clave: copiar .env.example a .env y completar GROQ_API_KEY (.env está en .gitignore)
+
+# 1. Calibrar el gate de abstención (SOLO con el split calibration)
+uv run rag-lab eval --config configs/a_dense_k5.toml --split calibration
+uv run rag-lab eval --config configs/b_hybrid_k5.toml --split calibration
+uv run rag-lab calibrate-gate runs/calibration/A_dense_k5
+uv run rag-lab calibrate-gate runs/calibration/B_hybrid_k5
+
+# 2. Pipeline completo offline, sin red (generador simulado y determinístico)
+uv run rag-lab generate runs/eval/A_dense_k5 --gen-config configs/gen_fake.toml
+uv run rag-lab generate runs/eval/B_hybrid_k5 --gen-config configs/gen_fake.toml
+
+# 3. Validar config y clave (sin generar); --online lista modelos con 1 GET
+uv run rag-lab gen-check --gen-config configs/gen_groq.toml --online
+
+# 4. Smoke con Groq (pocas preguntas) y luego el benchmark (con caché en cache/llm/)
+uv run rag-lab generate runs/calibration/A_dense_k5 --gen-config configs/gen_groq.toml     --qids c01,c09 --out runs/smoke/calibration_A
+uv run rag-lab generate runs/eval/A_dense_k5 --gen-config configs/gen_groq.toml     --qids e06,e10,e21 --out runs/smoke/eval_A
+uv run rag-lab generate runs/eval/A_dense_k5 --gen-config configs/gen_groq.toml
+uv run rag-lab generate runs/eval/B_hybrid_k5 --gen-config configs/gen_groq.toml
+uv run rag-lab compare-gen runs/eval/A_dense_k5/gen/groq_gpt-oss-120b     runs/eval/B_hybrid_k5/gen/groq_gpt-oss-120b
+```
+
+Con la caché poblada, re-ejecutar los pasos 4 no hace llamadas: reproduce las métricas a
+partir de las respuestas guardadas.
+
 ## Salidas
 
 | Ruta | Contenido |
@@ -78,6 +108,12 @@ reservado para calibrar umbrales en la Etapa 2; no debe usarse para elegir confi
 | `runs/<split>/<run>/summary.json` | agregados globales y por categoría |
 | `reports/compare_*.json` | comparación pareada A vs B |
 | `reports/stability_*.json` | estabilidad, diagnóstico ANN vs búsqueda exacta, casi-empates |
+| `reports/gate_<run>.json` | umbral del gate calibrado con el split calibration |
+| `runs/<split>/<run>/gen/<gen>/generations.jsonl` | respuesta cruda y validada, citas, gate, tokens, latencia, errores |
+| `runs/<split>/<run>/gen/<gen>/gen_manifest.json` | modelo, parámetros, hashes de prompt/esquema/datos, llamadas y tokens |
+| `runs/<split>/<run>/gen/<gen>/gen_summary.json` | métricas de generación (`gen_per_question.jsonl` por pregunta) |
+| `reports/compare_gen_*.json` | comparación pareada de generación A vs B |
+| `cache/llm/` | caché de respuestas de la API (no versionada) |
 
 ## Dataset
 

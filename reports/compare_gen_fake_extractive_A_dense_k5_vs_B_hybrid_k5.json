@@ -1,0 +1,238 @@
+{
+  "run_a": "A_dense_k5",
+  "run_b": "B_hybrid_k5",
+  "generation": "fake_extractive",
+  "shared": {
+    "split": "eval",
+    "index_id": "70d9384dbab6e92b",
+    "questions_sha256": "447d773c466a9f24a16dc6605e779d284eb403cab68b9e4bcd5df7fa9cb2bf91",
+    "labels_sha256": "ee9c0f3ac62a40dc16c91cbfae87c9f83c117ec7ec59b3a3e8fe7e9cab932ab6",
+    "prompt_template_sha256": "cc405c86aaecc2631df55604f6e1fe73f3103f5995e8bbb430ed0e4bf0dcf468",
+    "answer_schema_sha256": "bb9f0efa1b2b68d206e0aaa6991971aa4418cad387caf6dbe49a88230b664ea9",
+    "run_status": "complete",
+    "partial_qids": null
+  },
+  "summary_a": {
+    "status_counts": {
+      "ok": 40
+    },
+    "n_ok": 40,
+    "answerable": {
+      "n": 30,
+      "answered": 29,
+      "abstained_gate": 1,
+      "abstained_llm": 0,
+      "over_abstention": 1,
+      "abstained_with_incomplete_evidence": 0,
+      "answered_with_incomplete_evidence": 1,
+      "over_abstention_rate": 0.0333
+    },
+    "unanswerable": {
+      "n": 10,
+      "abstained_gate": 7,
+      "abstained_llm": 0,
+      "improper_answers": 3,
+      "improper_answer_rate": 0.3
+    },
+    "answered_answerable": {
+      "required_facts_coverage": {
+        "value": 0.3736,
+        "n": 29
+      },
+      "all_required_facts": {
+        "value": 0.3103,
+        "n": 29
+      },
+      "forbidden_present": {
+        "value": 0.2222,
+        "n": 9
+      },
+      "citation_precision": {
+        "value": 0.9655,
+        "n": 29
+      },
+      "cited_evidence_recall": {
+        "value": 0.8218,
+        "n": 29
+      }
+    },
+    "citations_all_answered": {
+      "n_answered": 32,
+      "citation_validity": {
+        "value": 1.0,
+        "n": 32
+      },
+      "answers_with_invalid_citations": 0,
+      "uncited_answers": 0
+    },
+    "version_selection": {
+      "checked": [
+        "e06",
+        "e10",
+        "e14",
+        "e18",
+        "e21",
+        "e39"
+      ],
+      "errors": [],
+      "temporal_rule_disagreements": []
+    },
+    "abstention_causes": {
+      "gate": 8,
+      "llm": 0
+    },
+    "errors": {
+      "format_errors": 0,
+      "api_errors": 0,
+      "not_run": 0,
+      "consistency_issues": 0
+    }
+  },
+  "summary_b": {
+    "status_counts": {
+      "ok": 40
+    },
+    "n_ok": 40,
+    "answerable": {
+      "n": 30,
+      "answered": 29,
+      "abstained_gate": 1,
+      "abstained_llm": 0,
+      "over_abstention": 1,
+      "abstained_with_incomplete_evidence": 0,
+      "answered_with_incomplete_evidence": 1,
+      "over_abstention_rate": 0.0333
+    },
+    "unanswerable": {
+      "n": 10,
+      "abstained_gate": 7,
+      "abstained_llm": 0,
+      "improper_answers": 3,
+      "improper_answer_rate": 0.3
+    },
+    "answered_answerable": {
+      "required_facts_coverage": {
+        "value": 0.408,
+        "n": 29
+      },
+      "all_required_facts": {
+        "value": 0.3448,
+        "n": 29
+      },
+      "forbidden_present": {
+        "value": 0.2222,
+        "n": 9
+      },
+      "citation_precision": {
+        "value": 1.0,
+        "n": 29
+      },
+      "cited_evidence_recall": {
+        "value": 0.8563,
+        "n": 29
+      }
+    },
+    "citations_all_answered": {
+      "n_answered": 32,
+      "citation_validity": {
+        "value": 1.0,
+        "n": 32
+      },
+      "answers_with_invalid_citations": 0,
+      "uncited_answers": 0
+    },
+    "version_selection": {
+      "checked": [
+        "e06",
+        "e10",
+        "e14",
+        "e18",
+        "e21",
+        "e39"
+      ],
+      "errors": [],
+      "temporal_rule_disagreements": []
+    },
+    "abstention_causes": {
+      "gate": 8,
+      "llm": 0
+    },
+    "errors": {
+      "format_errors": 0,
+      "api_errors": 0,
+      "not_run": 0,
+      "consistency_issues": 0
+    }
+  },
+  "gate_a": {
+    "threshold": 0.868271,
+    "score_type": "cosine_top1",
+    "rule": "midpoint(max_unanswerable, min_answerable) si separables; si no, min_answerable",
+    "calibration_sha256": "dcaa43069f9e531f73494e4ca9a807eac228eba314845569cf5b3cf9e79e04a5"
+  },
+  "gate_b": {
+    "threshold": 0.868271,
+    "score_type": "max_dense_cosine_in_topk",
+    "rule": "midpoint(max_unanswerable, min_answerable) si separables; si no, min_answerable",
+    "calibration_sha256": "f50add6053f9d68cf40443c1b191a977e21b7bc7bbc49e2d3231d2e29b382484"
+  },
+  "paired": {
+    "required_facts_coverage": {
+      "n_pairs": 29,
+      "a_better": 0,
+      "b_better": 1,
+      "ties": 28,
+      "differs_in": [
+        "e10"
+      ],
+      "sign_test_p": 1.0
+    },
+    "all_required_facts": {
+      "n_pairs": 29,
+      "a_better": 0,
+      "b_better": 1,
+      "ties": 28,
+      "differs_in": [
+        "e10"
+      ],
+      "sign_test_p": 1.0
+    },
+    "forbidden_present": {
+      "n_pairs": 9,
+      "a_better": 0,
+      "b_better": 0,
+      "ties": 9,
+      "differs_in": [],
+      "sign_test_p": null
+    },
+    "citation_precision": {
+      "n_pairs": 29,
+      "a_better": 0,
+      "b_better": 1,
+      "ties": 28,
+      "differs_in": [
+        "e16"
+      ],
+      "sign_test_p": 1.0
+    },
+    "cited_evidence_recall": {
+      "n_pairs": 29,
+      "a_better": 0,
+      "b_better": 1,
+      "ties": 28,
+      "differs_in": [
+        "e16"
+      ],
+      "sign_test_p": 1.0
+    },
+    "abstained": {
+      "n_pairs": 40,
+      "a_better": null,
+      "b_better": null,
+      "ties": 40,
+      "differs_in": [],
+      "sign_test_p": null
+    }
+  },
+  "note": "Pares solo donde ambas corridas tienen valor (p. ej. ambas respondieron). n chico: el test de signo no es evidencia fuerte. Los umbrales de gate difieren por diseño (cada configuración se calibra por separado)."
+}

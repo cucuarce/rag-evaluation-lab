@@ -1,0 +1,29 @@
+# Generador simulado, determinístico y sin red. Sirve para probar el pipeline completo offline.
+# Sus "métricas" NO miden calidad de un LLM: solo verifican que el pipeline funciona.
+
+[generation]
+name = "fake_extractive"
+prompt_version = "v1"
+reference_date = "2026-11-01"
+
+[model]
+provider = "fake"
+model = "fake-extractive-v1"
+temperature = 0.0
+max_completion_tokens = 1024
+reasoning_effort = "low"
+seed = 7
+
+[limits]
+timeout_s = 60
+max_retries = 3
+max_retry_after_s = 60
+backoff_base_s = 0.0
+max_concurrency = 1
+min_interval_s = 0.0
+max_calls = 1000
+max_total_tokens = 10000000
+max_consecutive_failures = 3
+
+[gate]
+enabled = true

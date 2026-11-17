@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-11-17T01:41:29+00:00",
+  "calibration_split": "calibration",
+  "retrieval_run_name": "A_dense_k5",
+  "method": "dense",
+  "index_id": "70d9384dbab6e92b",
+  "retrieval_config_hash": "e689bd27754e78302b58c7f5a3c9141c58e463a6801dfc43d7d7c3e750ca4b7e",
+  "score_type": "cosine_top1",
+  "rule": "midpoint(max_unanswerable, min_answerable) si separables; si no, min_answerable",
+  "threshold": 0.868271,
+  "separable_on_calibration": true,
+  "n_answerable": 8,
+  "n_unanswerable": 2,
+  "min_answerable": 0.886567,
+  "max_unanswerable": 0.849975,
+  "calibration_blocked_answerable": 0,
+  "calibration_blocked_unanswerable": 2,
+  "per_question": [
+    {
+      "qid": "c01",
+      "answerable": true,
+      "score": 0.9187588599674503,
+      "blocked": false
+    },
+    {
+      "qid": "c02",
+      "answerable": true,
+      "score": 0.9078902143608553,
+      "blocked": false
+    },
+    {
+      "qid": "c03",
+      "answerable": true,
+      "score": 0.9142789610565757,
+      "blocked": false
+    },
+    {
+      "qid": "c04",
+      "answerable": true,
+      "score": 0.8958372231957457,
+      "blocked": false
+    },
+    {
+      "qid": "c05",
+      "answerable": true,
+      "score": 0.8865667277020274,
+      "blocked": false
+    },
+    {
+      "qid": "c06",
+      "answerable": true,
+      "score": 0.9186251912452856,
+      "blocked": false
+    },
+    {
+      "qid": "c07",
+      "answerable": true,
+      "score": 0.92603279035333,
+      "blocked": false
+    },
+    {
+      "qid": "c08",
+      "answerable": true,
+      "score": 0.9181538772006589,
+      "blocked": false
+    },
+    {
+      "qid": "c09",
+      "answerable": false,
+      "score": 0.8499752768049373,
+      "blocked": true
+    },
+    {
+      "qid": "c10",
+      "answerable": false,
+      "score": 0.8477806453069321,
+      "blocked": true
+    }
+  ],
+  "calibration_sha256": "dcaa43069f9e531f73494e4ca9a807eac228eba314845569cf5b3cf9e79e04a5",
+  "warning": "Calibrado con n=10 (8 respondibles, 2 no respondibles): umbral frágil, no es una estimación estadística confiable."
+}

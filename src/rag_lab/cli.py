@@ -1,4 +1,4 @@
-"""CLI mínima: validate | index | eval | compare | stability."""
+"""CLI rag-lab: retrieval (Etapa 1) y generación (Etapa 2). Ver README."""
 
 from __future__ import annotations
 
@@ -95,12 +95,134 @@ def cmd_stability(args) -> None:
     _dump(report, REPORTS_DIR / f"stability_{args.split}_{cfg.name}.json")
 
 
+CACHE_DIR = PROJECT_ROOT / "cache" / "llm"
+
+
+def cmd_calibrate_gate(args) -> None:
+    from rag_lab.evaluation.gate_calibration import calibrate_gate
+    from rag_lab.generation.runner import gate_path_for
+
+    report = calibrate_gate(Path(args.calibration_run))
+    print(
+        f"gate {report['retrieval_run_name']} ({report['score_type']}): umbral="
+        f"{report['threshold']} separable={report['separable_on_calibration']} "
+        f"min_respondible={report['min_answerable']} max_no_respondible="
+        f"{report['max_unanswerable']}"
+    )
+    _dump(report, gate_path_for(report["retrieval_run_name"]))
+
+
+def _make_generator(cfg, http_client=None):
+    from rag_lab.generation.credentials import get_api_key
+    from rag_lab.generation.providers import FakeGenerator, GroqGenerator
+
+    if cfg.model.provider == "fake":
+        return FakeGenerator(cfg.model.model), None
+    key = get_api_key()
+    if not key:
+        raise ValueError("Falta GROQ_API_KEY (variable de entorno o .env en la raíz del proyecto)")
+    return GroqGenerator(cfg, key, http_client=http_client), key
+
+
+def cmd_gen_check(args) -> None:
+    from rag_lab.generation.config import load_generation_config
+    from rag_lab.generation.credentials import get_api_key, key_status
+
+    cfg = load_generation_config(args.gen_config)
+    report = {
+        "config_ok": True,
+        "generation": cfg.name,
+        "provider": cfg.model.provider,
+        "model": cfg.model.model,
+        "limits": cfg.to_dict()["limits"],
+        "api_key": key_status(),
+    }
+    if args.online and cfg.model.provider == "groq":
+        from groq import Groq
+
+        key = get_api_key()
+        if not key:
+            raise ValueError("Falta GROQ_API_KEY")
+        models = Groq(api_key=key, max_retries=0, timeout=30).models.list()
+        ids = sorted(m.id for m in models.data)
+        report["online"] = {
+            "model_available": cfg.model.model in ids,
+            "n_models_listed": len(ids),
+            "models_listed": ids,
+        }
+        if cfg.model.model not in ids:
+            print(json.dumps(report, indent=2, ensure_ascii=False))
+            raise ValueError(f"El modelo {cfg.model.model} no está disponible para esta clave")
+    print(json.dumps(report, indent=2, ensure_ascii=False))
+
+
+def cmd_generate(args) -> None:
+    from rag_lab.evaluation.gen_scoring import score_generation
+    from rag_lab.generation.calls import ResponseCache
+    from rag_lab.generation.config import load_generation_config
+    from rag_lab.generation.runner import run_generation
+
+    cfg = load_generation_config(args.gen_config)
+    generator, secret = _make_generator(cfg)
+    cache = None if args.no_cache or cfg.model.provider == "fake" else ResponseCache(CACHE_DIR)
+    qids = [q.strip() for q in args.qids.split(",")] if args.qids else None
+    run_dir = Path(args.retrieval_run)
+    out = Path(args.out) if args.out else None
+    gen_dir = run_generation(
+        run_dir, cfg, generator, out_dir=out, cache=cache, qids=qids, secret=secret
+    )
+    gm = json.loads((gen_dir / "gen_manifest.json").read_text(encoding="utf-8"))
+    summary = score_generation(gen_dir)  # fase 2: recién acá se leen etiquetas
+    m = summary["metrics"]
+    print(
+        json.dumps(
+            {
+                "run_status": gm["run_status"],
+                "abort_reason": gm["abort_reason"],
+                "counts": gm["counts"],
+                "tokens_real": gm["tokens_real"],
+                "answerable": m["answerable"],
+                "unanswerable": m["unanswerable"],
+                "answered_answerable": m["answered_answerable"],
+                "version_selection": m["version_selection"],
+                "errors": m["errors"],
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
+    shown = gen_dir.relative_to(PROJECT_ROOT) if gen_dir.is_relative_to(PROJECT_ROOT) else gen_dir
+    print(f"-> {shown.as_posix()}")
+    if gm["run_status"] != "complete":
+        raise ValueError(f"corrida abortada: {gm['abort_reason']}")
+
+
+def cmd_compare_gen(args) -> None:
+    from rag_lab.evaluation.gen_scoring import compare_generation
+
+    a, b = Path(args.gen_a), Path(args.gen_b)
+    report = compare_generation(a, b)
+    print(f"{'métrica':<26}{'pares':>6}  A>B  B>A  empates  p(signo)")
+    for m, s in report["paired"].items():
+        print(
+            f"{m:<26}{s['n_pairs']:>6}  {s['a_better']!s:>3}  {s['b_better']!s:>3}  "
+            f"{s['ties']:>7}  {s['sign_test_p']}"
+        )
+    out = (
+        Path(args.out)
+        if args.out
+        else REPORTS_DIR
+        / f"compare_gen_{report['generation']}_{report['run_a']}_vs_{report['run_b']}.json"
+    )
+    _dump(report, out)
+
+
 def main(argv: list[str] | None = None) -> int:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8")  # consola de Windows (cp1252 por defecto)
     p = argparse.ArgumentParser(
-        prog="rag-lab", description="RAG Evaluation Lab (Etapa 1: retrieval)"
+        prog="rag-lab", description="RAG Evaluation Lab (Etapa 1: retrieval, Etapa 2: generación)"
     )
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -130,6 +252,29 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--split", default="eval", choices=["eval", "calibration"])
     s.add_argument("--repeats", type=int, default=2)
     s.set_defaults(func=cmd_stability)
+
+    s = sub.add_parser("calibrate-gate", help="calibra el umbral del gate (solo split calibration)")
+    s.add_argument("calibration_run", help="p. ej. runs/calibration/A_dense_k5")
+    s.set_defaults(func=cmd_calibrate_gate)
+
+    s = sub.add_parser("gen-check", help="valida config de generación y clave (sin generar)")
+    s.add_argument("--gen-config", required=True)
+    s.add_argument("--online", action="store_true", help="lista modelos en la API (1 GET)")
+    s.set_defaults(func=cmd_gen_check)
+
+    s = sub.add_parser("generate", help="genera respuestas sobre una corrida de retrieval")
+    s.add_argument("retrieval_run", help="p. ej. runs/eval/A_dense_k5")
+    s.add_argument("--gen-config", required=True)
+    s.add_argument("--qids", help="subconjunto separado por comas (smoke)")
+    s.add_argument("--out", help="default: <retrieval_run>/gen/<nombre>")
+    s.add_argument("--no-cache", action="store_true")
+    s.set_defaults(func=cmd_generate)
+
+    s = sub.add_parser("compare-gen", help="comparación pareada de dos generaciones")
+    s.add_argument("gen_a")
+    s.add_argument("gen_b")
+    s.add_argument("--out")
+    s.set_defaults(func=cmd_compare_gen)
 
     args = p.parse_args(argv)
     try:

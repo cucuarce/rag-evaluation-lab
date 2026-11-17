@@ -10,6 +10,7 @@ dependencies = [
     "rank-bm25==0.2.2",
     "numpy>=2,<3",
     "torch>=2.6",
+    "groq>=0.30,<2",
 ]
 
 [project.scripts]
