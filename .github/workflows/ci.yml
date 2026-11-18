@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Ruff y tests (Python 3.12)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Sin red hacia Hugging Face: si algún test intentara cargar el modelo de embeddings,
+      # falla en lugar de descargarlo. La CI no usa GROQ_API_KEY ni ningún secreto.
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Instalar uv y Python 3.12
+        uses: astral-sh/setup-uv@v10.3.3
+        with:
+          version: "0.12.23"
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Instalar dependencias (lockfile congelado, con grupos dev y dashboard)
+        run: uv sync --frozen --group dashboard
+
+      - name: Ruff check
+        run: uv run --frozen ruff check .
+
+      - name: Ruff format
+        run: uv run --frozen ruff format --check .
+
+      - name: Tests (excluye solo los marcados `model`, que requieren el índice local)
+        run: uv run --frozen python -m pytest -m "not model" -ra --junitxml=pytest-report.xml
+
+      - name: Verificar que ningún test se omitió (incluye AppTest del dashboard)
+        run: |
+          uv run --frozen python - <<'EOF'
+          import sys
+          import xml.etree.ElementTree as ET
+
+          suite = ET.parse("pytest-report.xml").getroot()
+          suite = suite if suite.tag == "testsuite" else suite.find("testsuite")
+          tests, skipped = int(suite.get("tests")), int(suite.get("skipped"))
+          print(f"tests ejecutados: {tests}, omitidos: {skipped}")
+          sys.exit(1 if skipped or tests == 0 else 0)
+          EOF

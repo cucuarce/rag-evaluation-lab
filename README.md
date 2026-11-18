@@ -1,5 +1,7 @@
 # RAG Evaluation Lab
 
+[![CI](https://github.com/cucuarce/rag-evaluation-lab/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cucuarce/rag-evaluation-lab/actions/workflows/ci.yml)
+
 Laboratorio local y reproducible para **medir** un sistema RAG por partes: retrieval, generación
 con citas y abstención, y faithfulness por afirmación evaluada con un juez LLM contrastado con
 etiquetas humanas. Incluye un dashboard local de solo lectura para explorar los resultados.
@@ -257,6 +259,26 @@ Para no tocarlos, conviene correrlos sobre una copia del repositorio.
 uv run pytest
 uv run ruff check . && uv run ruff format --check .
 ```
+
+### Integración continua
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) corre en cada push y pull request a
+`main`, y también se puede lanzar a mano.
+
+**Qué hace:**
+- Usa Ubuntu, Python 3.12 y uv 0.12.23.
+- Instala con `uv sync --frozen --group dashboard`.
+- Ejecuta `ruff check`, `ruff format --check` y `python -m pytest -m "not model"`.
+
+**Qué tests corren:** todos, incluidos los del dashboard con `AppTest`, salvo los 5 marcados
+`model` de `tests/test_integration_retrieval.py`. Esos necesitan el índice local, que no se
+construye en CI para no descargar el modelo de embeddings.
+
+**Controles:**
+- Un último paso falla si algún test seleccionado se omite. Así, por ejemplo, el dashboard no puede saltearse en silencio por falta de Streamlit.
+- La CI no usa `GROQ_API_KEY` ni ningún secreto, y no llama a Groq.
+- Bloquea las descargas de Hugging Face (`HF_HUB_OFFLINE=1`).
+- Tiene permisos de solo lectura (`contents: read`).
 
 ## Salidas versionadas
 
